@@ -12,7 +12,7 @@ def main():
 
     for data_category in ['train','val','test']:
         print(f'Processing {data_category} data')
-        
+
         # List all JSON files to merge
         json_files = glob.glob(f'data/MELD/raw-texts/{data_category}/*.json')
 
@@ -44,4 +44,4 @@ if __name__ =="__main__":
     main()
 
 
-# pyth
+# python .\src\scripts\utterances_data_csv.py
