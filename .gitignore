@@ -2,6 +2,9 @@
 data/dev_sent_emo.csv
 data/test_sent_emo.csv
 data/train_sent_emo.csv
-/data
+/data/MELD
+
+*.mp4
+
 *.pyc
 .env
