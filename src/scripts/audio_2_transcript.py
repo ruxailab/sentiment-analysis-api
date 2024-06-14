@@ -89,6 +89,7 @@ def assembly_ai_speech2text_with_speaker_labels(file_path: str,save_path:str=Non
         
             with open(save_path, 'w') as f:
                 json.dump(detailed_transcript, f, indent=4)
+                print(f"Transcript saved to {save_path}")
 
 
         return detailed_transcript
