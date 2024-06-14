@@ -1,3 +1,5 @@
+# Script to fix old format of timestamps in the transcript file [Archive]
+
 import re
 
 # Function to convert milliseconds to HH:MM:SS format

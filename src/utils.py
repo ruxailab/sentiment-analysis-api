@@ -47,3 +47,12 @@ def set_seed(seed: int) -> None:
         # Set CUDA environment variables
         os.environ['CUDA_SEED'] = str(seed)  # Set CUDA seed
 
+
+
+def format_time(milliseconds):
+    seconds = milliseconds // 1000
+    minutes = seconds // 60
+    hours = minutes // 60
+    return f"{hours:02}:{minutes % 60:02}:{seconds % 60:02}"
+
+

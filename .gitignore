@@ -4,3 +4,4 @@ data/test_sent_emo.csv
 data/train_sent_emo.csv
 /data
 *.pyc
+.env
