@@ -1,0 +1,58 @@
+[
+    {
+        "start_time": "00:00:01",
+        "end_time": "00:00:05",
+        "speaker": "A",
+        "text": "I don't know what to say anymore. Hi Basma.",
+        "sentiemt": "negative"
+    },
+    {
+        "start_time": "00:00:07",
+        "end_time": "00:00:09",
+        "speaker": "UNK",
+        "text": "Let's just finish.",
+        "sentiemt": "neutral"
+    },
+    {
+        "start_time": "00:00:09",
+        "end_time": "00:00:010",
+        "speaker": "A",
+        "text": "Maybe. Yes.",
+        "sentiemt": "neutral"
+    },
+    {
+        "start_time": "00:00:11",
+        "end_time": "00:00:15",
+        "speaker": "UNK",
+        "text": "Or you will talk about Spotify.",
+        "sentiemt": "neutral"
+    },
+    {
+        "start_time": "00:00:16",
+        "end_time": "00:00:21",
+        "speaker": "A",
+        "text": "I really like Spotify. I can't live without it. Right? You agree?",
+        "sentiemt": "positive"
+    },
+    {
+        "start_time": "00:00:16",
+        "end_time": "00:00:21",
+        "speaker": "A",
+        "text": "I really like Spotify. I can't live without it. Right? You agree?",
+        "sentiemt": "positive"
+    },
+    {
+        "start_time": "00:00:25",
+        "end_time": "00:00:27",
+        "speaker": "UNK",
+        "text": "You were talking to someone?",
+        "sentiemt": "neutral"
+    },
+    {
+        "start_time": "00:00:27",
+        "end_time": "00:00:54",
+        "speaker": "A",
+        "text": "Yes. I am talking to someone that is beside me. So Spotify is amazing. They have really good music there  and really good recommendations. I really like it. You don't like it? No. Okay, I like it. Only my opinion matters. Okay. It's my word, my rules. But I think should be completely free.",
+        "sentiemt": "positive"
+    }
+]
