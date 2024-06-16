@@ -1,6 +1,7 @@
 import json 
 import argparse
 import time
+import re
 
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
@@ -25,7 +26,7 @@ def predict_sentiment(text, tokenizer, model):
     return predicted_class, probabilities[0][predicted_class].item()
 
 
-def roberta_sentiment_analysis(utterances:list, save_path:str=None):
+def roberta_sentiment_analysis(utterances:list, save_path:str=None, per_sentence:bool=False):
     # Load the tokenizer and model
     tokenizer = AutoTokenizer.from_pretrained("finiteautomata/bertweet-base-sentiment-analysis")
     model = AutoModelForSequenceClassification.from_pretrained("finiteautomata/bertweet-base-sentiment-analysis").to(DEVICE)
@@ -41,13 +42,32 @@ def roberta_sentiment_analysis(utterances:list, save_path:str=None):
         text = utterance["text"]
         # print(text)
 
-        sentiment, confidence = predict_sentiment(text, tokenizer, model)
+        if per_sentence:
+            sentences = re.split(r'(?<=[.!?]) +', text)
 
-        transcript_sentiment.append({
-            **utterance,
-            'sentiment': sentiment_labels[sentiment],
-            'confidence': confidence,
-        })
+            sentences_sentiment = []
+            for sentence in sentences:
+                sentiment, confidence = predict_sentiment(sentence, tokenizer, model)
+
+                sentences_sentiment.append({
+                    'sentence': sentence,
+                    'sentiment': sentiment_labels[sentiment],
+                    'confidence': confidence,
+                })
+
+            transcript_sentiment.append({
+                **utterance,
+                'sentences': sentences_sentiment,
+            })
+
+        else:
+            sentiment, confidence = predict_sentiment(text, tokenizer, model)
+
+            transcript_sentiment.append({
+                **utterance,
+                'sentiment': sentiment_labels[sentiment],
+                'confidence': confidence,
+            })
 
 
     end=time.time()
@@ -66,6 +86,7 @@ if __name__ == "__main__":
     parser.add_argument('file_path', type=str, help='Path to the JSON file to be analyzed.')
     parser.add_argument('--save_path', type=str, default=None, help='Path to save the analyzed transcript (JSON format).')
     parser.add_argument('--device', choices=["cpu", "gpu"], default="cpu", help='Device to run the model on.')
+    parser.add_argument('--per_sentence', action='store_true', help='Analyze sentiment per sentence.')
 
     args = parser.parse_args()
 
@@ -88,12 +109,14 @@ if __name__ == "__main__":
     with open(args.file_path, "r") as file:
         utterances = json.load(file)
 
-        roberta_sentiment_analysis(utterances, args.save_path)
+        roberta_sentiment_analysis(utterances, args.save_path,args.per_sentence)
 
 
 
 # PS D:\sentiment-analysis-api> python -m src.scripts.roberta_predict ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_transcript.json
 # PS D:\sentiment-analysis-api> python -m src.scripts.roberta_predict ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_transcript.json --save_path ./test.json
+# PS D:\sentiment-analysis-api> python -m src.scripts.roberta_predict ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_transcript.json --save_path ./test.json --device gpu
+# PS D:\sentiment-analysis-api> python -m src.scripts.roberta_predict ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_transcript.json --save_path ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_transcript_per_sentence.json --device gpu --per_sentence
 
 
 # import json 
