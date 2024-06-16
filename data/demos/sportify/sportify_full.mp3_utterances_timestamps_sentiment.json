@@ -1,0 +1,450 @@
+[
+    {
+        "start_time": "00:00:02",
+        "end_time": "00:00:02",
+        "speaker": "A",
+        "text": "Ready?",
+        "sentiment": "neutral",
+        "confidence": 0.9352457523345947
+    },
+    {
+        "start_time": "00:00:09",
+        "end_time": "00:00:13",
+        "speaker": "B",
+        "text": "Did you start it? Do I start it?",
+        "sentiment": "neutral",
+        "confidence": 0.9723045229911804
+    },
+    {
+        "start_time": "00:00:16",
+        "end_time": "00:00:59",
+        "speaker": "A",
+        "text": "I'm trying to connect. You need to accept the sentiment, the consent. Okay, so I was fine. First step will need to take to do this test. Is going to test and doing the pretest.",
+        "sentiment": "neutral",
+        "confidence": 0.8660370707511902
+    },
+    {
+        "start_time": "00:01:01",
+        "end_time": "00:01:02",
+        "speaker": "B",
+        "text": "It's blocked.",
+        "sentiment": "negative",
+        "confidence": 0.8338714838027954
+    },
+    {
+        "start_time": "00:01:02",
+        "end_time": "00:01:07",
+        "speaker": "A",
+        "text": "It's blocked. Okay, I will release.",
+        "sentiment": "neutral",
+        "confidence": 0.8962931036949158
+    },
+    {
+        "start_time": "00:01:10",
+        "end_time": "00:01:11",
+        "speaker": "B",
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "start_time": "00:01:12",
+        "end_time": "00:01:20",
+        "speaker": "A",
+        "text": "Okay, I see you doing zoom now the protector is just to get some information about you.",
+        "sentiment": "neutral",
+        "confidence": 0.9702537059783936
+    },
+    {
+        "start_time": "00:01:22",
+        "end_time": "00:01:29",
+        "speaker": "B",
+        "text": "It's okay if I write it in Portuguese or I need to write in English.",
+        "sentiment": "neutral",
+        "confidence": 0.913619339466095
+    },
+    {
+        "start_time": "00:01:30",
+        "end_time": "00:01:57",
+        "speaker": "A",
+        "text": "I think it's better in English. In the age you can put just the number. So we gonna test the Spotify platform. Do you know Spotify?",
+        "sentiment": "positive",
+        "confidence": 0.8319323658943176
+    },
+    {
+        "start_time": "00:01:57",
+        "end_time": "00:02:01",
+        "speaker": "B",
+        "text": "I do my highest level of education.",
+        "sentiment": "positive",
+        "confidence": 0.983546257019043
+    },
+    {
+        "start_time": "00:02:02",
+        "end_time": "00:02:05",
+        "speaker": "A",
+        "text": "What's your highest level of education?",
+        "sentiment": "neutral",
+        "confidence": 0.9422720670700073
+    },
+    {
+        "start_time": "00:02:09",
+        "end_time": "00:02:10",
+        "speaker": "B",
+        "text": "I don't know.",
+        "sentiment": "neutral",
+        "confidence": 0.5575203895568848
+    },
+    {
+        "start_time": "00:02:11",
+        "end_time": "00:02:15",
+        "speaker": "A",
+        "text": "You were doing university now.",
+        "sentiment": "neutral",
+        "confidence": 0.9603509306907654
+    },
+    {
+        "start_time": "00:02:15",
+        "end_time": "00:02:19",
+        "speaker": "B",
+        "text": "So graduation under the graduation.",
+        "sentiment": "neutral",
+        "confidence": 0.950955867767334
+    },
+    {
+        "start_time": "00:02:26",
+        "end_time": "00:02:30",
+        "speaker": "A",
+        "text": "I think last night will be okay.",
+        "sentiment": "positive",
+        "confidence": 0.9398981332778931
+    },
+    {
+        "start_time": "00:02:30",
+        "end_time": "00:02:51",
+        "speaker": "B",
+        "text": "I want to put graduation just for done.",
+        "sentiment": "positive",
+        "confidence": 0.6201162934303284
+    },
+    {
+        "start_time": "00:02:53",
+        "end_time": "00:03:54",
+        "speaker": "A",
+        "text": "Okay, so I will release the first test is the test for the login on the platform. If you are already logged, you can just put this on the observation and finish the test because you. You say you use a lot of. Okay, I see you just finished it. So I will release. The second test is to search a song like any song and play it for a few seconds.",
+        "sentiment": "neutral",
+        "confidence": 0.8628289699554443
+    },
+    {
+        "start_time": "00:03:56",
+        "end_time": "00:04:16",
+        "speaker": "B",
+        "text": "What song? I don't know what song. I need to play a few seconds.",
+        "sentiment": "neutral",
+        "confidence": 0.9235903024673462
+    },
+    {
+        "start_time": "00:04:16",
+        "end_time": "00:04:28",
+        "speaker": "A",
+        "text": "That's just for testing. Yo, kissif. I said.",
+        "sentiment": "neutral",
+        "confidence": 0.9026588201522827
+    },
+    {
+        "start_time": "00:04:52",
+        "end_time": "00:04:56",
+        "speaker": "B",
+        "text": "Okay, I stop it. Do I need to put here?",
+        "sentiment": "neutral",
+        "confidence": 0.5248740315437317
+    },
+    {
+        "start_time": "00:04:58",
+        "end_time": "00:05:10",
+        "speaker": "A",
+        "text": "If you need to put on the observation like the sound isn't good, you can put this or later we get this feedback.",
+        "sentiment": "neutral",
+        "confidence": 0.6198225021362305
+    },
+    {
+        "start_time": "00:05:24",
+        "end_time": "00:05:25",
+        "speaker": "B",
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "start_time": "00:05:28",
+        "end_time": "00:05:48",
+        "speaker": "A",
+        "text": "Okay, so I already the 30 tasks. This is a test for creating a playlist just for test feature. So you can put the song. You search it on the playlist with just the song and see if you can do this easy or it's harder to do.",
+        "sentiment": "neutral",
+        "confidence": 0.9301620721817017
+    },
+    {
+        "start_time": "00:05:49",
+        "end_time": "00:07:10",
+        "speaker": "B",
+        "text": "Okay. Okay. Just save it. Yes. Okay, I need to put any observation.",
+        "sentiment": "neutral",
+        "confidence": 0.8005557060241699
+    },
+    {
+        "start_time": "00:07:10",
+        "end_time": "00:07:21",
+        "speaker": "A",
+        "text": "No, if you want to put some observation like you, you think the path is confused or something.",
+        "sentiment": "negative",
+        "confidence": 0.5983223915100098
+    },
+    {
+        "start_time": "00:07:22",
+        "end_time": "00:07:25",
+        "speaker": "B",
+        "text": "Now ten.",
+        "sentiment": "neutral",
+        "confidence": 0.951635479927063
+    },
+    {
+        "start_time": "00:07:26",
+        "end_time": "00:07:45",
+        "speaker": "A",
+        "text": "Okay, so I will release the 40. The 40. No, not the 40. The foretest and easy to get the share point of your playlist.",
+        "sentiment": "positive",
+        "confidence": 0.5799347162246704
+    },
+    {
+        "start_time": "00:07:45",
+        "end_time": "00:07:46",
+        "speaker": "B",
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "start_time": "00:08:13",
+        "end_time": "00:08:37",
+        "speaker": "A",
+        "text": "Okay, so the test file. I will release the test. Five is a test to follow an artist in Spotify. You know, you can follow the artist.",
+        "sentiment": "neutral",
+        "confidence": 0.7895566821098328
+    },
+    {
+        "start_time": "00:08:41",
+        "end_time": "00:08:42",
+        "speaker": "B",
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "start_time": "00:08:42",
+        "end_time": "00:08:48",
+        "speaker": "A",
+        "text": "You can search your art as you is your favorite and start following.",
+        "sentiment": "neutral",
+        "confidence": 0.5804403424263
+    },
+    {
+        "start_time": "00:08:50",
+        "end_time": "00:08:53",
+        "speaker": "B",
+        "text": "Okay. I don't know any that I don't follow. Wait.",
+        "sentiment": "neutral",
+        "confidence": 0.9222179651260376
+    },
+    {
+        "start_time": "00:08:54",
+        "end_time": "00:08:56",
+        "speaker": "A",
+        "text": "I recommend Billie Eilish.",
+        "sentiment": "positive",
+        "confidence": 0.9212568998336792
+    },
+    {
+        "start_time": "00:08:57",
+        "end_time": "00:08:58",
+        "speaker": "B",
+        "text": "I'd rather follow her.",
+        "sentiment": "neutral",
+        "confidence": 0.8729687333106995
+    },
+    {
+        "start_time": "00:08:58",
+        "end_time": "00:09:02",
+        "speaker": "A",
+        "text": "Okay, so follow and follow him.",
+        "sentiment": "neutral",
+        "confidence": 0.5274033546447754
+    },
+    {
+        "start_time": "00:09:04",
+        "end_time": "00:09:06",
+        "speaker": "B",
+        "text": "Gonna be. I don't know.",
+        "sentiment": "neutral",
+        "confidence": 0.9503865838050842
+    },
+    {
+        "start_time": "00:09:06",
+        "end_time": "00:09:17",
+        "speaker": "A",
+        "text": "Okay, so you can follow easy.",
+        "sentiment": "neutral",
+        "confidence": 0.8870575428009033
+    },
+    {
+        "start_time": "00:09:18",
+        "end_time": "00:09:19",
+        "speaker": "B",
+        "text": "Yes.",
+        "sentiment": "positive",
+        "confidence": 0.7605288624763489
+    },
+    {
+        "start_time": "00:09:21",
+        "end_time": "00:09:27",
+        "speaker": "A",
+        "text": "So I will release the last task, it's to do logout of the platform.",
+        "sentiment": "neutral",
+        "confidence": 0.9302297234535217
+    },
+    {
+        "start_time": "00:09:27",
+        "end_time": "00:09:31",
+        "speaker": "B",
+        "text": "Oh no, really.",
+        "sentiment": "negative",
+        "confidence": 0.9317673444747925
+    },
+    {
+        "start_time": "00:09:33",
+        "end_time": "00:09:36",
+        "speaker": "A",
+        "text": "If you don't remember your account, you can.",
+        "sentiment": "neutral",
+        "confidence": 0.5614855289459229
+    },
+    {
+        "start_time": "00:09:36",
+        "end_time": "00:09:38",
+        "speaker": "B",
+        "text": "It's here. Look out.",
+        "sentiment": "neutral",
+        "confidence": 0.9458056688308716
+    },
+    {
+        "start_time": "00:09:39",
+        "end_time": "00:10:32",
+        "speaker": "A",
+        "text": "Okay, so that's fine. You don't need to. Okay, so you finish all the six tests and now I will release the both tests. It's the test you made after finishing all the tests. And we'll have some questions for you. Like of the experience using Spotify.",
+        "sentiment": "neutral",
+        "confidence": 0.8110566139221191
+    },
+    {
+        "start_time": "00:10:39",
+        "end_time": "00:10:43",
+        "speaker": "B",
+        "text": "Can I put on the number or do I need to explain.",
+        "sentiment": "neutral",
+        "confidence": 0.9325246214866638
+    },
+    {
+        "start_time": "00:10:46",
+        "end_time": "00:10:51",
+        "speaker": "A",
+        "text": "The way you. You like to nine out of ten.",
+        "sentiment": "neutral",
+        "confidence": 0.8654996752738953
+    },
+    {
+        "start_time": "00:11:12",
+        "end_time": "00:13:11",
+        "speaker": "B",
+        "text": "It, then save and exit.",
+        "sentiment": "neutral",
+        "confidence": 0.8057162165641785
+    },
+    {
+        "start_time": "00:13:11",
+        "end_time": "00:13:37",
+        "speaker": "A",
+        "text": "Okay, so to me appear, you finish the post test and now we can talk about the test. We do. But we can just finish if you want. But for the plasma, I think it's better we talk a little more. So wait.",
+        "sentiment": "neutral",
+        "confidence": 0.9362130165100098
+    },
+    {
+        "start_time": "00:13:37",
+        "end_time": "00:13:41",
+        "speaker": "B",
+        "text": "Do I need to save and exit or do I need to wait?",
+        "sentiment": "neutral",
+        "confidence": 0.9548295140266418
+    },
+    {
+        "start_time": "00:13:42",
+        "end_time": "00:14:10",
+        "speaker": "A",
+        "text": "If you save, the test will finish. So in theory we don't invoice call anymore. Yes, the same happened to carry, but to me, I think you. Oh, you were here. Okay, so.",
+        "sentiment": "neutral",
+        "confidence": 0.8655259013175964
+    },
+    {
+        "start_time": "00:14:12",
+        "end_time": "00:14:22",
+        "speaker": "B",
+        "text": "I don't know what to say anymore. Hi Basma. Let's just finish maybe yes.",
+        "sentiment": "neutral",
+        "confidence": 0.7141578793525696
+    },
+    {
+        "start_time": "00:14:22",
+        "end_time": "00:14:27",
+        "speaker": "A",
+        "text": "Or you will talk about Spotify.",
+        "sentiment": "neutral",
+        "confidence": 0.7321552634239197
+    },
+    {
+        "start_time": "00:14:27",
+        "end_time": "00:15:10",
+        "speaker": "B",
+        "text": "I really like Spotify. I can live without it, right? You agree? You were telling me to say yes. I am talking to someone that is beside me. So Spotify is amazing. They have really good music there and really good recommendations. I really like it. You don't like it? No. Okay, I like it. Only my opinion matters. Okay. It's my word, my rules. But I think should be completely free. That's it.",
+        "sentiment": "positive",
+        "confidence": 0.9845715761184692
+    },
+    {
+        "start_time": "00:15:11",
+        "end_time": "00:15:14",
+        "speaker": "A",
+        "text": "Okay, so let's finish the test.",
+        "sentiment": "neutral",
+        "confidence": 0.6755996942520142
+    },
+    {
+        "start_time": "00:15:15",
+        "end_time": "00:15:15",
+        "speaker": "B",
+        "text": "Yes.",
+        "sentiment": "positive",
+        "confidence": 0.7605288624763489
+    },
+    {
+        "start_time": "00:15:16",
+        "end_time": "00:15:17",
+        "speaker": "A",
+        "text": "And that's it.",
+        "sentiment": "neutral",
+        "confidence": 0.9247221946716309
+    },
+    {
+        "start_time": "00:15:17",
+        "end_time": "00:15:19",
+        "speaker": "B",
+        "text": "I need to save and exit.",
+        "sentiment": "neutral",
+        "confidence": 0.8621446490287781
+    }
+]
