@@ -13,7 +13,7 @@ with open("config.yaml", "r") as file:
 
 label2id = config.get('labels', {})
 id2label = {v: k for k, v in label2id.items()}
-
+num_classes = len(label2id)
 
 def set_seed(seed: int) -> None:
     """
