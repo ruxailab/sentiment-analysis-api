@@ -96,6 +96,19 @@ def assembly_ai_speech2text_with_speaker_labels(file_path: str,save_path:str=Non
 
 
 
+def google_speech_recognition(audio_file,save_path:str=None):
+    recognizer = sr.Recognizer()
+    try:
+        with sr.AudioFile(audio_file) as source:
+            audio = recognizer.record(source)  # Read the entire audio file
+            print("Google Speech Recognition")
+            print(audio)  # Debugging: print AudioData object
+            transcription = recognizer.recognize_google(audio, show_all=True, language="en-US")
+            print("Transcription: ", transcription)
+    except sr.UnknownValueError:
+        print("Google Speech Recognition could not understand the audio")
+    except sr.RequestError as e:
+        print(f"Could not request results from Google Speech Recognition service; {e}")
 
 if __name__ == "__main__":
     # Load the .env file
@@ -107,7 +120,7 @@ if __name__ == "__main__":
 
     parser.add_argument('file_path', type=str, help='Path to the audio file to be transcribed.')
     parser.add_argument('--save_path', type=str, default=None, help='Path to save the detailed transcript (JSON format).')
-    parser.add_argument('--module', type=str, choices=['assembly_ai', 'google_cloud'], required=True, help='Transcription module to be used (assembly_ai or google_cloud).')
+    parser.add_argument('--module', type=str, choices=['assembly_ai', 'google_cloud','google'], required=True, help='Transcription module to be used (assembly_ai or google_cloud).')
     parser.add_argument('--speaker_labels', action='store_true', help='Whether to use speaker labels in the transcription.')
     
     args = parser.parse_args()
@@ -116,8 +129,8 @@ if __name__ == "__main__":
 
     # Here you would instantiate the correct transcriber based on the module argument
     if args.module == 'assembly_ai':
+        print("Assembly AI")
         import assemblyai as aai  # Import your assembly_ai module
-
         # Set the API key
         assembly_ai_api_key = os.getenv('ASSEMBLY_AI_API_KEY')
         aai.settings.api_key = assembly_ai_api_key
@@ -133,6 +146,10 @@ if __name__ == "__main__":
         # import google_cloud as gc  # Import your google_cloud module
         # transcriber = gc.Transcriber()  # Adjust this line as necessary
         pass
+    elif args.module == 'google':
+        print("Google Speech Recognition")
+        import speech_recognition as sr
+        google_speech_recognition(args.file_path,args.save_path)
 
 
 
