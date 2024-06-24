@@ -18,10 +18,15 @@ def test():
 @app.route('/sentiment-analysis', methods=['POST'])
 def sentiment_analysis():
 
+    # Get the video file [Path]
+    video_file = request.json['video_file']
+
+    print(video_file)
+
     # Make Inference Object
     inference=Inference()
-    print("Inference Object Created")
-    # Get 
+    # print("Inference Object Created")
+    # # Get 
     return jsonify({'message': 'Hello, World from Sentiment Analysis App!'})
 
 #  python -m flask run
