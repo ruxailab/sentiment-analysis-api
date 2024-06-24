@@ -29,7 +29,7 @@ def video_2_audio(video_file:str,save:bool=False,audio_file:str=None) -> VideoFi
 if __name__ == "__main__":
     # Replace with your input and output file paths
     input_video = "./data/demos/sportify/sportify_3s.mp4"
-    output_audio = "./test.mp3"  # Output audio file format can be .mp3, .wav, etc.
+    output_audio = "./temp.mp3"  # Output audio file format can be .mp3, .wav, etc.
     
     audio=video_2_audio(input_video,True,output_audio)
     print(audio)

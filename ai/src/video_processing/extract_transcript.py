@@ -66,8 +66,8 @@ def extract_transcript(audio_file:str,save:bool=False,transcript_file:str=None) 
 
 if __name__ == "__main__":
     # Replace with your input and output file paths
-    input_audio = "./test.mp3"
-    output_transcript = "./test.json"  # Output transcript file format can be .json, .txt, etc.
+    input_audio = "./temp.mp3"
+    output_transcript = "./temp.json"  # Output transcript file format can be .json, .txt, etc.
 
     transcript=transcript=extract_transcript(input_audio,True,output_transcript)
     print(transcript)
