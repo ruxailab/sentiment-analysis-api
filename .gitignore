@@ -1,4 +1,4 @@
-
+# AI
 ai/data/daily_dialogue
 ai/data/MELD
 
@@ -9,3 +9,6 @@ ai/data/MELD
 
 *.pyc
 .env
+
+# Flask App
+app/env
