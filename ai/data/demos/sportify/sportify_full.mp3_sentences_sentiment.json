@@ -1,0 +1,617 @@
+[
+    {
+        "text": "Ready?",
+        "sentiment": "neutral",
+        "confidence": 0.9352457523345947
+    },
+    {
+        "text": "Did you start it?",
+        "sentiment": "neutral",
+        "confidence": 0.9672900438308716
+    },
+    {
+        "text": "Do I start it?",
+        "sentiment": "neutral",
+        "confidence": 0.9624912738800049
+    },
+    {
+        "text": "I'm trying to connect.",
+        "sentiment": "neutral",
+        "confidence": 0.9644578099250793
+    },
+    {
+        "text": "You need to accept the sentiment.",
+        "sentiment": "neutral",
+        "confidence": 0.9220204949378967
+    },
+    {
+        "text": "Okay, so I was fine.",
+        "sentiment": "neutral",
+        "confidence": 0.7206289172172546
+    },
+    {
+        "text": "First step will need to take to do this test.",
+        "sentiment": "neutral",
+        "confidence": 0.9715127944946289
+    },
+    {
+        "text": "Is going to test and doing the pretest.",
+        "sentiment": "neutral",
+        "confidence": 0.9460093975067139
+    },
+    {
+        "text": "It's blocked.",
+        "sentiment": "negative",
+        "confidence": 0.8338714838027954
+    },
+    {
+        "text": "It's blocked.",
+        "sentiment": "negative",
+        "confidence": 0.8338714838027954
+    },
+    {
+        "text": "Okay, I will release.",
+        "sentiment": "positive",
+        "confidence": 0.6805874705314636
+    },
+    {
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "text": "Okay, I see you doing zoom.",
+        "sentiment": "neutral",
+        "confidence": 0.929911196231842
+    },
+    {
+        "text": "Now the protector is just to get some information about you.",
+        "sentiment": "neutral",
+        "confidence": 0.9754084348678589
+    },
+    {
+        "text": "It's okay if I write it in Portuguese or I need to write in English.",
+        "sentiment": "neutral",
+        "confidence": 0.913619339466095
+    },
+    {
+        "text": "I think it's better in English.",
+        "sentiment": "positive",
+        "confidence": 0.6990083456039429
+    },
+    {
+        "text": "In the age you can put just the number.",
+        "sentiment": "neutral",
+        "confidence": 0.8649937510490417
+    },
+    {
+        "text": "So we gonna test the Spotify platform.",
+        "sentiment": "neutral",
+        "confidence": 0.8520233631134033
+    },
+    {
+        "text": "Do you know Spotify?",
+        "sentiment": "neutral",
+        "confidence": 0.9644753336906433
+    },
+    {
+        "text": "I do my highest level of education.",
+        "sentiment": "positive",
+        "confidence": 0.983546257019043
+    },
+    {
+        "text": "What's your highest level of education?",
+        "sentiment": "neutral",
+        "confidence": 0.9422720670700073
+    },
+    {
+        "text": "I don't know.",
+        "sentiment": "neutral",
+        "confidence": 0.5575203895568848
+    },
+    {
+        "text": "You were doing university now.",
+        "sentiment": "neutral",
+        "confidence": 0.9603509306907654
+    },
+    {
+        "text": "So graduation under the graduation.",
+        "sentiment": "neutral",
+        "confidence": 0.950955867767334
+    },
+    {
+        "text": "I think last night will be okay.",
+        "sentiment": "positive",
+        "confidence": 0.9398981332778931
+    },
+    {
+        "text": "I want to put graduation just for done.",
+        "sentiment": "positive",
+        "confidence": 0.6201162934303284
+    },
+    {
+        "text": "Okay, so I will release the first test is the test for the login on the platform.",
+        "sentiment": "neutral",
+        "confidence": 0.8316540122032166
+    },
+    {
+        "text": "If you are already logged, you can just put this on the observation and finish the test because you.",
+        "sentiment": "neutral",
+        "confidence": 0.9654049277305603
+    },
+    {
+        "text": "You say you use a lot of.",
+        "sentiment": "neutral",
+        "confidence": 0.9460520148277283
+    },
+    {
+        "text": "Okay, I see you just finished it.",
+        "sentiment": "neutral",
+        "confidence": 0.9396455883979797
+    },
+    {
+        "text": "So I will release.",
+        "sentiment": "neutral",
+        "confidence": 0.5591833591461182
+    },
+    {
+        "text": "The second test is to search a song like any song and play it for a few seconds.",
+        "sentiment": "neutral",
+        "confidence": 0.9615153670310974
+    },
+    {
+        "text": "What song?",
+        "sentiment": "neutral",
+        "confidence": 0.9626019597053528
+    },
+    {
+        "text": "I don't know what song.",
+        "sentiment": "neutral",
+        "confidence": 0.8942462801933289
+    },
+    {
+        "text": "I need to play a few seconds.",
+        "sentiment": "neutral",
+        "confidence": 0.9507668018341064
+    },
+    {
+        "text": "That's just for testing.",
+        "sentiment": "neutral",
+        "confidence": 0.9618669152259827
+    },
+    {
+        "text": "Yo, kissif.",
+        "sentiment": "neutral",
+        "confidence": 0.7011640667915344
+    },
+    {
+        "text": "I said okay, I stop it.",
+        "sentiment": "neutral",
+        "confidence": 0.8954297304153442
+    },
+    {
+        "text": "Do I need to put here?",
+        "sentiment": "neutral",
+        "confidence": 0.8664745688438416
+    },
+    {
+        "text": "If you need to put on the observation like the sound isn't good, you can put this or later we get this feedback.",
+        "sentiment": "neutral",
+        "confidence": 0.6198225021362305
+    },
+    {
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "text": "Okay, so I already the 30 tasks.",
+        "sentiment": "neutral",
+        "confidence": 0.95252525806427
+    },
+    {
+        "text": "This is a test for creating a playlist just for test feature.",
+        "sentiment": "neutral",
+        "confidence": 0.9305214285850525
+    },
+    {
+        "text": "So you can put the song.",
+        "sentiment": "neutral",
+        "confidence": 0.9448300004005432
+    },
+    {
+        "text": "You search it on the playlist with just the song and see if you can do this easy or it's harder to do.",
+        "sentiment": "neutral",
+        "confidence": 0.9508345723152161
+    },
+    {
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "text": "Just save it.",
+        "sentiment": "neutral",
+        "confidence": 0.9086831212043762
+    },
+    {
+        "text": "Yes.",
+        "sentiment": "positive",
+        "confidence": 0.7605288624763489
+    },
+    {
+        "text": "Okay, I need to put any observation.",
+        "sentiment": "neutral",
+        "confidence": 0.9591903686523438
+    },
+    {
+        "text": "No, if you want to put some observation like you, you think the path is confused or something.",
+        "sentiment": "negative",
+        "confidence": 0.5983223915100098
+    },
+    {
+        "text": "Now ten.",
+        "sentiment": "neutral",
+        "confidence": 0.951635479927063
+    },
+    {
+        "text": "Okay, so I will release the 40.",
+        "sentiment": "neutral",
+        "confidence": 0.6839815974235535
+    },
+    {
+        "text": "The 40.",
+        "sentiment": "neutral",
+        "confidence": 0.911914050579071
+    },
+    {
+        "text": "No, not the 40.",
+        "sentiment": "negative",
+        "confidence": 0.8153908252716064
+    },
+    {
+        "text": "The foretest and easy to get the share point of your playlist.",
+        "sentiment": "positive",
+        "confidence": 0.5613048076629639
+    },
+    {
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "text": "So the test file.",
+        "sentiment": "neutral",
+        "confidence": 0.9555515050888062
+    },
+    {
+        "text": "I will release the test.",
+        "sentiment": "neutral",
+        "confidence": 0.8736274838447571
+    },
+    {
+        "text": "Five is a test to follow an artist in Spotify.",
+        "sentiment": "neutral",
+        "confidence": 0.9366839528083801
+    },
+    {
+        "text": "You know, you can follow the artist.",
+        "sentiment": "neutral",
+        "confidence": 0.9092918038368225
+    },
+    {
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "text": "You can search your art as you is your favorite and start following.",
+        "sentiment": "neutral",
+        "confidence": 0.5804403424263
+    },
+    {
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "text": "I don't know any that I don't follow.",
+        "sentiment": "neutral",
+        "confidence": 0.788331925868988
+    },
+    {
+        "text": "Wait.",
+        "sentiment": "neutral",
+        "confidence": 0.9493943452835083
+    },
+    {
+        "text": "I recommend Billie Eilish.",
+        "sentiment": "positive",
+        "confidence": 0.9212568998336792
+    },
+    {
+        "text": "I'd rather follow her.",
+        "sentiment": "neutral",
+        "confidence": 0.8729687333106995
+    },
+    {
+        "text": "Okay, so follow and follow him.",
+        "sentiment": "neutral",
+        "confidence": 0.5274033546447754
+    },
+    {
+        "text": "Gonna be.",
+        "sentiment": "neutral",
+        "confidence": 0.9210226535797119
+    },
+    {
+        "text": "I don't know.",
+        "sentiment": "neutral",
+        "confidence": 0.5575203895568848
+    },
+    {
+        "text": "Okay, so you can follow easy.",
+        "sentiment": "neutral",
+        "confidence": 0.8870575428009033
+    },
+    {
+        "text": "Yes.",
+        "sentiment": "positive",
+        "confidence": 0.7605288624763489
+    },
+    {
+        "text": "So I will release the last task.",
+        "sentiment": "neutral",
+        "confidence": 0.9498019218444824
+    },
+    {
+        "text": "It's to do logout of the platform.",
+        "sentiment": "neutral",
+        "confidence": 0.971104085445404
+    },
+    {
+        "text": "Oh no, really.",
+        "sentiment": "negative",
+        "confidence": 0.9317673444747925
+    },
+    {
+        "text": "If you don't remember your account, you can.",
+        "sentiment": "neutral",
+        "confidence": 0.5614855289459229
+    },
+    {
+        "text": "It's here.",
+        "sentiment": "neutral",
+        "confidence": 0.9175324440002441
+    },
+    {
+        "text": "Look out.",
+        "sentiment": "neutral",
+        "confidence": 0.9146206378936768
+    },
+    {
+        "text": "Okay, so that's fine.",
+        "sentiment": "neutral",
+        "confidence": 0.5819677710533142
+    },
+    {
+        "text": "You don't need to.",
+        "sentiment": "negative",
+        "confidence": 0.7870484590530396
+    },
+    {
+        "text": "Okay, so you finish all the six tests and now I will release the both tests.",
+        "sentiment": "neutral",
+        "confidence": 0.9281113147735596
+    },
+    {
+        "text": "It's the test you made after finishing all the tests.",
+        "sentiment": "neutral",
+        "confidence": 0.9500144124031067
+    },
+    {
+        "text": "And we'll have some questions for you.",
+        "sentiment": "neutral",
+        "confidence": 0.9647815823554993
+    },
+    {
+        "text": "Like of the experience using Spotify.",
+        "sentiment": "neutral",
+        "confidence": 0.8571702241897583
+    },
+    {
+        "text": "Can I put on the number or do I need to explain the way you.",
+        "sentiment": "neutral",
+        "confidence": 0.9480134844779968
+    },
+    {
+        "text": "You like to nine out of ten it, then save and exit.",
+        "sentiment": "neutral",
+        "confidence": 0.7974500060081482
+    },
+    {
+        "text": "Okay, so to me appear, you finish the post test and now we can talk about the test.",
+        "sentiment": "neutral",
+        "confidence": 0.9434062242507935
+    },
+    {
+        "text": "We do.",
+        "sentiment": "neutral",
+        "confidence": 0.734602689743042
+    },
+    {
+        "text": "But we can just finish if you want.",
+        "sentiment": "neutral",
+        "confidence": 0.8678465485572815
+    },
+    {
+        "text": "But for the plasma, I think it's better we talk a little more.",
+        "sentiment": "neutral",
+        "confidence": 0.9360268712043762
+    },
+    {
+        "text": "So wait.",
+        "sentiment": "negative",
+        "confidence": 0.4762496054172516
+    },
+    {
+        "text": "Do I need to save and exit or do I need to wait?",
+        "sentiment": "neutral",
+        "confidence": 0.9548295140266418
+    },
+    {
+        "text": "If you save, the test will finish.",
+        "sentiment": "neutral",
+        "confidence": 0.6863727569580078
+    },
+    {
+        "text": "So in theory we don't invoice call anymore.",
+        "sentiment": "neutral",
+        "confidence": 0.9181839823722839
+    },
+    {
+        "text": "Yes, the same happened to carry, but to me, I think you.",
+        "sentiment": "neutral",
+        "confidence": 0.9365592002868652
+    },
+    {
+        "text": "Oh, you were here.",
+        "sentiment": "neutral",
+        "confidence": 0.9371722340583801
+    },
+    {
+        "text": "Okay, so I don't know what to say anymore.",
+        "sentiment": "negative",
+        "confidence": 0.9314993619918823
+    },
+    {
+        "text": "Hi Basma.",
+        "sentiment": "neutral",
+        "confidence": 0.8937852382659912
+    },
+    {
+        "text": "Let's just finish maybe yes.",
+        "sentiment": "neutral",
+        "confidence": 0.8653631806373596
+    },
+    {
+        "text": "Or you will talk about Spotify.",
+        "sentiment": "neutral",
+        "confidence": 0.7321552634239197
+    },
+    {
+        "text": "I really like Spotify.",
+        "sentiment": "positive",
+        "confidence": 0.9915338158607483
+    },
+    {
+        "text": "I can live without it.",
+        "sentiment": "neutral",
+        "confidence": 0.7069643139839172
+    },
+    {
+        "text": "Right?",
+        "sentiment": "neutral",
+        "confidence": 0.9152557253837585
+    },
+    {
+        "text": "You agree?",
+        "sentiment": "neutral",
+        "confidence": 0.9292399883270264
+    },
+    {
+        "text": "You were telling me to say yes.",
+        "sentiment": "neutral",
+        "confidence": 0.774854838848114
+    },
+    {
+        "text": "I am talking to someone that is beside me.",
+        "sentiment": "neutral",
+        "confidence": 0.8616964221000671
+    },
+    {
+        "text": "So Spotify is amazing.",
+        "sentiment": "positive",
+        "confidence": 0.9921595454216003
+    },
+    {
+        "text": "They have really good music there and really good recommendations.",
+        "sentiment": "positive",
+        "confidence": 0.9905664324760437
+    },
+    {
+        "text": "I really like it.",
+        "sentiment": "positive",
+        "confidence": 0.9917701482772827
+    },
+    {
+        "text": "You don't like it?",
+        "sentiment": "negative",
+        "confidence": 0.5952544212341309
+    },
+    {
+        "text": "No.",
+        "sentiment": "neutral",
+        "confidence": 0.877544641494751
+    },
+    {
+        "text": "Okay, I like it.",
+        "sentiment": "positive",
+        "confidence": 0.9718015789985657
+    },
+    {
+        "text": "Only my opinion matters.",
+        "sentiment": "neutral",
+        "confidence": 0.8949202299118042
+    },
+    {
+        "text": "Okay.",
+        "sentiment": "neutral",
+        "confidence": 0.8906424641609192
+    },
+    {
+        "text": "It's my word, my rules.",
+        "sentiment": "neutral",
+        "confidence": 0.9292380213737488
+    },
+    {
+        "text": "But I think should be completely free.",
+        "sentiment": "positive",
+        "confidence": 0.6444937586784363
+    },
+    {
+        "text": "That's it.",
+        "sentiment": "neutral",
+        "confidence": 0.9340973496437073
+    },
+    {
+        "text": "Okay, so let's finish the test.",
+        "sentiment": "neutral",
+        "confidence": 0.6755996942520142
+    },
+    {
+        "text": "Yes.",
+        "sentiment": "positive",
+        "confidence": 0.7605288624763489
+    },
+    {
+        "text": "And that's it.",
+        "sentiment": "neutral",
+        "confidence": 0.9247221946716309
+    },
+    {
+        "text": "I need to save and exit.",
+        "sentiment": "neutral",
+        "confidence": 0.8621446490287781
+    }
+]
