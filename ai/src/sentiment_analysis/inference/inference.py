@@ -12,15 +12,16 @@ class Inference():
         self.model=RobertaSentiment()
 
     def infer(self,video_file:str):
-        # # Video2Audio
+        # Video2Audio
         # audio=video_2_audio(video_file,True,"./temp.mp3")
 
-        # # Audio2Transcript
+        # Audio2Transcript
         # transcript=extract_transcript("./temp.mp3",True,"./temp.json")
         # Read the transcript
-        import json
-        with open("./temp.json", "r") as file:
-            transcript = json.load(file)
+        # import json
+        # with open("./temp.json", "r") as file:
+        #     transcript = json.load(file)
+        transcript=extract_transcript(video_file,False)
 
         # Transcript2Sentiment
         for utterance in transcript:
