@@ -1,0 +1,180 @@
+{
+    "text": " Hello, but morning, how are you? Yeah, yeah, I can start the test. And no, I haven't tried 45 before. This is my first time. I hope to end doing that. Okay, um, I don't know what to do with the first test. Can you tell it this? Okay. So I need to add a music to my favorite list. Okay, let me try it. But I don't know where is the favorite bucket. Let me check it. No, this task is very confusing I can't can you help me please I found I found that's okay yeah yeah but that was confusing a bit at the beginning but More open right now. It managed. Okay, let's begin for next task Okay, I blew my own voice on the opening back. Okay, okay Let me check the button for that task Yeah, no, I don't know. Yeah, I found it. Okay, okay. Let's start last task. Okay, share the music correctly with my friend. Okay, but we're doing a one-flast one But I don't know what flowers ones that I can try with try through it. Can I use a button? I need to check that. Okay, moment please. Okay, okay, that's perfect. Yeah, that's very, very easy. I enjoyed that task. Okay. Okay, my feedback about Spotify is I really like it's very very wonderful app. I enjoyed using Spotify, but my problem is that some tasks are a little bit confusing like couldn't run them up. I think it would be wonderful if it is completely free. I don't need to play a lot of money for it that application. I can't try to enter. Okay, thank you. See you later in another test. Bye!",
+    "chunks": [
+        {
+            "timestamp": [
+                0.0,
+                5.0
+            ],
+            "text": " Hello, but morning, how are you?"
+        },
+        {
+            "timestamp": [
+                5.0,
+                8.0
+            ],
+            "text": " Yeah, yeah, I can start the test."
+        },
+        {
+            "timestamp": [
+                8.0,
+                13.0
+            ],
+            "text": " And no, I haven't tried 45 before."
+        },
+        {
+            "timestamp": [
+                13.0,
+                18.0
+            ],
+            "text": " This is my first time. I hope to end doing that."
+        },
+        {
+            "timestamp": [
+                18.0,
+                23.0
+            ],
+            "text": " Okay, um, I don't know what to do with the first test."
+        },
+        {
+            "timestamp": [
+                23.0,
+                25.0
+            ],
+            "text": " Can you tell it this?"
+        },
+        {
+            "timestamp": [
+                26.0,
+                28.0
+            ],
+            "text": " Okay."
+        },
+        {
+            "timestamp": [
+                28.0,
+                33.0
+            ],
+            "text": " So I need to add a music to my favorite list."
+        },
+        {
+            "timestamp": [
+                33.0,
+                35.0
+            ],
+            "text": " Okay, let me try it."
+        },
+        {
+            "timestamp": [
+                35.0,
+                42.0
+            ],
+            "text": " But I don't know where is the favorite bucket."
+        },
+        {
+            "timestamp": [
+                42.0,
+                44.0
+            ],
+            "text": " Let me check it."
+        },
+        {
+            "timestamp": [
+                44.0,
+                49.44
+            ],
+            "text": " No, this task is very confusing I can't"
+        },
+        {
+            "timestamp": [
+                49.44,
+                56.88
+            ],
+            "text": " can you help me please I found I found that's"
+        },
+        {
+            "timestamp": [
+                56.88,
+                68.58
+            ],
+            "text": " okay yeah yeah but that was confusing a bit at the beginning but More open right now. It managed. Okay, let's begin for next task"
+        },
+        {
+            "timestamp": [
+                70.0,
+                75.16
+            ],
+            "text": " Okay, I blew my own voice on the opening back. Okay, okay"
+        },
+        {
+            "timestamp": [
+                76.0,
+                78.64
+            ],
+            "text": " Let me check the button for that task"
+        },
+        {
+            "timestamp": [
+                79.4,
+                94.08
+            ],
+            "text": " Yeah, no, I don't know. Yeah, I found it. Okay, okay. Let's start last task. Okay,"
+        },
+        {
+            "timestamp": [
+                94.08,
+                105.04
+            ],
+            "text": " share the music correctly with my friend. Okay, but we're doing a one-flast one But I don't know what flowers ones that I can try with try through it."
+        },
+        {
+            "timestamp": [
+                106.64,
+                111.28
+            ],
+            "text": " Can I use a button? I need to check that. Okay, moment please."
+        },
+        {
+            "timestamp": [
+                113.2,
+                120.32
+            ],
+            "text": " Okay, okay, that's perfect. Yeah, that's very, very easy. I enjoyed that task. Okay."
+        },
+        {
+            "timestamp": [
+                131.8,
+                138.8
+            ],
+            "text": " Okay, my feedback about Spotify is I really like it's very very wonderful app. I enjoyed using Spotify, but my problem is that some tasks are a little bit confusing"
+        },
+        {
+            "timestamp": [
+                138.8,
+                142.0
+            ],
+            "text": " like couldn't run them up."
+        },
+        {
+            "timestamp": [
+                142.0,
+                147.28
+            ],
+            "text": " I think it would be wonderful if it is completely free. I don't need to play a lot of"
+        },
+        {
+            "timestamp": [
+                147.28,
+                154.16
+            ],
+            "text": " money for it that application. I can't try to enter. Okay, thank you. See you later in"
+        },
+        {
+            "timestamp": [
+                154.16,
+                158.16
+            ],
+            "text": " another test. Bye!"
+        }
+    ]
+}
