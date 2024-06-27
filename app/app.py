@@ -44,7 +44,7 @@ def sentiment_analysis():
         return jsonify({'error': str(e)}), 500
 
     
+#  .\env\Scripts\activate
 #  python -m flask run
 #  python -m venv env  
-#  .\env\Scripts\activate
 #  python -m pip install flask
