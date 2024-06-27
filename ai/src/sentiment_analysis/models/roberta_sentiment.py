@@ -6,16 +6,19 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 
 class RobertaSentiment(nn.Module):
-    def __init__(self)->None:
+    def __init__(self,device)->None:
         super(RobertaSentiment, self).__init__()
 
         model_name="finiteautomata/bertweet-base-sentiment-analysis"
+
+        # Set the device
+        self.device=device
 
         # Tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
 
         # Model
-        self.model= AutoModelForSequenceClassification.from_pretrained(model_name)
+        self.model= AutoModelForSequenceClassification.from_pretrained(model_name).to(self.device)
 
         # Load the model configuration to get class labels
         self.config = self.model.config
@@ -29,7 +32,7 @@ class RobertaSentiment(nn.Module):
         
     def forward(self,text)->tuple:
         # Tokenize the input text
-        inputs = self.tokenizer(text, return_tensors="pt", truncation=True, padding=True)
+        inputs = self.tokenizer(text, return_tensors="pt", truncation=True, padding=True).to(self.device)
 
         # Forward pass
         outputs = self.model(**inputs)

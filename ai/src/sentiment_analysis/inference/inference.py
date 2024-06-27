@@ -8,13 +8,18 @@ from src.sentiment_analysis.models.roberta_sentiment import RobertaSentiment
 
 import time as time
 class Inference():
-    def __init__(self):
+    def __init__(self,whisper_model_size:str="tiny",device:str="cpu"):
+        # Set the device
+        self.device=device
 
         # Load Transcription model
-        self.transcript_model=WhisperTranscript()
+        self.transcript_model=WhisperTranscript(model_size=whisper_model_size,device=self.device)
 
         # Load Sentiment Model
-        self.sentiment_model=RobertaSentiment()
+        self.sentiment_model=RobertaSentiment(device=self.device)
+
+        # Set the model to evaluation mode
+        self.sentiment_model.eval()
 
     def infer(self,video_file:str):
         # Video2Audio
@@ -44,11 +49,12 @@ class Inference():
         return transcript
     
 if __name__ == "__main__":
-    inference=Inference()
+    inference=Inference(whisper_model_size='tiny',device='cpu')
+    # inference=Inference(whisper_model_size='tiny',device='cuda:0')
 
     # Time to test the pipeline
     start = time.time()
-    transcript_sentiment=inference.infer("./data/demos/sportify/sportify_full.mp4")
+    transcript_sentiment=inference.infer("./data/demos/sportify/sportify_3s.mp4")
     end = time.time()
     print("Time taken to infer: ",end-start," seconds")
     print(transcript_sentiment)
@@ -57,6 +63,6 @@ if __name__ == "__main__":
     import json
     with open("./temp.json", 'w') as f:
         json.dump(transcript_sentiment, f, indent=4)
-        print(f"Transcript saved to ./temp.json")
+        print(f"Transcription Sentiment saved to ./temp.json")
 
 # PS D:\sentiment-analysis-api\ai> python -m src.sentiment_analysis.inference.inference
