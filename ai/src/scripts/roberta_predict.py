@@ -88,6 +88,9 @@ if __name__ == "__main__":
     parser.add_argument('--device', choices=["cpu", "gpu"], default="cpu", help='Device to run the model on.')
     parser.add_argument('--per_sentence', action='store_true', help='Analyze sentiment per sentence.')
 
+    # Optional arguments for key for the JSON file
+    parser.add_argument('--key', type=str, default=None, help='Key for the JSON file.')  # chucks for the JSON file from whisper-tiny
+
     args = parser.parse_args()
 
 
@@ -109,6 +112,9 @@ if __name__ == "__main__":
     with open(args.file_path, "r") as file:
         utterances = json.load(file)
 
+        if args.key:
+            utterances = utterances[args.key]
+
         roberta_sentiment_analysis(utterances, args.save_path,args.per_sentence)
 
 
@@ -117,7 +123,7 @@ if __name__ == "__main__":
 # PS D:\sentiment-analysis-api> python -m src.scripts.roberta_predict ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_transcript.json --save_path ./test.json
 # PS D:\sentiment-analysis-api> python -m src.scripts.roberta_predict ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_transcript.json --save_path ./test.json --device gpu
 # PS D:\sentiment-analysis-api> python -m src.scripts.roberta_predict ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_transcript.json --save_path ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_transcript_per_sentence.json --device gpu --per_sentence
-
+# PS D:\sentiment-analysis-api>  python -m src.scripts.roberta_predict ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_transcript_whipher_tiny.json --save_path ./res.json --device gpu --key chunks
 
 # import json 
 

@@ -110,6 +110,33 @@ def google_speech_recognition(audio_file,save_path:str=None):
     except sr.RequestError as e:
         print(f"Could not request results from Google Speech Recognition service; {e}")
 
+def whisper_speech2text(audio_file,save_path:str=None):
+    model = "openai/whisper-tiny"
+    device = 0 if torch.cuda.is_available() else "cpu"
+
+
+
+    # Transcribe the audio file
+    pipe = pipeline(
+        task="automatic-speech-recognition",
+        model=model,
+        chunk_length_s=30,
+        device=device,
+    )
+
+    # Cal time for creating the transcript
+    start = time.time()
+    out = pipe(audio_file, return_timestamps=True)
+    end = time.time()
+    print(f"Time taken to create the transcript: {end-start} seconds")
+
+    # Save the output to a JSON file
+    if save_path:
+        with open(save_path, 'w') as f:
+            json.dump(out, f, indent=4)
+            print(f"Transcript saved to {save_path}")
+    return out
+
 if __name__ == "__main__":
     # Load the .env file
     load_dotenv()
@@ -120,11 +147,10 @@ if __name__ == "__main__":
 
     parser.add_argument('file_path', type=str, help='Path to the audio file to be transcribed.')
     parser.add_argument('--save_path', type=str, default=None, help='Path to save the detailed transcript (JSON format).')
-    parser.add_argument('--module', type=str, choices=['assembly_ai', 'google_cloud','google'], required=True, help='Transcription module to be used (assembly_ai or google_cloud).')
+    parser.add_argument('--module', type=str, choices=['assembly_ai', 'google_cloud','google','whisper'], required=True, help='Transcription module to be used (assembly_ai or google_cloud).')
     parser.add_argument('--speaker_labels', action='store_true', help='Whether to use speaker labels in the transcription.')
     
     args = parser.parse_args()
-
 
 
     # Here you would instantiate the correct transcriber based on the module argument
@@ -141,15 +167,26 @@ if __name__ == "__main__":
         else:
             assembly_ai_speech2text(args.file_path,args.save_path)  # Adjust this line as necessary
 
-
     elif args.module == 'google_cloud':
         # import google_cloud as gc  # Import your google_cloud module
         # transcriber = gc.Transcriber()  # Adjust this line as necessary
         pass
+
     elif args.module == 'google':
         print("Google Speech Recognition")
         import speech_recognition as sr
         google_speech_recognition(args.file_path,args.save_path)
+
+    elif args.module=='whisper':
+        print("Whisper")
+
+        import torch
+        from transformers import pipeline
+
+        transcript=whisper_speech2text(args.file_path,args.save_path)
+        print(transcript)
+
+
 
 
 

@@ -30,8 +30,20 @@ Using CPU
 Time taken to analyze the sentiment: 3.34137225151062 seconds
 Sentiment saved to ./sentiment.json
 
-
 PS D:\sentiment-analysis-api> python -m src.scripts.roberta_predict ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_transcript.json --save_path ./data/demos/sportify/sportify_full.mp3_utterances_timestamps_sentiment.json --device gpu
 Using GPU
 Time taken to analyze the sentiment: 1.8824462890625 seconds
 Sentiment saved to ./sentiment.json
+
+--------------------------------  [Whisper-Tiny & Roberta]
+PS D:\sentiment-analysis-api\ai>  python -m src.scripts.audio_2_transcript ./spmp3 --module whisper --save_path ./out.json
+Whisper
+Time taken to create the transcript: 20.528743028640747 seconds
+Transcript saved to ./out.json
+
+
+PS D:\sentiment-analysis-api\ai> python -m src.scripts.roberta_predict ./data/d_transcript_whipher_tiny.json --save_path ./res.json --device gpu --key chunks
+Using GPU
+Time taken to analyze the sentiment: 3.592700958251953 seconds
+Sentiment saved to ./res.json
+PS D:\sentiment-analysis-api\ai
