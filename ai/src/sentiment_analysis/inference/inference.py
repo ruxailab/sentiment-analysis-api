@@ -2,7 +2,7 @@
 
 # Modules
 from src.video_processing.video_2_audio import video_2_audio
-# from src.video_processing.extract_transcript import extract_transcript
+from src.video_processing.extract_transcript import extract_transcript
 from src.video_processing.models.whisper_transcript import WhisperTranscript
 from src.sentiment_analysis.models.roberta_sentiment import RobertaSentiment
 
@@ -24,11 +24,12 @@ class Inference():
 
         # Audio2Transcript
         # transcript=extract_transcript("./temp.mp3",True,"./temp.json")
-        # Read the transcript
+        # transcript=extract_transcript("./temp.mp3",False)
+        # # Read the transcript
         # import json
         # with open("./temp.json", "r") as file:
         #     transcript = json.load(file)
-        # transcript=extract_transcript(video_file,False)
+        # # transcript=extract_transcript(video_file,False)
         _,transcript=self.transcript_model('./temp.mp3')
 
         # Transcript2Sentiment
