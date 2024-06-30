@@ -1,6 +1,6 @@
 import sys
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 # Add the path to the sentiment_analysis module
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'ai'))
@@ -12,7 +12,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # Load environment variables from .env file
-load_dotenv()
+# load_dotenv()
 
 # 
 @app.route('/', methods=['GET'])
@@ -60,7 +60,8 @@ def sentiment_analysis():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-    
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
 #  .\env\Scripts\activate
 #  python -m flask run
 #  python -m venv env  

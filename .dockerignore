@@ -1,0 +1,11 @@
+# .dockerignore file to prevent unnecessary files from being copied into the Docker image.
+data
+logs
+
+
+__pycache__
+*.pyc
+*.pyo
+.env
+env
+.git

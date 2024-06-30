@@ -2,7 +2,7 @@
 
 # Modules
 from src.video_processing.video_2_audio import video_2_audio
-from src.video_processing.extract_transcript import extract_transcript
+# from src.video_processing.extract_transcript import extract_transcript
 from src.video_processing.models.whisper_transcript import WhisperTranscript
 from src.sentiment_analysis.models.roberta_sentiment import RobertaSentiment
 
