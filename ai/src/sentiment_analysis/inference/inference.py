@@ -22,8 +22,9 @@ class Inference():
         self.sentiment_model.eval()
 
     def infer(self,video_file:str):
+        print("Infering..........")
         # Video2Audio
-        audio=video_2_audio(video_file,True,"./temp.mp3")
+        audio=video_2_audio(video_file,True,"temp.mp3")
         # Get the audio data as a NumPy array
         # audio = audio.to_soundarray()
 
@@ -35,7 +36,7 @@ class Inference():
         # with open("./temp.json", "r") as file:
         #     transcript = json.load(file)
         # # transcript=extract_transcript(video_file,False)
-        _,transcript=self.transcript_model('./temp.mp3')
+        _,transcript=self.transcript_model('temp.mp3')
 
         # Transcript2Sentiment
         for utterance in transcript:

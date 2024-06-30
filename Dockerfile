@@ -17,6 +17,7 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 # Copy the current directory contents into the container at /sentiment_analysis_app
 ADD app/app.py /sentiment_analysis_app/app/app.py
+ADD app/Basma_sportify_1_Side.mp4 /sentiment_analysis_app/app/Basma_sportify_1_Side.mp4
 
 # Copy the current directory contents into the container at /sentiment_analysis_app
 ADD ai/src/sentiment_analysis/models /sentiment_analysis_app/ai/src/sentiment_analysis/models
