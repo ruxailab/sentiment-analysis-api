@@ -1,5 +1,5 @@
 Flask
 moviepy
-ffmpeg
+# ffmpeg
 transformers
 emoji
