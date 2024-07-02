@@ -1,0 +1,267 @@
+{
+    "sentiment": [
+        {
+            "confidence": 0.6929166316986084,
+            "sentiment": "POS",
+            "text": " Hello, good morning Karen, how are you?",
+            "timestamp": [
+                0,
+                5
+            ]
+        },
+        {
+            "confidence": 0.9569605588912964,
+            "sentiment": "POS",
+            "text": " Yeah, yeah, I can start the test.",
+            "timestamp": [
+                5,
+                8
+            ]
+        },
+        {
+            "confidence": 0.6106770634651184,
+            "sentiment": "NEG",
+            "text": " And no, I haven't tried Spotify before.",
+            "timestamp": [
+                8,
+                12
+            ]
+        },
+        {
+            "confidence": 0.962160050868988,
+            "sentiment": "NEU",
+            "text": " This is my first time.",
+            "timestamp": [
+                12,
+                15
+            ]
+        },
+        {
+            "confidence": 0.9914229512214661,
+            "sentiment": "POS",
+            "text": " I hope to enjoy that.",
+            "timestamp": [
+                15,
+                18
+            ]
+        },
+        {
+            "confidence": 0.9035741686820984,
+            "sentiment": "NEG",
+            "text": " Okay, I don't know what to do with the first task.",
+            "timestamp": [
+                18,
+                23
+            ]
+        },
+        {
+            "confidence": 0.9647162556648254,
+            "sentiment": "NEU",
+            "text": " Can you tell me please?",
+            "timestamp": [
+                23,
+                26
+            ]
+        },
+        {
+            "confidence": 0.5069765448570251,
+            "sentiment": "NEU",
+            "text": " Okay, so I need to add music to my favorite list. Okay, let me try it.",
+            "timestamp": [
+                26,
+                36
+            ]
+        },
+        {
+            "confidence": 0.9489639401435852,
+            "sentiment": "NEG",
+            "text": " But I don't know where is the favorite button. Let me check it. No, this task is very confusing. I can't... can you help me please?",
+            "timestamp": [
+                36,
+                50.88
+            ]
+        },
+        {
+            "confidence": 0.9670900702476501,
+            "sentiment": "POS",
+            "text": " I found it, I found that speed point. Yeah, yeah, but that was confusing a bit at the beginning, but We'll be right good. Let's begin for next task",
+            "timestamp": [
+                54.08,
+                68.56
+            ]
+        },
+        {
+            "confidence": 0.9771153926849365,
+            "sentiment": "POS",
+            "text": " Okay, I've loved my own voice only",
+            "timestamp": [
+                70,
+                73.52
+            ]
+        },
+        {
+            "confidence": 0.9280493259429932,
+            "sentiment": "NEU",
+            "text": " Okay, okay, um, let me check the button for that task",
+            "timestamp": [
+                74.4,
+                78.58
+            ]
+        },
+        {
+            "confidence": 0.805648684501648,
+            "sentiment": "POS",
+            "text": " Yeah, I found it",
+            "timestamp": [
+                82.08,
+                84.08
+            ]
+        },
+        {
+            "confidence": 0.9798516631126404,
+            "sentiment": "POS",
+            "text": " Okay, okay, perfect.",
+            "timestamp": [
+                84.4,
+                86
+            ]
+        },
+        {
+            "confidence": 0.955706775188446,
+            "sentiment": "NEU",
+            "text": " Let's start last task.",
+            "timestamp": [
+                88,
+                90
+            ]
+        },
+        {
+            "confidence": 0.5495551824569702,
+            "sentiment": "POS",
+            "text": " Okay, share the music record with my friend.",
+            "timestamp": [
+                92,
+                98
+            ]
+        },
+        {
+            "confidence": 0.9325488805770874,
+            "sentiment": "NEU",
+            "text": " Okay, what?",
+            "timestamp": [
+                98,
+                100
+            ]
+        },
+        {
+            "confidence": 0.7946426868438721,
+            "sentiment": "NEU",
+            "text": " But they don't know what last one that I can chat with.",
+            "timestamp": [
+                100,
+                104
+            ]
+        },
+        {
+            "confidence": 0.8975814580917358,
+            "sentiment": "NEU",
+            "text": " Try through it. Can I use laptop? I need to try that. Okay,",
+            "timestamp": [
+                104,
+                110.16
+            ]
+        },
+        {
+            "confidence": 0.979167103767395,
+            "sentiment": "POS",
+            "text": " moment please. Okay, okay, that's perfect. Yeah, that's",
+            "timestamp": [
+                110.16,
+                116.16
+            ]
+        },
+        {
+            "confidence": 0.9902323484420776,
+            "sentiment": "POS",
+            "text": " very, very easy. I enjoyed that task. Okay.",
+            "timestamp": [
+                116.16,
+                123.92
+            ]
+        },
+        {
+            "confidence": 0.9872179627418518,
+            "sentiment": "POS",
+            "text": " Okay, my feedback about 45 is I really liked it.",
+            "timestamp": [
+                123.92,
+                128.84
+            ]
+        },
+        {
+            "confidence": 0.9921615719795227,
+            "sentiment": "POS",
+            "text": " It is very, very wonderful app.",
+            "timestamp": [
+                128.84,
+                131.88
+            ]
+        },
+        {
+            "confidence": 0.9917814135551453,
+            "sentiment": "POS",
+            "text": " I enjoyed using Spotify.",
+            "timestamp": [
+                131.88,
+                134.36
+            ]
+        },
+        {
+            "confidence": 0.9653639197349548,
+            "sentiment": "NEG",
+            "text": " But my problem is that some tasks are a little bit confusing.",
+            "timestamp": [
+                134.36,
+                138.88
+            ]
+        },
+        {
+            "confidence": 0.5908427238464355,
+            "sentiment": "NEG",
+            "text": " I couldn't run them up.",
+            "timestamp": [
+                138.88,
+                140.44
+            ]
+        },
+        {
+            "confidence": 0.9322551488876343,
+            "sentiment": "POS",
+            "text": " I think it would be wonderful if it is completely free. I don't need to pay a lot of money for that application.",
+            "timestamp": [
+                142.04,
+                149
+            ]
+        },
+        {
+            "confidence": 0.9521371126174927,
+            "sentiment": "NEU",
+            "text": " I can try to do it later.",
+            "timestamp": [
+                149,
+                151
+            ]
+        },
+        {
+            "confidence": 0.5470182299613953,
+            "sentiment": "NEU",
+            "text": " Okay, thank you. See you later in another test. Bye.",
+            "timestamp": [
+                151,
+                156
+            ]
+        }
+    ],
+    "video_file": "D:/sentiment-analysis-api/ai/data/demos/sportify/Basma_sportify_1_Side.mp4",
+    "whisper_model_size": "base"
+}
