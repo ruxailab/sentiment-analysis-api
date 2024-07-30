@@ -141,6 +141,86 @@ def async_sentiment_analysis():
         return jsonify({'error': str(e)}), 500
     
 
+@app.route('/sentiment-analysis-timestamp', methods=['POST'])
+def sentiment_analysis_timestamp():
+
+    # Get the video file [Path]
+    video_file = request.json['video_file']
+
+        # Check if video_file is provided
+    if not video_file:
+        return jsonify({'error': 'No video file path provided'}), 400
+
+    # Get start and end time
+    start_time = request.json['start_time']
+    end_time = request.json['end_time']
+
+    # Check if start_time and end_time are provided
+    if not start_time or not end_time:
+        return jsonify({'error': 'Start time or end time not provided'}), 400
+    
+    # Get the whisper model size
+    whisper_model_size = request.json['whisper_model_size']
+    
+    # Check if whisper_model_size is provided
+    if not whisper_model_size:
+        return jsonify({'error': 'Whisper model size not provided'}), 400
+    
+    # Check if whisper_model_size is valid
+    if whisper_model_size not in ['tiny','base','small','medium','large','large-v2','large-v3']:
+        return jsonify({'error': 'Invalid whisper model size'}), 400
+    
+
+
+    # Extract Audio from Video
+    audio = video_2_audio(video_file,True,"temp.mp3")
+    if not audio:
+        return jsonify({'error': 'Error extracting audio'}), 500
+    
+    audio = AudioSegment.from_file('temp.mp3')
+    # print(audio.duration_seconds)
+    
+    if start_time < 0 or end_time > audio.duration_seconds:
+        return jsonify({'error': 'Invalid timestamp range'}), 400
+    
+
+
+    # Convert start_time and end_time to milliseconds
+    start_time_ms = start_time * 1000
+    end_time_ms = end_time * 1000
+
+    # Slice the audio file
+    audio_segment = audio[start_time_ms:end_time_ms]
+
+    # Save the sliced audio file
+    audio_segment.export('temp.mp3', format='mp3')
+
+
+    # Get the device from environment variables
+    device = os.getenv('DEVICE', 'cpu')
+    
+    # Make Inference Object
+    inference=Inference(whisper_model_size=whisper_model_size, device=device)
+
+    # Perform inference to get the transcript sentiment
+    transcript_sentiment = inference.infer_2(f'temp.mp3')
+
+
+
+    response = {
+        "transcript_sentiment": transcript_sentiment
+    }
+
+
+    return jsonify(response), 200
+    
+
+    
+
+    
+
+
+
 @app.route('/split-audio', methods=['POST'])
 def split_audio():
 
@@ -206,8 +286,8 @@ def split_audio():
 
 
 
-@app.route('/sentiment-analysis-timestamp', methods=['POST'])
-def sentiment_analysis_timestamp():    
+@app.route('/sentiment-analysis-timestamp-chunks', methods=['POST'])
+def sentiment_analysis_timestamp_chucks():    
     # Get start and end time
     start_time = request.json['start_time']
     end_time = request.json['end_time']
