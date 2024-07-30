@@ -49,6 +49,26 @@ class Inference():
 
         return transcript
     
+    def infer_2(self,chuck):
+        # Transcript 
+        _,transcript=self.transcript_model('temp.mp3')
+
+
+        # Sentiment
+        for utterance in transcript:
+            text = utterance["text"]
+            _,_,label,prob=self.sentiment_model(text)
+
+            # Add the sentiment to the transcript
+            utterance["sentiment"]=label
+            utterance["confidence"]=prob
+
+        return transcript
+
+
+        # Sentiment
+
+    
 if __name__ == "__main__":
     inference=Inference(whisper_model_size='tiny',device='cpu')
     # inference=Inference(whisper_model_size='tiny',device='cuda:0')
