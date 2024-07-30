@@ -49,9 +49,9 @@ class Inference():
 
         return transcript
     
-    def infer_2(self,chuck):
+    def infer_2(self,audio_file:str):
         # Transcript 
-        _,transcript=self.transcript_model('temp.mp3')
+        _,transcript=self.transcript_model(audio_file)
 
 
         # Sentiment

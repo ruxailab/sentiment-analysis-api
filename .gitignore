@@ -12,3 +12,4 @@ ai/data/MELD
 
 # Flask App
 app/env
+app/temp
