@@ -4,6 +4,8 @@ import time
 import json
 # from dotenv import load_dotenv
 
+from flask_cors import CORS
+
 # Add the path to the sentiment_analysis module
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'ai'))
 from src.sentiment_analysis.inference.inference import Inference
@@ -16,6 +18,9 @@ from pydub import AudioSegment, silence
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
+
+# Enable CORS for all routes and restrict to specific origins
+CORS(app, resources={r"/*": {"origins": "http://localhost:8080"}})
 
 # Load environment variables from .env file
 # load_dotenv()
@@ -378,6 +383,12 @@ if __name__ == '__main__':
 # python3 -m venv env
 # # Activate the virtual environment
 # source env/bin/activate
+
+# export FLASK_APP=app.py
+
+# flask run
+
+
 
 
 #  ./env/Scripts/activate
