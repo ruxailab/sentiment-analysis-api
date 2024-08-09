@@ -5,6 +5,8 @@ import json
 # from dotenv import load_dotenv
 
 from flask_cors import CORS
+import requests
+from io import BytesIO
 
 # Add the path to the sentiment_analysis module
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'ai'))
@@ -27,7 +29,7 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:8080"}})
 
 
 @app.route('/', methods=['GET'])
-def test():
+def hello():
     return jsonify({'message': 'Hello, World from Sentiment Analysis App!'})
 
 
@@ -374,10 +376,89 @@ def sentiment_analysis_timestamp_chucks():
     }
 
     return jsonify(response), 200
+
+@app.route('/test', methods=['POST'])
+def test():
+    url = request.json['url']    
+    start_time = request.json['start_time']
+    end_time = request.json['end_time']
+    
+    # Get the whisper model size
+    whisper_model_size = request.json['whisper_model_size']
+
+    print(url)
+    print(start_time)
+    print(end_time)
+    print(whisper_model_size)
+
+
+    if not url:
+        return jsonify({'error': 'No URL provided'}), 400
+    
+    if start_time!=0 and not start_time:
+        return jsonify({'error': 'No start time provided'}), 400
+    
+    if end_time!=0 and not end_time:
+        return jsonify({'error': 'No end time provided'}), 400
+
+    # Check if whisper_model_size is provided
+    if not whisper_model_size:
+        return jsonify({'error': 'Whisper model size not provided'}), 400
+    
+    # Check if whisper_model_size is valid
+    if whisper_model_size not in ['tiny','base','small','medium','large','large-v2','large-v3']:
+        return jsonify({'error': 'Invalid whisper model size'}), 400
+
+
+
+    # Convert start_time and end_time to milliseconds
+    start_time_ms = start_time * 1000
+    end_time_ms = end_time * 1000
+
+
+    # Download the audio file from the Storage
+    url_response = requests.get(url)
+    if url_response.status_code != 200:
+        return {'error': 'Failed to download audio file'}, 500
     
 
+    # Load audio file into pydub
+    audio = AudioSegment.from_file(BytesIO(url_response.content))
+
+    # Extract the specified region
+    segment = audio[start_time_ms:end_time_ms]
+
+
+    # Save the segment to .mp3
+    segment.export('temp.mp3', format='mp3')   
+
+
+    # Get the device from environment variables
+    device = os.getenv('DEVICE', 'cpu')
+
+    # Make Inference Object
+    inference=Inference(whisper_model_size=whisper_model_size, device=device)
+
+
+    transcript_sentiment = inference.infer_2('temp.mp3')
+
+    print(transcript_sentiment)
+
+
+
+    response = {
+        'url': url,
+        'start_time': start_time,
+        'end_time': end_time,
+        'whisper_model_size': whisper_model_size
+    }
+
+    return jsonify(response), 200
+
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=8000, debug=True)
 
 # # Create a virtual environment named 'env'
 # python3 -m venv env

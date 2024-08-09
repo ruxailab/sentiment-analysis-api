@@ -50,6 +50,7 @@ class Inference():
         return transcript
     
     def infer_2(self,audio_file:str):
+
         # Transcript 
         _,transcript=self.transcript_model(audio_file)
 
@@ -66,7 +67,7 @@ class Inference():
         return transcript
 
 
-        # Sentiment
+       
 
     
 if __name__ == "__main__":
