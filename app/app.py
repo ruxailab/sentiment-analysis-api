@@ -379,17 +379,18 @@ def sentiment_analysis_timestamp_chucks():
 
 @app.route('/test', methods=['POST'])
 def test():
-    url = request.json['url']    
-    start_time = request.json['start_time']
-    end_time = request.json['end_time']
+    data = request.json
     
-    # Get the whisper model size
-    whisper_model_size = request.json['whisper_model_size']
+    url = data.get('url')
+    start_time = data.get('start_time')
+    end_time = data.get('end_time')
+    whisper_model_size = data.get('whisper_model_size')
 
-    print(url)
-    print(start_time)
-    print(end_time)
-    print(whisper_model_size)
+
+    # print(url)
+    # print(start_time)
+    # print(end_time)
+    # print(whisper_model_size)
 
 
     if not url:
@@ -441,16 +442,14 @@ def test():
 
 
     transcript_sentiment = inference.infer_2('temp.mp3')
-
     print(transcript_sentiment)
-
-
 
     response = {
         'url': url,
         'start_time': start_time,
         'end_time': end_time,
-        'whisper_model_size': whisper_model_size
+        'whisper_model_size': whisper_model_size,   
+        'utterances_sentiment': transcript_sentiment # Array of dictionaries {timestamp, text, sentiment, confidence}
     }
 
     return jsonify(response), 200
