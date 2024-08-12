@@ -444,6 +444,10 @@ def test():
     transcript_sentiment = inference.infer_2('temp.mp3')
     print(transcript_sentiment)
 
+    # Add start time stamp to each utterance
+    for utterance in transcript_sentiment:
+        utterance['timestamp'] = (start_time + utterance['timestamp'][0], start_time + utterance['timestamp'][1])
+
     response = {
         'url': url,
         'start_time': start_time,
