@@ -21,8 +21,7 @@ class Inference():
         # Set the model to evaluation mode
         self.sentiment_model.eval()
 
-    def infer(self,video_file:str):
-        print("Infering..........")
+    def infer(self,video_file:str):        
         # Video2Audio
         audio=video_2_audio(video_file,True,"temp.mp3")
         # Get the audio data as a NumPy array
@@ -49,7 +48,7 @@ class Inference():
 
         return transcript
     
-    def infer_2(self,audio_file:str):
+    def infer_audio_file(self,audio_file:str):
 
         # Transcript 
         _,transcript=self.transcript_model(audio_file)

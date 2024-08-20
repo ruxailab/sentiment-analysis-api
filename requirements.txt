@@ -1,5 +1,0 @@
-Flask
-moviepy
-# ffmpeg
-transformers
-emoji
