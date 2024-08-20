@@ -45,6 +45,20 @@
 
 <!-- ### Native -->
 ### <img align="center" height="40px" width="50px" src="https://media.lordicon.com/icons/wired/outline/743-web-code.gif"> Native <a id="native"></a>
+ cd ./app
+# Create a virtual environment named 'env'
+# python3 -m venv env
+
+pip install ........
+
+# Activate the virtual environment
+# source env/bin/activate
+
+8000
+
+# Run Flask App
+# python app.py
+
 
 <!-- ### Docker -->
 ### <img align="center" width="60px" src="https://miro.medium.com/v2/resize:fit:1400/1*wXtyhpOL5NK_w39UvZpADQ.gif"> Docker <a id="docker"></a>
