@@ -11,7 +11,6 @@
 - <a href="#started">Get Started</a>
     - <a href="#started">Native</a>
     - <a href="#started">Docker</a>
-- <a href="#contributors">Contributors</a>
 - <a href="#license">License</a>
 
 <!-- Overview -->
@@ -64,26 +63,22 @@ For testing the API endpoints, you can use the following Postman collection:
     source env/bin/activate
     ```
 
-4. **Run Flask App**
+4. **Install Dependecies**
+    ```bash
+    pip install -r requirements.txt
+    ```
+    
+5. **Run Flask App**
    -    In Debug Mode  [port 8000]
         ```bash
         python app.py
         ```
-5. **Run API Documentation**
- - Access the API documentation at: http://localhost:8000/apidocs
+        
+6. **Run API Documentation**
+     - Access the API documentation at: http://localhost:8000/apidocs
    
 <!-- Docker -->
 ### <img align="center" width="60px" src="https://miro.medium.com/v2/resize:fit:1400/1*wXtyhpOL5NK_w39UvZpADQ.gif"> Docker <a id="docker"></a>
-
-<!-- Contributors -->
-## <img align="center" width="60px" src="https://earlycoders.in/wp-content/uploads/2023/02/68377-coder-boy.gif"> Contributors <a id="contributors"></a>
-
-<!-- Contributors list -->
-<table align="center" style="border-collapse: collapse; border: none;">
-  <tr>
-    <td align="center"><a href="https://github.com/BasmaElhoseny01"><img src="https://avatars.githubusercontent.com/u/72309546?v=4" width="150px;" alt=""/><br /><sub><b>Basma Elhoseny</b></sub></a></td>
-  </tr>
-</table>
 
 <!-- License -->
 ## <img align="center" height="60px" src="https://cdn-icons-png.freepik.com/512/1046/1046441.png"> License <a id="license"></a>
