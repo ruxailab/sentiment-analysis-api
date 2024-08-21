@@ -14,9 +14,24 @@
 - <a href="#gsoc">GSoC Docs</a>
 - <a href="#license">License</a>
 
+
 <!-- Overview -->
 ## <img align="center" width="70px" src="https://cdn.dribbble.com/users/1501052/screenshots/4545496/media/13e279b5c3bd2e8f79067239da3d8633.gif"> Overview <a id="Overview"></a>
 
+This project is a standalone backend solution for sentiment analysis of video and audio files. It processes both complete files and segmented audio from one-sided or multi-speaker videos. The system provides sentiment analysis for each segment of the audio or video, including a transcription and its corresponding sentiment for each timestamp.
+
+Developed as one of the main projects for RuxAiLab for GSoC '24, this tool integrates with the RuxAiLab project through [RuxAiLab PRs](#integration_to_ruxailab). The pipeline involves:
+
+1. **Input:** Video or audio files are uploaded to the system.
+2. **Pipeline Modules:** 
+   - **Audio Extraction:** Extract audio from video files using MoviePy.
+   - **Transcription:** Transcribe the audio using Whisper.
+   - **Sentiment Analysis:** Analyze the transcription for sentiment using RoBERTa. Sentiment labels are **POS** (Positive), **NEU** (Neutral), and **NEG** (Negative).
+3. **Output:** Generate a detailed report that includes the transcription along with sentiment analysis for each timestamp.
+
+![Pipeline](https://github.com/user-attachments/assets/bdd0ca21-9f90-41bd-83ac-bbc6494fd653)
+
+This project aims to enhance RuxAiLab's capabilities by providing detailed sentiment insights along with transcriptions for better understanding and analysis for users of RuxAiLab.
 
 <!-- Tools -->
 ## <img  align= center width =60px  height =70px src="https://media4.giphy.com/media/ux6vPam8BubuCxbW20/giphy.gif?cid=6c09b952gi267xsujaqufpqwuzeqhbi88q0ohj83jwv6dpls&ep=v1_stickers_related&rid=giphy.gif&ct=s"> Built Using<a id="tools"></a>
@@ -94,7 +109,7 @@ This repository is part of the [Google Summer of Code (GSoC) 2024](https://summe
 - Progress Tracking Docs: [GSOC'24 Project Progress and Follow Up Sheet](https://docs.google.com/spreadsheets/d/1wnTACVlsw_JWCWV70Log1DFwilxwmj_azB3TekGA3OY/edit?usp=sharing)
 - Meetings Presentations: [Slides](https://drive.google.com/drive/u/1/folders/1SMujWE0p7Xz_CaS0e9qKkLRcDt7YX729)
 - Main Reposotory for the Project: [sentiment-analysis-api Repo](https://github.com/ruxailab/sentiment-analysis-api) 
-- Integration to [RUXAILAB](https://github.com/ruxailab/RUXAILAB) PR Requests:
+- Integration to [RUXAILAB](https://github.com/ruxailab/RUXAILAB) PR Requests<a id="integration_to_ruxailab"></a>:
     - [PR #533](https://github.com/ruxailab/RUXAILAB/pull/533)
 - Wikkis:
     - [Deployment Study Guide](https://github.com/ruxailab/sentiment-analysis-api/wiki/Deployment-Study-Guide)
