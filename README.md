@@ -45,21 +45,30 @@
 
 <!-- ### Native -->
 ### <img align="center" height="40px" width="50px" src="https://media.lordicon.com/icons/wired/outline/743-web-code.gif"> Native <a id="native"></a>
- cd ./app
-# Create a virtual environment named 'env'
-# python3 -m venv env
+1. **Clone the Repository**
+    ```bash
+    git clone https://github.com/ruxailab/sentiment-analysis-api.git
+    cd sentiment-analysis-api/app
+    ```
 
-pip install ........
+2. **Create the Virtual Environment**
+    ```bash
+    python3 -m venv env
+    ```
 
-# Activate the virtual environment
-# source env/bin/activate
+3. **Activate the virtual environment**
+    ```bash
+    source env/bin/activate
+    ```
 
-8000
-
-# Run Flask App
-# python app.py
-
-
+4. **Run Flask App**
+   -    In Debug Mode  [port 8000]
+        ```bash
+        python app.py
+        ```
+5. **Run API Documentation**
+ - Access the API documentation at: http://localhost:8000/apidocs
+   
 <!-- ### Docker -->
 ### <img align="center" width="60px" src="https://miro.medium.com/v2/resize:fit:1400/1*wXtyhpOL5NK_w39UvZpADQ.gif"> Docker <a id="docker"></a>
 
