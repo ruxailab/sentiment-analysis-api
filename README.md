@@ -6,7 +6,6 @@
 ## <img align="center" width="80px" src="https://cdn.dribbble.com/users/35253/screenshots/3984334/ideate_dribb.gif"> Table of Contents
 - <a href="#Overview">Overview</a>
 - <a href="#tools">Built Using</a>
-- <a href="#demo">Demo</a>
 - <a href="#documentaion">API Documenation</a>
 - <a href="#started">Get Started</a>
     - <a href="#started">Native</a>
@@ -55,9 +54,6 @@ You can access the API documentation at [http://localhost:8000/apidocs](http://l
 For testing the API endpoints, you can use the following Postman collection:
 - [RuxAiLab Sentiment Analysis APIs Postman Collection](https://www.postman.com/interstellar-shadow-582340/workspace/ruxaailab/collection/31975349-d17198fa-8c4f-41d4-9870-1dc6e7443bc3) 
  
-<!-- Demo -->
-## <img align="center" width="80px" src="https://cdn.dribbble.com/users/346181/screenshots/2332299/rf-icon-_premium-quality-videos_.gif"> Demo <a id="demo"></a>
-
 <!-- Getting Started -->
 ## <img align="center" width="60px" height="60px" src="https://media3.giphy.com/media/wuZWV7keWqi2jJGzdB/giphy.gif?cid=6c09b952wp4ev7jtywg3j6tt7ec7vr3piiwql2vhrlsgydyz&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> Get Started <a id="started"></a>
 
@@ -95,8 +91,22 @@ For testing the API endpoints, you can use the following Postman collection:
    
 <!-- Docker -->
 ### <img align="center" width="60px" src="https://miro.medium.com/v2/resize:fit:1400/1*wXtyhpOL5NK_w39UvZpADQ.gif"> Docker <a id="docker"></a>
-
-
+1. **Clone the Repository**
+    ```bash
+    git clone https://github.com/ruxailab/sentiment-analysis-api.git
+    cd sentiment-analysis-api/app
+    ```
+2. **Build Image**
+    ```bash
+     docker build -t sentiment_analysis:v6 .
+    ```
+3. **Start Docker Conatiner (Port 8000)**
+    ```bash
+     docker run --name sentiment_container -p 8000:8000 sentiment_analysis:v6
+    ```
+4. **Run API Documentation**
+     - Access the API documentation at: http://localhost:8000/apidocs
+       
 <!-- GSoC Docs -->
 ## <img align="center" width="60px" src="https://en.opensuse.org/images/9/91/Gsocsun.png"> GSoC Docs <a id="gsoc"></a>
 This repository is part of the [Google Summer of Code (GSoC) 2024](https://summerofcode.withgoogle.com/) program.
