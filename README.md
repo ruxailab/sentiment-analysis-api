@@ -87,7 +87,7 @@ For testing the API endpoints, you can use the following Postman collection:
 
 <!-- License -->
 ## <img align="center" height="60px" src="https://cdn-icons-png.freepik.com/512/1046/1046441.png"> License <a id="license"></a>
-
-    This software is licensed under the MIT License. See the [LICENSE](https://github.com/ruxailab/sentiment-analysis-api/blob/main/LICENSE) file for more information.<br>
+This software is licensed under the MIT License. See the [LICENSE](https://github.com/ruxailab/sentiment-analysis-api/blob/main/LICENSE) file for more information.
+<div align="center">
     © 2024 RUXAILAB.
 </div>
