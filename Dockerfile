@@ -21,7 +21,7 @@ RUN apt-get -y update && apt-get -y upgrade && apt-get install -y --no-install-r
 
 # Copy the current directory contents into the container at /sentiment_analysis_app
 ADD app/app.py /sentiment_analysis_app/app/app.py
-ADD demos /sentiment_analysis_app/demos
+# ADD demos /sentiment_analysis_app/demos
 
 # Copy the current directory contents into the container at /sentiment_analysis_app
 ADD ai/src/sentiment_analysis/models/roberta_sentiment.py /sentiment_analysis_app/ai/src/sentiment_analysis/models/roberta_sentiment.py
