@@ -96,9 +96,9 @@ This repository is part of the [Google Summer of Code (GSoC) 2024](https://summe
 - Main Reposotory for the Project: [sentiment-analysis-api Repo](https://github.com/ruxailab/sentiment-analysis-api) 
 - Integration to [RUXAILAB](https://github.com/ruxailab/RUXAILAB) PR Requests:
     - [PR #533](https://github.com/ruxailab/RUXAILAB/pull/533)
-- Useful Wikkis:
+- Wikkis:
     - [Deployment Study Guide](https://github.com/ruxailab/sentiment-analysis-api/wiki/Deployment-Study-Guide)
-    - [Speech2Text](https://github.com/ruxailab/sentiment-analysis-api/wiki/Deployment-Study-Guide)
+    - [Speech2Text Tools Survey](https://github.com/ruxailab/sentiment-analysis-api/wiki/Speech2Text-Tools-Survey)
     - [VueJs and Vuetify Study Guide (RUXAILAB Repo)](https://github.com/ruxailab/RUXAILAB/wiki/VueJs-and-Vuetify-Study-Guide)
   
 <!-- License -->
