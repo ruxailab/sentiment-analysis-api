@@ -11,6 +11,7 @@
 - <a href="#started">Get Started</a>
     - <a href="#started">Native</a>
     - <a href="#started">Docker</a>
+- <a href="#gsoc">GSoC Docs</a>
 - <a href="#license">License</a>
 
 <!-- Overview -->
@@ -80,6 +81,26 @@ For testing the API endpoints, you can use the following Postman collection:
 <!-- Docker -->
 ### <img align="center" width="60px" src="https://miro.medium.com/v2/resize:fit:1400/1*wXtyhpOL5NK_w39UvZpADQ.gif"> Docker <a id="docker"></a>
 
+
+<!-- GSoC Docs -->
+## <img align="center" width="60px" src="https://en.opensuse.org/images/9/91/Gsocsun.png"> GSoC Docs <a id="gsoc"></a>
+This repository is part of the [Google Summer of Code (GSoC) 2024](https://summerofcode.withgoogle.com/) program.
+
+- **Contributor:** [Basma Elhoseny](https://github.com/basmaelhoseny01)
+- **Mentors:** [Karine](https://github.com/KarinePistili) - [Marc](https://github.com/marcgc21) - [Vinícius](https://github.com/hvini) - [Murilo](https://github.com/murilonND)
+
+### Useful Links:
+- GSoC'24 Project Page: [Sentiment Analysis API Project GSoC 24 Program](https://summerofcode.withgoogle.com/programs/2024/projects/V469U9cf)
+- Progress Tracking Docs: [GSOC'24 Project Progress and Follow Up Sheet](https://docs.google.com/spreadsheets/d/1wnTACVlsw_JWCWV70Log1DFwilxwmj_azB3TekGA3OY/edit?usp=sharing)
+- Meetings Presentations: [Slides](https://drive.google.com/drive/u/1/folders/1SMujWE0p7Xz_CaS0e9qKkLRcDt7YX729)
+- Main Reposotory for the Project: [sentiment-analysis-api Repo](https://github.com/ruxailab/sentiment-analysis-api) 
+- Integration to [RUXAILAB](https://github.com/ruxailab/RUXAILAB) PR Requests:
+    - [PR #533](https://github.com/ruxailab/RUXAILAB/pull/533)
+- Useful Wikkis:
+    - [Deployment Study Guide](https://github.com/ruxailab/sentiment-analysis-api/wiki/Deployment-Study-Guide)
+    - [Speech2Text](https://github.com/ruxailab/sentiment-analysis-api/wiki/Deployment-Study-Guide)
+    - [VueJs and Vuetify Study Guide (RUXAILAB Repo)](https://github.com/ruxailab/RUXAILAB/wiki/VueJs-and-Vuetify-Study-Guide)
+  
 <!-- License -->
 ## <img align="center" height="60px" src="https://cdn-icons-png.freepik.com/512/1046/1046441.png"> License <a id="license"></a>
 This software is licensed under the MIT License. See the [LICENSE](https://github.com/ruxailab/sentiment-analysis-api/blob/main/LICENSE) file for more information.
