@@ -33,9 +33,13 @@
   </tr>
 </table>
 
-<!-- Documentation -->
+<!-- API Documentation -->
 ## <img align="center" width="80px" src="https://cdn.dribbble.com/users/1874602/screenshots/5647628/send-icon.gif"> API Documentation <a id="documentaion"></a>
+You can access the API documentation at [http://localhost:8000/apidocs](http://localhost:8000/apidocs) after running the Flask App.
 
+### Postman Collection
+For testing the API endpoints, you can use the following Postman collection:
+- [RuxAiLab Sentiment Analysis APIs Postman Collection](https://www.postman.com/interstellar-shadow-582340/workspace/ruxaailab/collection/31975349-d17198fa-8c4f-41d4-9870-1dc6e7443bc3) 
  
 <!-- Demo -->
 ## <img align="center" width="80px" src="https://cdn.dribbble.com/users/346181/screenshots/2332299/rf-icon-_premium-quality-videos_.gif"> Demo <a id="demo"></a>
