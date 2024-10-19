@@ -36,4 +36,4 @@ EXPOSE 8000
 
 
 # Run app.py when the container launches
-CMD ["python", "/sentiment_analysis_app/app/app.py"]
+CMD ["python","-u", "/sentiment_analysis_app/app/app.py"]
