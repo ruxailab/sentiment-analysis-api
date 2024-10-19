@@ -50,7 +50,7 @@ class Hello(Resource):
                 examples:
                     application/json: "Hello from Sentiment Analysis App!!"
         """
-        return {'message': 'Hello from Sentiment Analysis App!!'}
+        return {'message': 'Hello from Sentiment Analysis App!!'} , 200
 
 
 
@@ -111,17 +111,20 @@ class WhispherSentimentAnalysis(Resource):
             500:
                 description: Internal Server Error. Returned when there is an issue with performing the analysis.
         """
+        json_data = request.json
+
         # Get the video file [Path]
-        video_file = request.json['video_file']
+        video_file = json_data.get('video_file')
         # print(video_file)
         if not video_file:
-            return jsonify({'error': 'No video file path provided'}), 400
+            return {'error': 'No video file path provided'}, 400
         
         # Get the whisper model size
-        whisper_model_size = request.json['whisper_model_size']
+        whisper_model_size = json_data.get('whisper_model_size')
+
         # print(whisper_model_size)
         if whisper_model_size not in ['tiny','base','small','medium','large','large-v2','large-v3']:
-            return jsonify({'error': 'Invalid whisper model size'}), 400
+            return {'error': 'Invalid whisper model size'}, 400
         
 
         # Get the device from environment variables
@@ -131,10 +134,13 @@ class WhispherSentimentAnalysis(Resource):
         inference=Inference(whisper_model_size=whisper_model_size, device=device)
         # print("Inference Object Created")
 
+  
+
         try:
             # Perform inference to get the transcript sentiment
             transcript_sentiment = inference.infer(video_file)
-            
+            # print("transcript_sentiment",transcript_sentiment)
+
             # Format the response
             response = {
                 'video_file': video_file,
@@ -142,9 +148,10 @@ class WhispherSentimentAnalysis(Resource):
                 'sentiment': transcript_sentiment
             }
 
-            return jsonify(response)
+
+            return response , 200
         except Exception as e:
-            return jsonify({'error': str(e)}), 500
+            return {'error': str(e)}, 500
 
 class WhispherTimeStampedSentimentAnalysis(Resource):
     def post(self):
@@ -229,85 +236,89 @@ class WhispherTimeStampedSentimentAnalysis(Resource):
           500:
             description: Internal Server Error. Returned when there is an issue with downloading or processing the audio file.
         """
-        data = request.json
+        try:
+          data = request.json
 
-        url = data.get('url')
-        start_time = data.get('start_time')
-        end_time = data.get('end_time')
-        whisper_model_size = data.get('whisper_model_size')
-
-
-        # print(url)
-        # print(start_time)
-        # print(end_time)
-        # print(whisper_model_size)
+          url = data.get('url')
+          start_time = data.get('start_time')
+          end_time = data.get('end_time')
+          whisper_model_size = data.get('whisper_model_size')
 
 
-        if not url:
-            return jsonify({'error': 'No URL provided'}), 400
-        
-        if start_time!=0 and not start_time:
-            return jsonify({'error': 'No start time provided'}), 400
-        
-        if end_time!=0 and not end_time:
-            return jsonify({'error': 'No end time provided'}), 400
-
-        # Check if whisper_model_size is provided
-        if not whisper_model_size:
-            return jsonify({'error': 'Whisper model size not provided'}), 400
-        
-        # Check if whisper_model_size is valid
-        if whisper_model_size not in ['tiny','base','small','medium','large','large-v2','large-v3']:
-            return jsonify({'error': 'Invalid whisper model size'}), 400
+          # print(url)
+          # print(start_time)
+          # print(end_time)
+          # print(whisper_model_size)
 
 
+          if not url:
+              return {'error': 'No URL provided'}, 400
+          
+          if start_time!=0 and not start_time:
+              return {'error': 'No start time provided'}, 400
+          
+          if end_time!=0 and not end_time:
+              return {'error': 'No end time provided'}, 400
 
-        # Convert start_time and end_time to milliseconds
-        start_time_ms = start_time * 1000
-        end_time_ms = end_time * 1000
-
-
-        # Download the audio file from the Storage
-        url_response = requests.get(url)
-        if url_response.status_code != 200:
-            return {'error': 'Failed to download audio file'}, 500
-        
-
-        # Load audio file into pydub
-        audio = AudioSegment.from_file(BytesIO(url_response.content))
-
-        # Extract the specified region
-        segment = audio[start_time_ms:end_time_ms]
-
-
-        # Save the segment to .mp3
-        segment.export('temp.mp3', format='mp3')   
+          # Check if whisper_model_size is provided
+          if not whisper_model_size:
+              return {'error': 'Whisper model size not provided'}, 400
+          
+          # Check if whisper_model_size is valid
+          if whisper_model_size not in ['tiny','base','small','medium','large','large-v2','large-v3']:
+              return {'error': 'Invalid whisper model size'}, 400
 
 
-        # Get the device from environment variables
-        device = os.getenv('DEVICE', 'cpu')
 
-        # Make Inference Object
-        inference=Inference(whisper_model_size=whisper_model_size, device=device)
+          # Convert start_time and end_time to milliseconds
+          start_time_ms = start_time * 1000
+          end_time_ms = end_time * 1000
 
 
-        transcript_sentiment = inference.infer_audio_file('temp.mp3')
-        # print(transcript_sentiment)
+          # Download the audio file from the Storage
+          url_response = requests.get(url)
+          if url_response.status_code != 200:
+              return {'error': 'Failed to download audio file'}, 500
+          
 
-        # Add start time stamp to each utterance
-        for utterance in transcript_sentiment:
-            utterance['timestamp'] = (start_time + utterance['timestamp'][0], start_time + utterance['timestamp'][1])
+          # Load audio file into pydub
+          audio = AudioSegment.from_file(BytesIO(url_response.content))
 
-        response = {
-            'url': url,
-            'start_time': start_time,
-            'end_time': end_time,
-            'whisper_model_size': whisper_model_size,   
-            'utterances_sentiment': transcript_sentiment # Array of dictionaries {timestamp, text, sentiment, confidence}
-        }
+          # Extract the specified region
+          segment = audio[start_time_ms:end_time_ms]
 
-        return jsonify(response), 200
 
+          # Save the segment to .mp3
+          segment.export('temp.mp3', format='mp3')   
+
+
+          # Get the device from environment variables
+          device = os.getenv('DEVICE', 'cpu')
+    
+
+          # Make Inference Object
+          inference=Inference(whisper_model_size=whisper_model_size, device=device)
+
+
+          transcript_sentiment = inference.infer_audio_file('temp.mp3')
+          # print(transcript_sentiment)
+
+          # Add start time stamp to each utterance
+          for utterance in transcript_sentiment:
+              utterance['timestamp'] = (start_time + utterance['timestamp'][0], start_time + utterance['timestamp'][1])
+
+          response = {
+              'url': url,
+              'start_time': start_time,
+              'end_time': end_time,
+              'whisper_model_size': whisper_model_size,   
+              'utterances_sentiment': transcript_sentiment # Array of dictionaries {timestamp, text, sentiment, confidence}
+          }
+
+          return response, 200
+          
+        except Exception as e:
+          return {'error': str(e)}, 500
 
 
 # Add the resources to the API
