@@ -46,15 +46,6 @@ This project aims to enhance RuxAiLab's capabilities by providing detailed senti
   </tr>
 </table>
 
-<!-- API Documentation -->
-## <img align="center" width="80px" src="https://cdn.dribbble.com/users/1874602/screenshots/5647628/send-icon.gif"> API Documentation <a id="documentaion"></a>
-You can access the API documentation at [http://localhost:8000/apidocs](http://localhost:8000/apidocs) after running the Flask App.
-
-<!-- Postman -->
-### Postman Collection
-For testing the API endpoints, you can use the following Postman collection:
-- [RuxAiLab Sentiment Analysis APIs Postman Collection](https://www.postman.com/interstellar-shadow-582340/workspace/ruxaailab/collection/31975349-d17198fa-8c4f-41d4-9870-1dc6e7443bc3) 
- 
 <!-- Getting Started -->
 ## <img align="center" width="60px" height="60px" src="https://media3.giphy.com/media/wuZWV7keWqi2jJGzdB/giphy.gif?cid=6c09b952wp4ev7jtywg3j6tt7ec7vr3piiwql2vhrlsgydyz&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> Get Started <a id="started"></a>
 
@@ -131,6 +122,16 @@ For testing the API endpoints, you can use the following Postman collection:
 4. **Run API Documentation**
      - Access the API documentation at: http://localhost:8000/apidocs
    
+
+<!-- API Documentation -->
+## <img align="center" width="80px" src="https://cdn.dribbble.com/users/1874602/screenshots/5647628/send-icon.gif"> API Documentation <a id="documentaion"></a>
+You can access the API documentation at [http://localhost:8000/apidocs](http://localhost:8000/apidocs) after running the Flask App.
+
+<!-- Postman -->
+### Postman Collection
+For testing the API endpoints, you can use the following Postman collection:
+- [RuxAiLab Sentiment Analysis APIs Postman Collection](https://www.postman.com/interstellar-shadow-582340/workspace/ruxaailab/collection/31975349-d17198fa-8c4f-41d4-9870-1dc6e7443bc3) 
+ 
 
 <!-- GSoC Docs -->
 ## <img align="center" width="60px" src="https://en.opensuse.org/images/9/91/Gsocsun.png"> GSoC Docs <a id="gsoc"></a>
