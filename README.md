@@ -127,6 +127,9 @@ For testing the API endpoints, you can use the following Postman collection:
     ```bash
     ~/sentiment-analysis-api$ docker-compose up
     ```
+4. **Run API Documentation**
+     - Access the API documentation at: http://localhost:8000/apidocs
+   
 
 <!-- GSoC Docs -->
 ## <img align="center" width="60px" src="https://en.opensuse.org/images/9/91/Gsocsun.png"> GSoC Docs <a id="gsoc"></a>
