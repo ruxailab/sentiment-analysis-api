@@ -8,7 +8,6 @@ ai/data/MELD
 *.wav
 
 *.pyc
-.env
 env
 
 # Flask App
