@@ -2,10 +2,10 @@ version: '3.8'
 services:
   flask-app:  # Name of the service
     build:
-      context: .  # Current directory (backend/) as the build context
+      context: .  # Current directory (sentiment-analysis-app/) as the build context
       dockerfile: Dockerfile
     image: sentiment-analysis-app:0.0.0 # Tag for the image
     ports:
       - "8000:8000"  # Map port 8080 of the container to port 8080 on the host
     volumes:
-      - /home/basma/sentiment-analysis-api/demos:/demos    # Bind mount for demos
+      - ./demos:/sentiment_analysis_app/demos    # Bind mount for demos
