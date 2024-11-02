@@ -94,19 +94,42 @@ For testing the API endpoints, you can use the following Postman collection:
 1. **Clone the Repository**
     ```bash
     git clone https://github.com/ruxailab/sentiment-analysis-api.git
-    cd sentiment-analysis-api/app
+    cd sentiment-analysis-api
     ```
-2. **Build Image**
+2. **[Optional if you want to use video saved on your machine] Copy Your Video File to /sentiment-analysis-api/demos**
     ```bash
-     docker build -t sentiment_analysis:v6 .
+    cp <Video_file_absolute_path> ./demos
     ```
-3. **Start Docker Conatiner (Port 8000)**
+3. **Build Image**
     ```bash
-     docker run --name sentiment_container -p 8000:8000 sentiment_analysis:v6
+     docker build -t sentiment_analysis:v0 .
     ```
-4. **Run API Documentation**
+4. **Start Docker Conatiner (Port 8000)**
+    ```bash
+     docker run --name sentiment_container -p 8000:8000 -v ./demos:/sentiment_analysis_app/demos sentiment_analysis:v0
+    ```
+5. **Run API Documentation**
      - Access the API documentation at: http://localhost:8000/apidocs
-       
+
+
+<!-- Docker Compose -->
+<!-- 
+
+### <img align="center" width="60px" src="https://miro.medium.com/v2/resize:fit:1400/1*wXtyhpOL5NK_w39UvZpADQ.gif">Docker Compose<a id="docker"></a>
+1. **Clone the Repository**
+    ```bash
+    git clone https://github.com/ruxailab/sentiment-analysis-api.git
+    cd sentiment-analysis-api
+    ```
+2. **Build Image Using Docker Compose**
+    ```bash
+     docker-compose build
+    ```
+3. **Start Docker Container**
+    ```
+    docker-compose up
+    ```
+-->
 <!-- GSoC Docs -->
 ## <img align="center" width="60px" src="https://en.opensuse.org/images/9/91/Gsocsun.png"> GSoC Docs <a id="gsoc"></a>
 This repository is part of the [Google Summer of Code (GSoC) 2024](https://summerofcode.withgoogle.com/) program.
