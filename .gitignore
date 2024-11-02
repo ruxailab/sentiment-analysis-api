@@ -9,6 +9,7 @@ ai/data/MELD
 
 *.pyc
 .env
+env
 
 # Flask App
 app/env

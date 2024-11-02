@@ -1,4 +1,0 @@
-https://huggingface.co/finiteautomata/bertweet-base-sentiment-analysis
-https://github.com/pysentimiento/pysentimiento (Not used)
-https://deepgram.com/learn/best-speech-to-text-apis
-https://www.assemblyai.com/app

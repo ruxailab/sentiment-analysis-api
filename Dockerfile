@@ -29,11 +29,12 @@ ADD ai/src/sentiment_analysis/inference/inference.py /sentiment_analysis_app/ai/
 
 ADD ai/src/video_processing /sentiment_analysis_app/ai/src/video_processing
 
+
+# Copy the .env
+ADD .env /sentiment_analysis_app/.env
+
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
-
-# # Define environment variable
-
 
 # Run app.py when the container launches
 CMD ["python","-u", "/sentiment_analysis_app/app/app.py"]
