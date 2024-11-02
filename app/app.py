@@ -286,9 +286,9 @@ class WhispherTimeStampedSentimentAnalysis(Resource):
             url_response = requests.get(url)
             if url_response.status_code != 200:
                 return {'error': 'Failed to download audio file'}, 500
-          
-                # Load audio file into pydub
-                audio = AudioSegment.from_file(BytesIO(url_response.content))
+      
+            # Load audio file into pydub
+            audio = AudioSegment.from_file(BytesIO(url_response.content))
 
           # Extract the specified region
           segment = audio[start_time_ms:end_time_ms]
