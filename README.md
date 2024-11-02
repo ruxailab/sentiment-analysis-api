@@ -61,29 +61,29 @@ For testing the API endpoints, you can use the following Postman collection:
 ### <img align="center" height="40px" width="50px" src="https://media.lordicon.com/icons/wired/outline/743-web-code.gif"> Native <a id="native"></a>
 1. **Clone the Repository**
     ```bash
-    git clone https://github.com/ruxailab/sentiment-analysis-api.git
-    cd sentiment-analysis-api/app
+    ~$ git clone https://github.com/ruxailab/sentiment-analysis-api.git
+    ~$ cd sentiment-analysis-api/app
     ```
 
 2. **Create the Virtual Environment**
     ```bash
-    python3 -m venv env
+    ~/sentiment-analysis-api/app$ python3 -m venv env
     ```
     
 3. **Activate the virtual environment**
     ```bash
-    source env/bin/activate
+     ~/sentiment-analysis-api/app$ source env/bin/activate
     ```
 
 4. **Install Dependecies**
     ```bash
-    pip install -r requirements.txt
+     ~/sentiment-analysis-api/app$ pip install -r requirements.txt
     ```
     
 5. **Run Flask App**
    -    In Debug Mode  [port 8000]
         ```bash
-        python app.py
+         ~/sentiment-analysis-api/app$ python app.py
         ```
         
 6. **Run API Documentation**
@@ -93,43 +93,41 @@ For testing the API endpoints, you can use the following Postman collection:
 ### <img align="center" width="60px" src="https://miro.medium.com/v2/resize:fit:1400/1*wXtyhpOL5NK_w39UvZpADQ.gif"> Docker <a id="docker"></a>
 1. **Clone the Repository**
     ```bash
-    git clone https://github.com/ruxailab/sentiment-analysis-api.git
-    cd sentiment-analysis-api
+    ~$ git clone https://github.com/ruxailab/sentiment-analysis-api.git
+    ~$ cd sentiment-analysis-api
     ```
 2. **[Optional if you want to use video saved on your machine] Copy Your Video File to /sentiment-analysis-api/demos**
     ```bash
-    cp <Video_file_absolute_path> ./demos
+    ~/sentiment-analysis-api$  cp <Video_file_absolute_path> ./demos
     ```
 3. **Build Image**
     ```bash
-     docker build -t sentiment_analysis:v0 .
+    ~/sentiment-analysis-api$ docker build -t sentiment_analysis:v0 .
     ```
 4. **Start Docker Conatiner (Port 8000)**
     ```bash
-     docker run --name sentiment_container -p 8000:8000 -v ./demos:/sentiment_analysis_app/demos sentiment_analysis:v0
+    ~/sentiment-analysis-api$ docker run --name sentiment_container -p 8000:8000 -v ./demos:/sentiment_analysis_app/demos sentiment_analysis:v0
     ```
 5. **Run API Documentation**
      - Access the API documentation at: http://localhost:8000/apidocs
 
 
 <!-- Docker Compose -->
-<!-- 
-
-### <img align="center" width="60px" src="https://miro.medium.com/v2/resize:fit:1400/1*wXtyhpOL5NK_w39UvZpADQ.gif">Docker Compose<a id="docker"></a>
+### <img align="center" width="60px" src="https://github.com/user-attachments/assets/af017ff7-3275-4ae5-b706-d3a3e85bd9bf">Docker Compose<a id="docker-compose"></a>
 1. **Clone the Repository**
     ```bash
-    git clone https://github.com/ruxailab/sentiment-analysis-api.git
-    cd sentiment-analysis-api
+    ~$ git clone https://github.com/ruxailab/sentiment-analysis-api.git
+    ~$ cd sentiment-analysis-api
     ```
 2. **Build Image Using Docker Compose**
     ```bash
-     docker-compose build
+     ~/sentiment-analysis-api$ docker-compose build
     ```
 3. **Start Docker Container**
+    ```bash
+    ~/sentiment-analysis-api$ docker-compose up
     ```
-    docker-compose up
-    ```
--->
+
 <!-- GSoC Docs -->
 ## <img align="center" width="60px" src="https://en.opensuse.org/images/9/91/Gsocsun.png"> GSoC Docs <a id="gsoc"></a>
 This repository is part of the [Google Summer of Code (GSoC) 2024](https://summerofcode.withgoogle.com/) program.
