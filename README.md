@@ -8,8 +8,9 @@
 - <a href="#tools">Built Using</a>
 - <a href="#documentaion">API Documenation</a>
 - <a href="#started">Get Started</a>
-    - <a href="#started">Native</a>
-    - <a href="#started">Docker</a>
+    - <a href="#native">Native</a>
+    - <a href="#docker">Docker</a>
+    - <a href="#docker-compose">Docker Compose</a>
 - <a href="#gsoc">GSoC Docs</a>
 - <a href="#license">License</a>
 
