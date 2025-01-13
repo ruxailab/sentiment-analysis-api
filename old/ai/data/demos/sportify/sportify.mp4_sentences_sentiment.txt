@@ -1,0 +1,22 @@
+I don't know what to say anymore.---->Sentiment: negative
+Hi Basma.---->Sentiment: neutral
+Let's just finish.---->Sentiment: neutral
+Maybe.---->Sentiment: neutral
+Yes.---->Sentiment: positive
+Or you will talk about Spotify.---->Sentiment: neutral
+I really like Spotify.---->Sentiment: positive
+I can't live without it.---->Sentiment: positive
+Right?---->Sentiment: neutral
+You agree?---->Sentiment: neutral
+You were talking to someone?---->Sentiment: neutral
+I am talking to someone that is beside me.---->Sentiment: neutral
+So Spotify is amazing.---->Sentiment: positive
+They have really good music there and really good recommendations.---->Sentiment: positive
+I really like it.---->Sentiment: positive
+You don't like it?---->Sentiment: negative
+No.---->Sentiment: neutral
+Okay, I like it.---->Sentiment: positive
+Only my opinion matters.---->Sentiment: neutral
+Okay.---->Sentiment: neutral
+It's my word, my rules.---->Sentiment: neutral
+But I think should be completely free.---->Sentiment: positive
