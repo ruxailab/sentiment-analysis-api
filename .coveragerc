@@ -1,0 +1,5 @@
+[run]
+data_file = tests/coverage/.coverage
+
+[html]
+directory = tests/coverage/coverage_html_report
