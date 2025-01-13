@@ -22,7 +22,7 @@ def create_app(config:dict):
         app,
         version="1.0",
         title=config['app_name'],
-        description="API documentation for the backend app",
+        description=f'API documentation for the {config["app_name"]} app',
         doc="/docs"  # Swagger UI documentation will be available at /docs
     )
 
