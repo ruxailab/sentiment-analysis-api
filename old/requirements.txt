@@ -1,0 +1,17 @@
+python-dotenv
+
+Flask
+flask_cors
+requests
+
+# torch
+# ffmpeg
+transformers
+emoji
+
+moviepy
+pydub
+
+# Documentation 
+flask-restful
+flasgger

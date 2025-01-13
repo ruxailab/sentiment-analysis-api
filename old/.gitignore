@@ -1,0 +1,15 @@
+# AI
+ai/data/daily_dialogue
+ai/data/MELD
+
+
+*.mp4
+*.mp3
+*.wav
+
+*.pyc
+env
+
+# Flask App
+app/env
+app/temp
