@@ -1,6 +1,0 @@
-# Flask Dependencies
-flask
-flask_cors
-flask_restx
-
-yaml
