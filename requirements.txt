@@ -3,5 +3,6 @@ flask
 flask_cors
 flask_restx
 
+yaml
 
-# Testing Dependencies
+numpy<2 
