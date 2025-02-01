@@ -1,5 +1,9 @@
+"""
+This module defines the WhisperTranscript class, which is a PyTorch model for transcribing audio files using the OpenAI Whisper model.
+"""
 import torch
 import torch.nn as nn
+
 from transformers import pipeline
 
 
@@ -7,9 +11,7 @@ class WhisperTranscript(nn.Module):
     def __init__(self, config: dict) -> None:
         """
         Initialize the Whisper model pipeline for transcription.
-
-        Args:
-            config (dict): Configuration dictionary.
+        :param config: The configuration object containing model and device info.      
         """
         self.debug = config.get('debug')
 
@@ -48,13 +50,18 @@ class WhisperTranscript(nn.Module):
 # if __name__ == "__main__":
 #     config = {
 #         'debug': True,
-#         'transcription': {
+#         # Transcription Configuration
+#         'transcription':{
 #             'default_model': "whisper",  # Specify the default transcription model (e.g., whisper, another_model)
-#             'whisper': {
-#                 'model_size': 'tiny',
-#                 'device': 'cpu',
-#                 'chunk_length_s': 30
-#             }
+#             'whisper':{                  # Whisper-specific configuration
+#                 'model_size': "base" ,   # Choose between tiny, base, small, medium, large
+#                 'device': 'cpu'  ,       # -1 for CPU, or the GPU device index (e.g., 0)
+#                 'chunk_length_s': 30 
+#             }                 
+#             # 'another_model':{          # Placeholder for another transcription model's configuration
+#                 #   'api_key': "your_api_key"
+#                 #   'endpoint': "https://api.example.com/transcribe"
+#             # }
 #         }
 #     }
 #     print("config",config)
@@ -66,3 +73,7 @@ class WhisperTranscript(nn.Module):
 #     transcription, chunks = model(audio_file)
 #     print("transcription",transcription)
 #     print("chunks",chunks)
+
+# #  Run:
+# # python -m app.models.whisper_model
+    

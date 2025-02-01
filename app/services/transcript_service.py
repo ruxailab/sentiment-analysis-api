@@ -1,3 +1,6 @@
+"""
+This module contains the service layer for transcribing audio files.
+"""
 import os
 from app.config import Config
 
@@ -5,7 +8,6 @@ from app.config import Config
 from app.data.transcript_data import TranscriptDataLayer
 
 config = Config().config # Load the configuration
-
 
 class TranscriptService:
     def __init__(self):
@@ -21,14 +23,16 @@ class TranscriptService:
         """
         try:
             # Check if the audio file exists
-            if not os.path.exists(audio_file_path):
-                return {'error': f'Audio file not found: {audio_file_path}'}
+            if not os.path.exists(audio_file_path) or not os.path.isfile(audio_file_path):
+                return {
+                    'error': f'Audio file not found: {audio_file_path}'
+                }
             
             result = self.transcript_data_layer.transcribe(audio_file_path)
 
             if isinstance(result, dict) and 'error' in result:
                 return {
-                    'error': f'An error occurred during transcription: {result["error"]}'
+                    'error': result['error']
                 }
 
             # Return the transcribed text and chunks
@@ -38,15 +42,20 @@ class TranscriptService:
             }
         
         except Exception as e:
+            # Catch any other exceptions
             print(f"[error] [Service Layer] [TranscriptService] [transcribe] An error occurred during transcription: {str(e)}")
-            return {'error': f'An error occurred during transcription: {str(e)}'}
+            return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
+        
         
 # if __name__ == "__main__":
 #     transcript_service = TranscriptService()
+#     print("transcript_service",transcript_service)
 
-    # result = transcript_service.transcribe("./samples/sample_1.mp3")
-    # print("result",result)
+#     # Normal Case
+#     result = transcript_service.transcribe("./samples/sample_1.mp3")
+#     print("result",result)
 
+    # # File doesn't exist
     # result = transcript_service.transcribe("./samples/non_exist_file.mp3")
     # print("result",result)
 

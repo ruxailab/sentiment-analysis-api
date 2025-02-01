@@ -1,3 +1,6 @@
+"""
+This Module is responsible for handling the sentiment analysis data layer.
+"""
 # Model Layer
 from app.models.bertweet_model import BertweetSentiment
 
@@ -37,7 +40,7 @@ class SentimentDataLayer:
         
         except Exception as e:
             print(f"[error] [Data Layer] [SentimentDataLayer] [analyze] An error occurred during sentiment analysis: {str(e)}")
-            return {'error': f'An error occurred during sentiment analysis: {str(e)}'}
+            return {'error': f'An unexpected error occurred while processing the request.'}  # Generic error message
         
 
 # if __name__ == "__main__":

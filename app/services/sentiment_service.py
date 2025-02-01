@@ -1,3 +1,6 @@
+"""
+This module contains the service layer for sentiment analysis.
+"""
 from app.config import Config
 
 # Data Layer for fetching and processing transcripts
@@ -22,7 +25,7 @@ class SentimentService:
 
             if isinstance(result, dict) and 'error' in result:
                 return {
-                    'error': f'An error occurred during sentiment analysis: {result["error"]}'
+                    'error': result['error']
                 }
 
             # Return the predicted label and confidence score
@@ -33,7 +36,7 @@ class SentimentService:
         
         except Exception as e:
             print(f"[error] [Service Layer] [SentimentService] [analyze] An error occurred during sentiment analysis: {str(e)}")
-            return {'error': f'An error occurred during sentiment analysis: {str(e)}'}
+            return {'error': f'An unexpected error occurred while processing the request.'}  # Generic error message
         
 
 # if __name__ == "__main__":

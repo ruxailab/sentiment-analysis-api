@@ -1,3 +1,6 @@
+"""
+This module contains the service layer for extracting audio segments.
+"""
 import uuid
 import os
 from pydub import AudioSegment
@@ -96,8 +99,8 @@ class AudioService:
         return file_path
 
 
-if __name__ == "__main__":
-    service = AudioService()
+# if __name__ == "__main__":
+#     service = AudioService()
    
     # # start_time_ms < 0
     # audio = service.extract_audio("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", -100,100)

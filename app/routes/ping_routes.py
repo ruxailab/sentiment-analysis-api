@@ -52,7 +52,7 @@ def register_routes(api):
                 print(f"Route Error: Failed to ping the server: {str(e)}")
                 return {
                     "status": "error",
-                    "error": "Internal Server Error",
+                    "error": "An unexpected error occurred while processing the request.",
                     "data": None
                 }, 500
             

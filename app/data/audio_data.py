@@ -1,3 +1,6 @@
+"""
+This Module is responsible for handling the audio data layer.
+"""
 import os
 from urllib.parse import urlparse
 import requests
@@ -6,6 +9,10 @@ from pydub import AudioSegment
 
 class AudioDataLayer:
     def __init__(self,config):
+        """
+        Initialize the Audio Data Layer.
+        :param config: The configuration object containing model and device info.
+        """
         # self.config = config
         self.debug = config.get('debug')
        
