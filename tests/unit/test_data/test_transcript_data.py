@@ -14,6 +14,24 @@ class TestTranscriptDataLayer:
     # Grouped tests for initialization (__init__ method)
     class TestInitialization:
         @pytest.fixture
+        def transcript_data_layer__whisper(self):
+            """
+            Fixture to set up TranscriptDataLayer instance for testing.
+            """
+            config = {
+                'debug': True,
+                'transcription': {
+                    'default_model': "whisper",
+                    'whisper': {
+                        'model_size': "base",
+                        'device': 'cpu',
+                        'chunk_length_s': 30
+                    }
+                }
+            }
+            return TranscriptDataLayer(config)
+        
+        @pytest.fixture
         def mock_whisper_transcript(self):
             """
             Fixture to mock the 'WhisperTranscript' class.
@@ -22,7 +40,7 @@ class TestTranscriptDataLayer:
                 yield mock_whisper_transcript
 
 
-        def test_init_whisper_model(self,mock_whisper_transcript,transcript_data_layer):
+        def test_init_whisper_model(self,mock_whisper_transcript,transcript_data_layer__whisper):
             """
             Test that TranscriptDataLayer initializes the Whisper model.
             """
@@ -40,7 +58,7 @@ class TestTranscriptDataLayer:
             })
 
             # Ensure the model is set to the WhisperTranscript instance
-            assert isinstance(transcript_data_layer.model, mock_whisper_transcript.return_value.__class__)
+            assert isinstance(transcript_data_layer__whisper.model, mock_whisper_transcript.return_value.__class__)
 
         def test_init_unsupported_model(self):
             """
@@ -120,3 +138,6 @@ class TestTranscriptDataLayer:
                 'chunks': [{'timestamp': (0.0, 3.0), 'text': "Test transcription"}]
             }
             mock_model.assert_called_once_with(self.args['audio_file_path'])
+
+# # Run the tests
+# # coverage run  -m pytest .\tests\unit\test_data\test_transcript_data.py    
