@@ -1,3 +1,7 @@
+"""
+This Module contains the unit tests for the AudioService class.
+"""
+
 import pytest
 from unittest.mock import MagicMock, patch
 

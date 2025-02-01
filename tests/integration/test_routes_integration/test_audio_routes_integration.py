@@ -1,5 +1,6 @@
 """
-Integration test for the /audio route
+Integration test for: 
+    - /audio
 """
 
 import pytest
@@ -121,13 +122,17 @@ class TestAudioExtract:
 
         assert response.status_code == 200
         assert response.json["status"] == "success"
-        
+       
         # Ensure no other keys are present in the response
-        expected_keys = {"audio_path", "start_time_ms", "end_time_ms"}
-        actual_keys = set(response.json["data"].keys())
+        expected_keys = {"status", "data"}
+        actual_keys = set(response.json.keys())
         assert actual_keys == expected_keys, f"Unexpected keys in response: {actual_keys}"
+
         
-        assert "audio_path" in response.json["data"]
+        expected_data_keys = {"audio_path", "start_time_ms", "end_time_ms"}
+        actual_data_keys = set(response.json["data"].keys())
+        assert actual_data_keys == expected_data_keys, f"Unexpected keys in response (data): {actual_keys}"
+        
         assert isinstance(response.json["data"]["audio_path"], str)
         assert response.json["data"]["start_time_ms"] == 0
         assert response.json["data"]["end_time_ms"] == 5000
