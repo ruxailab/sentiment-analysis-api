@@ -89,7 +89,7 @@ class TestTranscriptionTranscribe:
         assert response.status_code == 500
         assert response.json == {
             "status": "error",
-            "error": "An unexpected error occurred during transcription.",
+            "error": "An unexpected error occurred while processing the request.",
             "data": None
         }
         mock_transcribe.assert_called_once_with(audio_file_path=payload['file_path'])
@@ -177,7 +177,7 @@ class TestTranscriptionChunks:
         assert response.status_code == 500
         assert response.json == {
             "status": "error",
-            "error": "An unexpected error occurred during transcription.",
+            "error": "An unexpected error occurred while processing the request.",
             "data": None
         }
         mock_transcribe.assert_called_once_with(audio_file_path=payload['file_path'])

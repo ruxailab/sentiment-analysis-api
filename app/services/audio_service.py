@@ -41,7 +41,7 @@ class AudioService:
             if isinstance(audio, dict) and 'error' in audio:
                 # If there was an error fetching the audio, return it
                 return {
-                    'error': audio['error'] # Return the error message``
+                    'error': audio['error'] # Return the error message
                 }
             
             # If end_time_ms is None, set it to the length of the audio file

@@ -82,7 +82,7 @@ class TestTranscriptionChunks:
     def setup(self, client):
         """Set up before each test."""
         self.client = client
-        self.endpoint = "/transcription/chucks"
+        self.endpoint = "/transcription/chunks"
         self.payload = {
             "file_path": "./samples/sample_1.mp3"
         }

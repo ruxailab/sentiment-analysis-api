@@ -58,8 +58,9 @@ class AudioTranscriptionSentimentPipeline:
             audio_result = self.audio_service.extract_audio(url, start_time_ms, end_time_ms, user_id)
 
             if isinstance(audio_result, dict) and 'error' in audio_result:
+                # If there was an error extracting the audio, return it
                 return {
-                    'error': f'An error occurred while extracting the audio: {audio_result["error"]}'
+                    'error': audio_result["error"] # Return the error message
                 }
             
             if self.debug:
@@ -75,7 +76,7 @@ class AudioTranscriptionSentimentPipeline:
 
             if isinstance(transcription_result, dict) and 'error' in transcription_result:
                 return {
-                    'error': f'An error occurred while transcribing the audio: {transcription_result["error"]}'
+                    'error': transcription_result['error'] # Return the error message
                 }
             
             if self.debug:
@@ -100,6 +101,7 @@ class AudioTranscriptionSentimentPipeline:
                 sentiment_result = self.sentiment_service.analyze(text)
                 if isinstance(sentiment_result, dict) and 'error' in sentiment_result:
                     print("[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [sentiment_result]", sentiment_result)
+                    chunk['error'] = sentiment_result['error']  # Add the error message to the chunk
                     continue # Skip this chunk if there was an error :D
 
                 if self.debug:
@@ -119,7 +121,7 @@ class AudioTranscriptionSentimentPipeline:
             }
         except Exception as e:
             print(f"[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] An error occurred during processing: {str(e)}")
-            return {'error': f'An error occurred during processing: {str(e)}'}
+            return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
         
 
 

@@ -105,7 +105,7 @@ def register_routes(api):
                 if 'error' in result:
                     return {
                         'status': 'error',
-                        'error': f'An error occurred during audio transcript sentiment analysis: {result["error"]}',
+                        'error': result['error'],
                         'data': None
                     }, 500 # Internal Server Error
                 
@@ -124,7 +124,7 @@ def register_routes(api):
             except Exception as e:
                 return {
                     'status': 'error',
-                    'error': f'An unexpected error occurred during audio transcript sentiment analysis: {str(e)}',
+                    'error': 'An unexpected error occurred while processing the request.', # Generic error message
                     'data': None
                 }, 500
             
