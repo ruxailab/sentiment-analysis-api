@@ -1,3 +1,7 @@
 env/
 __pycache__/
-**/__pycache__/
+*.pyc
+
+# static       # Ignore everything in static and its subdirectories
+# !static/audio/user123/empty.txt  # Allow only static/audio/user123/.txt
+# static/
