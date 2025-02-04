@@ -59,21 +59,31 @@ This project aims to enhance RuxAiLab's capabilities by providing detailed senti
     ```
 
 2. **Create the Virtual Environment**
-    ```bash
-    ~/sentiment-analysis-api$ python3 -m venv env
-    ```
+    - **Linux**
+        ```bash
+         ~/sentiment-analysis-api$ python3 -m venv env
+        ```
+    - **Windows**
+        ```bash
+         ### python -m venv env
+        ```
     
-3. **Activate the virtual environment**
-    ```bash
-     (env) ~/sentiment-analysis-api$ source env/bin/activate
-    ```
+4. **Activate the virtual environment**
+    - **Linux**
+        ```bash
+         ~/sentiment-analysis-api$ source env/bin/activate
+        ```
+    - **Windows**
+        ```bash
+         #### env\Scripts\activate
+        ```
 
-4. **Install pip Dependencies**
+6. **Install pip Dependencies**
     ```bash
      (env) ~/sentiment-analysis-api$ pip install -r requirements.txt
     ```
 
-5. **Install <a href="https://www.ffmpeg.org/" target="_blank">FFmpeg</a>**
+7. **Install <a href="https://www.ffmpeg.org/" target="_blank">FFmpeg</a>**
     - **Linux**
         ```bash
         ~$ apt-get -y update && apt-get -y upgrade && apt-get install -y --no-install-recommends ffmpeg
@@ -83,13 +93,13 @@ This project aims to enhance RuxAiLab's capabilities by providing detailed senti
         - Add FFmpeg to the system path.
 
     
-6. **Run Flask App**
+8. **Run Flask App**
    -    In Debug Mode  [port 8080]
         ```bash
          ~/sentiment-analysis-api$ python3 -m run
         ```
         
-7. **Run API Documentation**
+9. **Run API Documentation**
      - Access the API documentation at: http://localhost:8080/apidocs
    
 <!-- Docker -->
