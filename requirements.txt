@@ -1,8 +1,17 @@
 # Flask Dependencies
-flask
-flask_cors
-flask_restx
+flask==3.1.0
+flask_cors==5.0.0
+flask_restx==1.3.0
 
-yaml
 
-numpy<2
+pydub==0.25.1
+pyaml==25.1.0
+requests==2.32.3
+
+
+torch==2.6.0
+transformers==4.48.2
+emoji==0.6.0
+
+pydantic==2.10.6
+#numpy<2
