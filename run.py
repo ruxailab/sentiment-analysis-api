@@ -5,7 +5,7 @@ from app.config import Config  # Import Config class
 
 if __name__ == '__main__':
     try:
-        print("Hello from the Sentiment Analysis Back End Server!")
+        print("Hello from the Sentiment Analysis Back End Server :D")
 
         # Create the Config instance (Singleton will ensure it's only loaded once)
         config = Config(config_path='config.yaml')
