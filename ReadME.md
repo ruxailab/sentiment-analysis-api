@@ -57,7 +57,6 @@ This project aims to enhance RuxAiLab's capabilities by providing detailed senti
     ~$ git clone https://github.com/ruxailab/sentiment-analysis-api.git
     ~$ cd sentiment-analysis-api
     ```
-
 2. **Create the Virtual Environment**
     - **Linux**
         ```bash
@@ -66,8 +65,7 @@ This project aims to enhance RuxAiLab's capabilities by providing detailed senti
     - **Windows**
         ```bash
          ### python -m venv env
-        ```
-    
+        ```    
 4. **Activate the virtual environment**
     - **Linux**
         ```bash
@@ -77,12 +75,10 @@ This project aims to enhance RuxAiLab's capabilities by providing detailed senti
         ```bash
          #### env\Scripts\activate
         ```
-
 6. **Install pip Dependencies**
     ```bash
      (env) ~/sentiment-analysis-api$ pip install -r requirements.txt
     ```
-
 7. **Install <a href="https://www.ffmpeg.org/" target="_blank">FFmpeg</a>**
     - **Linux**
         ```bash
@@ -90,63 +86,62 @@ This project aims to enhance RuxAiLab's capabilities by providing detailed senti
         ```
     - **Windows (Win10)**
         - Follow Tutorial [here](htps://www.youtube.com/watch?v=IECI72XEox0)
-        - Add FFmpeg to the system path.
-
-    
+        - Add FFmpeg to the system path.    
 8. **Run Flask App**
-   -    In Debug Mode  [port 8080]
+   -    In Debug Mode  [port 8001]
         ```bash
          ~/sentiment-analysis-api$ python3 -m run
         ```
-        
 9. **Run API Documentation**
-     - Access the API documentation at: http://localhost:8080/apidocs
+     - Access the API documentation at: http://localhost:8001/apidocs
    
 <!-- Docker -->
 ### <img align="center" width="60px" src="https://miro.medium.com/v2/resize:fit:1400/1*wXtyhpOL5NK_w39UvZpADQ.gif"> Docker <a id="docker"></a>
-1. **Clone the Repository**
+1. **Install Docker**
+    ```bash
+    ~$ sudo apt  install docker.io  
+    ~$ docker --version    ## Docker version 26.1.3, build 26.1.3-0ubuntu1~22.04.1
+    ```
+2. **Clone the Repository**
     ```bash
     ~$ git clone https://github.com/ruxailab/sentiment-analysis-api.git
     ~$ cd sentiment-analysis-api
     ```
-2. **[Optional if you want to use video saved on your machine] Copy Your Video File to /sentiment-analysis-api/demos**
-    ```bash
-    ~/sentiment-analysis-api$  cp <Video_file_absolute_path> ./demos
-    ```
 3. **Build Image**
     ```bash
-    ~/sentiment-analysis-api$ docker build -t sentiment_analysis:v0 .
+    ~/sentiment-analysis-api$ docker build -t sentiment_analysis_api .
     ```
-4. **Start Docker Conatiner (Port 8080)**
+6. **Start Docker Conatiner (Port 8001)**
     ```bash
-    ~/sentiment-analysis-api$ docker run --name sentiment_container -p 8080:8080 -v ./demos:/sentiment_analysis_app/demos sentiment_analysis:v0
+    ~/sentiment-analysis-api$ docker run  --name sentiment_analysis_api_app -p 8001:8001 -v ./:/sentiment_analysis_app sentiment_analysis_api
     ```
-5. **Run API Documentation**
-     - Access the API documentation at: http://localhost:8080/apidocs
+7. **Run API Documentation**
+     - Access the API documentation at: http://localhost:8001/apidocs
 
 
 <!-- Docker Compose -->
 ### <img align="center" width="60px" src="https://github.com/user-attachments/assets/af017ff7-3275-4ae5-b706-d3a3e85bd9bf">Docker Compose<a id="docker-compose"></a>
-1. **Clone the Repository**
+1. **Install Docker Compose**
+2. **Clone the Repository**
     ```bash
-    ~$ git clone https://github.com/ruxailab/sentiment-analysis-api.git
-    ~$ cd sentiment-analysis-api
+    ~$ sudo apt install docker-compose-v2
+    ~$ docker-compose version   ## Docker Compose version 2.27.1+ds1-0ubuntu1~22.04.1
     ```
-2. **Build Image Using Docker Compose**
+3. **Build Image Using Docker Compose**
     ```bash
-     ~/sentiment-analysis-api$ docker-compose build
+     ~/sentiment-analysis-api$ docker compose build
     ```
-3. **Start Docker Container**
+4. **Start Docker Container**
     ```bash
-    ~/sentiment-analysis-api$ docker-compose up
+    ~/sentiment-analysis-api$ docker compose up
     ```
-4. **Run API Documentation**
-     - Access the API documentation at: http://localhost:8080/apidocs
+5. **Run API Documentation**
+     - Access the API documentation at: http://localhost:8001/apidocs
    
 
 <!-- API Documentation -->
 ## <img align="center" width="80px" src="https://cdn.dribbble.com/users/1874602/screenshots/5647628/send-icon.gif"> API Documentation <a id="documentaion"></a>
-You can access the API documentation at [http://localhost:8080/apidocs](http://localhost:8080/apidocs) after running the Flask App.
+You can access the API documentation at [http://localhost:8001/apidocs](http://localhost:8001/apidocs) after running the Flask App.
 
 <!-- Postman -->
 ### Postman Collection
