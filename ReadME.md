@@ -1,6 +1,7 @@
 # <img align="center" width="60px" src="https://media.licdn.com/dms/image/C5612AQG0_zmxHXI5fQ/article-cover_image-shrink_720_1280/0/1520134887225?e=2147483647&v=beta&t=JswxDuKKsAJdkMfqcRMh0WwZF3wztqx4z-aPDPEt1YM"> Sentiment Analysis API
 <div align="center">
-    <img src="https://t4.ftcdn.net/jpg/08/92/22/07/360_F_892220774_JALjFtTUwSQBsgd1dOUvagKlhPYrDTKU.jpg"/>
+    <img src="https://litslink.com/wp-content/uploads/2021/03/sentiment-featured.jpg"/>
+<!--     <img src="https://t4.ftcdn.net/jpg/08/92/22/07/360_F_892220774_JALjFtTUwSQBsgd1dOUvagKlhPYrDTKU.jpg"/> -->
 </div>
 
 ## <img align="center" width="80px" src="https://cdn.dribbble.com/users/35253/screenshots/3984334/ideate_dribb.gif"> Table of Contents
