@@ -65,6 +65,7 @@ sentiment-analysis-api/
 │   ├── routes/             # Defines the routes for the API
 │   ├── services/           # Contains the business logic services
 │   └── ...                 # Additional app files
+├── docs/                   # Documentation files
 ├── docker-compose.yml      # Defines Docker Compose configuration
 ├── Dockerfile              # Defines Docker container setup
 ├── .env                    # Environment variables
