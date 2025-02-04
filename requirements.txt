@@ -5,4 +5,4 @@ flask_restx
 
 yaml
 
-numpy<2 
+numpy<2
