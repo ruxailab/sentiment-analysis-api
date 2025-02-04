@@ -1,0 +1,37 @@
+debug: true # Shared debug setting across all modules
+
+# Application Configuration
+flask:
+  app_name: Sentiment Analysis API
+  host: 0.0.0.0
+  port: 8001
+  debug: true
+
+
+# Audio Configuration
+# audio:
+
+# Transcription Configuration
+transcription:
+  default_model: "whisper"  # Specify the default transcription model (e.g., whisper, another_model)
+  whisper:                 # Whisper-specific configuration
+    model_size: "base"  # Choose between tiny, base, small, medium, large
+    device: 'cpu'               # `cpu` for CPU, or `cuda` GPU device
+    chunk_length_s: 30 
+  # another_model:           # Placeholder for another transcription model's configuration
+  #   api_key: "your_api_key"
+  #   endpoint: "https://api.example.com/transcribe"
+
+# Sentiment Analysis Configuration
+sentiment_analysis:
+  default_model: "bertweet"  # Specify the default sentiment analysis model (e.g., bertweet, another_model)
+  bertweet:                  # Vader-specific configuration
+    model_name: "finiteautomata/bertweet-base-sentiment-analysis"
+    device: 'cpu'               # `cpu` for CPU, or `cuda` GPU device
+  # another_model:          # Placeholder for another sentiment analysis model's configuration
+  #   api_key: "your_api_key"
+  #   endpoint: "https://api.example.com/sentiment"
+
+# AudioTranscriptionSentimentPipeline Configuration
+audio_transcription_sentiment_pipeline:
+  remove_audio: false  # Specify whether to remove audio files after processing

@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  app:  # Name of the service
+    build:
+      context: .  # Current directory (sentiment-analysis-api/) as the build context
+      dockerfile: Dockerfile
+    image: sentiment_analysis_api # Tag for the image
+    ports:
+      - "8001:8001"  # Map port 8080 of the container to port 8080 on the host
+    volumes:
+      - .:/sentiment_analysis_api    # Bind mount for project
