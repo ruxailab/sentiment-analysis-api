@@ -1,4 +1,4 @@
-# <img align="center" width="60px" src="https://media.licdn.com/dms/image/C5612AQG0_zmxHXI5fQ/article-cover_image-shrink_720_1280/0/1520134887225?e=2147483647&v=beta&t=JswxDuKKsAJdkMfqcRMh0WwZF3wztqx4z-aPDPEt1YM"> Sentiment Analysis API
+# Sentiment Analysis API
 <div align="center">
     <img src="https://litslink.com/wp-content/uploads/2021/03/sentiment-featured.jpg"/>
 <!--     <img src="https://t4.ftcdn.net/jpg/08/92/22/07/360_F_892220774_JALjFtTUwSQBsgd1dOUvagKlhPYrDTKU.jpg"/> -->
@@ -59,25 +59,27 @@ Here is the folder structure of the Sentiment Analysis API project:
 sentiment-analysis-api/
 ├── app/
 │   ├── __init__.py         # Initializes the app and its components
-│   ├── config.yaml         # Configuration for app settings
-│   ├── routes.py           # Defines the routes for the API
+│   ├── config.py           # Configuration for app settings
+│   ├── data/               # Data handling module
+│   ├── models/             # Contains the models for sentiment analysis
+│   ├── routes/             # Defines the routes for the API
+│   ├── services/           # Contains the business logic services
 │   └── ...                 # Additional app files
 ├── docker-compose.yml      # Defines Docker Compose configuration
 ├── Dockerfile              # Defines Docker container setup
 ├── .env                    # Environment variables
-├── pycache/                # Cached Python files
 ├── pytest.ini              # Pytest configuration
 ├── README.md               # Project documentation
+├── CONTRIBUTING.md.md               # Project documentation
 ├── requirements.txt        # Lists required Python dependencies
 ├── run.py                  # Entry point to run the app
 ├── samples/                # Sample input files for testing
 ├── static/                 # Static files (e.g., images)
 ├── tests/                  # Contains unit and integration tests
+│   ├── coverage/           # Coverage reports
+│   ├── integration/        # Integration tests
 │   ├── unit/               # Unit tests
-│   │   ├── test_data/      # Unit tests for data layer
-│   │   ├── test_service/   # Unit tests for service layer
-│   │   └── test_routes/    # Unit tests for routes layer
-│   └── integration/        # Integration tests
+│   └── ...                 # Other test files
 └── ...                     # Other files
 ```
 This structure helps separate the application logic, configuration files, test files, and Docker-related configurations.
