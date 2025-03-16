@@ -68,8 +68,6 @@ class BertweetSentiment(nn.Module):
 
         Args:
             texts (list): List of input texts for sentiment analysis.
-            batch_size (int, optional): Maximum number of texts to process in one forward pass.
-                If None, it uses a default value from the configuration (or processes all if not set).
 
         Returns:
             list: A list of dictionaries with 'label' and 'confidence' for each text.
