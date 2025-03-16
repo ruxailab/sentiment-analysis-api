@@ -42,6 +42,22 @@ class SentimentDataLayer:
             print(f"[error] [Data Layer] [SentimentDataLayer] [analyze] An error occurred during sentiment analysis: {str(e)}")
             return {'error': f'An unexpected error occurred while processing the request.'}  # Generic error message
         
+    def analyze_batch(self, texts: list) -> list:
+        """
+        Perform sentiment analysis on a list of texts.
+        :param texts: List of input texts.
+        :return: List of dictionaries each with predicted label and confidence.
+        """
+        try:
+            # Call the batch_forward method on the underlying model
+            results = self.model.batch_forward(texts)
+            return results
+        
+        except Exception as e:
+            print(f"[error] [Data Layer] [SentimentDataLayer] [analyze_batch] An error occurred: {str(e)}")
+            # Return an error for each text in case of failure
+            return [{"error": "An unexpected error occurred while processing batch request."} for _ in texts]
+        
 
 # if __name__ == "__main__":
 #     config = {

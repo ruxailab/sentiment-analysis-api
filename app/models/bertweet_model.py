@@ -61,6 +61,41 @@ class BertweetSentiment(nn.Module):
         predicted_label = self.class_labels[predicted_class]
 
         return outputs, probabilities, predicted_label, probabilities[0][predicted_class].item()
+    
+    def batch_forward(self, texts: list) -> list:
+        """
+        Perform sentiment analysis on a list of texts in batch.
+
+        Args:
+            texts (list): List of input texts for sentiment analysis.
+
+        Returns:
+            list: A list of dictionaries with 'label' and 'confidence' for each text.
+        """
+        # batch_size get it from the configuration
+        batch_size = self.config.get("batch_size", len(texts))
+        
+        results = []
+        # If the number of texts exceeds the batch_size, split them
+        if len(texts) > batch_size:
+            for i in range(0, len(texts), batch_size):
+                sub_texts = texts[i : i + batch_size]
+                results.extend(self.batch_forward(sub_texts))
+            return results
+
+        # Otherwise, process the batch at once.
+        inputs = self.tokenizer(texts, return_tensors="pt", truncation=True, padding=True).to(self.device)
+        outputs = self.model(**inputs)
+        probabilities = torch.nn.functional.softmax(outputs.logits, dim=-1)
+        for i in range(probabilities.size(0)):
+            predicted_class = torch.argmax(probabilities[i]).item()
+            predicted_label = self.class_labels[predicted_class]
+            confidence = probabilities[i][predicted_class].item()
+            results.append({
+                "label": predicted_label,
+                "confidence": confidence
+            })
+        return results
 
 
 if __name__ == "__main__":
