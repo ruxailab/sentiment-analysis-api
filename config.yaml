@@ -28,6 +28,7 @@ sentiment_analysis:
   bertweet:                  # Vader-specific configuration
     model_name: "finiteautomata/bertweet-base-sentiment-analysis"
     device: 'cpu'               # `cpu` for CPU, or `cuda` GPU device
+    batch_size: 2
   # another_model:          # Placeholder for another sentiment analysis model's configuration
   #   api_key: "your_api_key"
   #   endpoint: "https://api.example.com/sentiment"
@@ -35,3 +36,5 @@ sentiment_analysis:
 # AudioTranscriptionSentimentPipeline Configuration
 audio_transcription_sentiment_pipeline:
   remove_audio: false  # Specify whether to remove audio files after processing
+
+batch_size : 1
