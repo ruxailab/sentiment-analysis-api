@@ -100,7 +100,9 @@ def register_routes(api):
                 
 
                 # Call the service to perform sentiment analysis on the audio transcript
-                result = service.process(url = url, start_time_ms = start_time_ms, end_time_ms = end_time_ms)
+                # result = service.process(url = url, start_time_ms = start_time_ms, end_time_ms = end_time_ms)
+                result = service.process_batch(url = url, start_time_ms = start_time_ms, end_time_ms = end_time_ms)
+                
 
                 if 'error' in result:
                     return {

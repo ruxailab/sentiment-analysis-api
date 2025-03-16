@@ -122,7 +122,70 @@ class AudioTranscriptionSentimentPipeline:
         except Exception as e:
             print(f"[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] An error occurred during processing: {str(e)}")
             return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
+    
+
+    def process_batch(self, url: str, start_time_ms: int, end_time_ms: int = None, user_id: str = None) -> dict:
+        """
+        Process the Video/Audio file by extracting a segment, transcribing it, and performing sentiment analysis.
+        :param url: URL or local file path to the audio file.
+        :param start_time_ms: Start time of the segment to extract (in milliseconds).
+        :param end_time_ms: End time of the segment to extract (in milliseconds).
+        :param user_id: (Optional) User ID for creating user-specific subdirectories
+        :return: Transcription, sentiment analysis, and audio segment details
+        """
+        try:
+            # Step(1) Extract the audio segment
+            audio_result = self.audio_service.extract_audio(url, start_time_ms, end_time_ms, user_id)
+            if isinstance(audio_result, dict) and 'error' in audio_result:
+                return {'error': audio_result["error"]}
         
+            if self.debug:
+                print("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [audio_result]", audio_result)
+        
+            # Parse the audio segment details
+            audio_path = audio_result['audio_path']
+            start_time_ms = audio_result['start_time_ms']
+            end_time_ms = audio_result['end_time_ms']
+
+            # Step(2) Transcribe the audio segment
+            transcription_result = self.transcript_service.transcribe(audio_path)
+            if isinstance(transcription_result, dict) and 'error' in transcription_result:
+                return {'error': transcription_result['error']}
+        
+            if self.debug:
+                print("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [transcription_result]", transcription_result)
+        
+            # Parse the transcription details
+            transcription = transcription_result['transcription']
+            chunks = transcription_result['chunks']  # Each chunk: {'timestamp': (,), 'text': ...}
+
+            # Remove the audio file after processing if needed
+            if self.remove_audio:
+                print(f"[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] Removing audio file: {audio_path}")
+                os.remove(audio_path)
+
+            # Step(3) Batch Sentiment Analysis
+            texts = [chunk['text'] for chunk in chunks]
+            batch_results = self.sentiment_service.analyze_batch(texts)
+            # Map batch results back to each chunk
+            for i, result in enumerate(batch_results):
+                if isinstance(result, dict) and 'error' in result:
+                    chunks[i]['error'] = result['error']
+                else:
+                    chunks[i]['label'] = result['label']
+                    chunks[i]['confidence'] = result['confidence']
+
+            # Return the transcription, sentiment analysis, and audio segment details
+            return {
+                'audio_path': audio_path,
+                'start_time_ms': start_time_ms,
+                'end_time_ms': end_time_ms,
+                'transcription': transcription,
+                'utterances_sentiment': chunks,
+            }
+        except Exception as e:
+            print(f"[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] An error occurred during processing: {str(e)}")
+            return {'error': 'An unexpected error occurred while processing the request.'}
 
 
 # if __name__ == "__main__":
