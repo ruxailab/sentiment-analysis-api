@@ -1,11 +1,12 @@
 from app import create_app
 
-from app.config import Config  # Import Config class
+from app.utils.logger import  logger  # Import the logger
 
+from app.config import Config  # Import Config class
 
 if __name__ == '__main__':
     try:
-        print("Hello from the Sentiment Analysis Back End Server :D")
+        logger.info("Hello from the Sentiment Analysis Back End Server :D")
 
         # Create the Config instance (Singleton will ensure it's only loaded once)
         config = Config(config_path='config.yaml')
@@ -18,6 +19,5 @@ if __name__ == '__main__':
         app.run(host=flask_app_config['host'], port=flask_app_config['port'], debug=flask_app_config['debug'])
 
     except Exception as e:
-        print(f"Unexpected Error in the Back End Server: {e}")
-
+        logger.error(f"Unexpected Error in the Back End Server: {e}")
         

@@ -2,6 +2,8 @@ import os
 
 from app.config import Config
 
+from app.utils.logger import logger
+
 # Services
 from app.services.audio_service import AudioService
 from app.services.transcript_service import TranscriptService
@@ -64,7 +66,8 @@ class AudioTranscriptionSentimentPipeline:
                 }
             
             if self.debug:
-                print("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [audio_result]", audio_result)
+                logger.debug(f"[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [audio_result]", audio_result)
+                # print("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [audio_result]", audio_result)
             
             # Parse the audio segment details
             audio_path = audio_result['audio_path']
@@ -80,7 +83,8 @@ class AudioTranscriptionSentimentPipeline:
                 }
             
             if self.debug:
-                print("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [transcription_result]", transcription_result)
+                logger.debug("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [transcription_result]", transcription_result)
+                # print("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [transcription_result]", transcription_result)
 
             # Parse the transcription details
             transcription = transcription_result['transcription'] # Full transcription text
@@ -89,7 +93,8 @@ class AudioTranscriptionSentimentPipeline:
 
             # Remove the audio file after processing
             if self.remove_audio:
-                print(f"[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] Removing audio file: {audio_path}")
+                logger.debug(f"[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] Removing audio file: {audio_path}")
+                # print(f"[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] Removing audio file: {audio_path}")
                 os.remove(audio_path)
 
 
@@ -100,12 +105,14 @@ class AudioTranscriptionSentimentPipeline:
 
                 sentiment_result = self.sentiment_service.analyze(text)
                 if isinstance(sentiment_result, dict) and 'error' in sentiment_result:
-                    print("[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [sentiment_result]", sentiment_result)
+                    logger.error(f"[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [sentiment_result]", sentiment_result)
+                    # print("[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [sentiment_result]", sentiment_result)
                     chunk['error'] = sentiment_result['error']  # Add the error message to the chunk
                     continue # Skip this chunk if there was an error :D
 
                 if self.debug:
-                    print("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [sentiment_result]", sentiment_result)
+                    logger.debug("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [sentiment_result]", sentiment_result)
+                    # print("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [sentiment_result]", sentiment_result)
 
                 # Add the sentiment result to the chunk
                 chunk['label'] = sentiment_result['label']
@@ -120,7 +127,8 @@ class AudioTranscriptionSentimentPipeline:
                 'utterances_sentiment': chunks,
             }
         except Exception as e:
-            print(f"[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] An error occurred during processing: {str(e)}")
+            logger.error(f"[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] An error occurred during processing: {str(e)}")
+            # print(f"[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] An error occurred during processing: {str(e)}")
             return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
         
 

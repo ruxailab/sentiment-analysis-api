@@ -1,0 +1,8 @@
+[run]
+data_file = tests/coverage/.coverage
+omit =
+    /usr/lib/python3/dist-packages/*
+    /tmp/*
+
+[html]
+directory = tests/coverage/coverage_html_report

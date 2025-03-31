@@ -5,6 +5,8 @@ This Module is responsible for handling the transcription data layer.
 # Model Layer
 from app.models.whisper_model import WhisperTranscript
 
+from app.utils.logger import logger
+
 class TranscriptDataLayer:
     def __init__(self, config: dict):
         """
@@ -40,7 +42,8 @@ class TranscriptDataLayer:
         
         except Exception as e:
             # Handle any errors that occur during transcription
-            print(f"[error] [Data Layer] [TranscriptDataLayer] [transcribe] An error occurred during transcription: {str(e)}")
+            logger.error(f"[error] [Data Layer] [TranscriptDataLayer] [transcribe] An error occurred during transcription: {str(e)}")
+            # print(f"[error] [Data Layer] [TranscriptDataLayer] [transcribe] An error occurred during transcription: {str(e)}")
             return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
     
 # if __name__ == "__main__":

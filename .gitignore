@@ -1,0 +1,11 @@
+# Ignore Python cache directories
+__pycache__/
+*.pyc
+*.pyo
+
+static/
+
+logs/
+
+# Ignore Testing Coverage Results
+tests/coverage/.coverage

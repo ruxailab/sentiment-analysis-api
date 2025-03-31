@@ -6,6 +6,7 @@ flask:
   host: 0.0.0.0
   port: 8001
   debug: true
+  logs_dir: "logs"  # Directory to store logs
 
 
 # Audio Configuration
@@ -17,6 +18,7 @@ transcription:
   whisper:                 # Whisper-specific configuration
     model_size: "base"  # Choose between tiny, base, small, medium, large
     device: 'cpu'               # `cpu` for CPU, or `cuda` GPU device
+    # device: 'cuda'               # `cpu` for CPU, or `cuda` GPU device
     chunk_length_s: 30 
   # another_model:           # Placeholder for another transcription model's configuration
   #   api_key: "your_api_key"
@@ -28,6 +30,7 @@ sentiment_analysis:
   bertweet:                  # Vader-specific configuration
     model_name: "finiteautomata/bertweet-base-sentiment-analysis"
     device: 'cpu'               # `cpu` for CPU, or `cuda` GPU device
+    # device: 'cuda'               # `cpu` for CPU, or `cuda` GPU device
   # another_model:          # Placeholder for another sentiment analysis model's configuration
   #   api_key: "your_api_key"
   #   endpoint: "https://api.example.com/sentiment"

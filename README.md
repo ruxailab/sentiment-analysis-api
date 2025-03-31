@@ -40,7 +40,7 @@ This project aims to enhance RuxAiLab's capabilities by providing detailed senti
 ## <img  align= center width =60px  height =70px src="https://media4.giphy.com/media/ux6vPam8BubuCxbW20/giphy.gif?cid=6c09b952gi267xsujaqufpqwuzeqhbi88q0ohj83jwv6dpls&ep=v1_stickers_related&rid=giphy.gif&ct=s"> Built Using<a id="tools"></a>
 <table style="border-collapse: collapse; border: none;">
   <tr>
-    <td><img height="60" src="https://dragonz.dev/assets/images/os/linux.png"/></td>
+    <td><img height="60" src="https://pngimg.com/d/linux_PNG29.png"/></td>
     <td><img height="60" src="https://miro.medium.com/v2/resize:fit:1400/0*adyeTInZ7lebNANK.png"/></td>
     <td><img height="40" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/PyTorch_logo_black.svg/2560px-PyTorch_logo_black.svg.png"/></td>
     <td><img height="70" src="https://cdn.worldvectorlogo.com/logos/docker.svg"/></td>
@@ -207,7 +207,7 @@ For testing the API endpoints, you can use the following Postman collection:
         ```
     - Run API Layer unit tests using the following command:
         ```bash
-        ~/sentiment-analysis-api$  coverage run  -m pytest ./tests/unit/test_routes/
+        ~/sentiment-analysis-api$ coverage run  -m pytest ./tests/unit/test_routes/
         ```
     - Run all the unit tests using the following command:
         ```bash
@@ -235,7 +235,7 @@ For testing the API endpoints, you can use the following Postman collection:
         ```
         - Open the HTML file in the browser:
             ```bash
-            ~/sentiment-analysis-api$ firefox htmlcov/index.html
+            ~/sentiment-analysis-api$ firefox ./tests/coverage/coverage_html_report/index.html 
             ```
 
 

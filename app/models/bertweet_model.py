@@ -63,30 +63,30 @@ class BertweetSentiment(nn.Module):
         return outputs, probabilities, predicted_label, probabilities[0][predicted_class].item()
 
 
-if __name__ == "__main__":
-    config = {
-        'debug': True,
-        'sentiment_analysis': {
-            'default_model': "bertweet",  # Specify the default sentiment analysis model (e.g., bertweet, another_model)
-            'bertweet': {
-                'model_name': "finiteautomata/bertweet-base-sentiment-analysis",
-                'device': 'cpu'
-            }
-        }
-    }
-    print("config",config)
-    model = BertweetSentiment(config)
+# if __name__ == "__main__":
+#     config = {
+#         'debug': True,
+#         'sentiment_analysis': {
+#             'default_model': "bertweet",  # Specify the default sentiment analysis model (e.g., bertweet, another_model)
+#             'bertweet': {
+#                 'model_name': "finiteautomata/bertweet-base-sentiment-analysis",
+#                 'device': 'cpu'
+#             }
+#         }
+#     }
+#     print("config",config)
+#     model = BertweetSentiment(config)
 #     print("model",model)
 #     print("model.class_labels",model.class_labels)
 
-    text = "I love the new features of the app!"
-    print(model(text))
+#     text = "I love the new features of the app!"
+#     print(model(text))
 
-    # text = "I hate the new features of the app!"
-    # print(model(text))
+#     text = "I hate the new features of the app!"
+#     print(model(text))
 
-    # text = "Hi how are u?"
-    # print(model(text))
+#     text = "Hi how are u?"
+#     print(model(text))
 
 # # Run:
 # # python -m app.models.bertweet_model

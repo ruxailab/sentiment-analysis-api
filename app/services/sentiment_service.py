@@ -3,6 +3,8 @@ This module contains the service layer for sentiment analysis.
 """
 from app.config import Config
 
+from app.utils.logger import logger
+
 # Data Layer for fetching and processing transcripts
 from app.data.sentiment_data import SentimentDataLayer
 
@@ -35,7 +37,8 @@ class SentimentService:
             }
         
         except Exception as e:
-            print(f"[error] [Service Layer] [SentimentService] [analyze] An error occurred during sentiment analysis: {str(e)}")
+            logger.error(f"[error] [Service Layer] [SentimentService] [analyze] An error occurred during sentiment analysis: {str(e)}")
+            # print(f"[error] [Service Layer] [SentimentService] [analyze] An error occurred during sentiment analysis: {str(e)}")
             return {'error': f'An unexpected error occurred while processing the request.'}  # Generic error message
         
 

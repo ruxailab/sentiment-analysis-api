@@ -7,6 +7,8 @@ from pydub import AudioSegment
 
 from app.config import Config
 
+from app.utils.logger import logger
+
 # Data layer for fetching audio files
 from app.data.audio_data import AudioDataLayer
 
@@ -29,10 +31,10 @@ class AudioService:
         :return: Path to the saved audio file or error message
         """
         try:
-            # Validate start_time_ms (must be a non-negative integer)
-            if not isinstance(start_time_ms, int) or start_time_ms < 0:
+            # Validate start_time_ms (must be a non-negative number)
+            if not isinstance(start_time_ms, (int, float)) or start_time_ms < 0:
                 return {
-                    'error': 'Start time must be a non-negative integer.'
+                    'error': 'Start time must be a non-negative number.'
                 }
         
             # Fetch the audio file using the AudioDataLayer [Data Layer]
@@ -69,7 +71,8 @@ class AudioService:
             
         except Exception as e:
             # Catch any other exceptions
-            print(f"[error] [Service Layer] [AudioService] [extract_audio] An error occurred during the audio extraction: {str(e)}")
+            logger.error(f"[error] [Service Layer] [AudioService] [extract_audio] An error occurred during the audio extraction: {str(e)}")
+            # print(f"[error] [Service Layer] [AudioService] [extract_audio] An error occurred during the audio extraction: {str(e)}")
             return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
 
 

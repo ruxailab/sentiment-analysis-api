@@ -55,7 +55,7 @@ class TestAudioService:
             mock_audio_data_layer__fetch_audio.assert_not_called()
 
             assert result == {
-                "error": "Start time must be a non-negative integer.",
+                "error": "Start time must be a non-negative number.",
             }
             
 
