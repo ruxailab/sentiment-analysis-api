@@ -31,10 +31,10 @@ class AudioService:
         :return: Path to the saved audio file or error message
         """
         try:
-            # Validate start_time_ms (must be a non-negative integer)
-            if not isinstance(start_time_ms, int) or start_time_ms < 0:
+            # Validate start_time_ms (must be a non-negative number)
+            if not isinstance(start_time_ms, (int, float)) or start_time_ms < 0:
                 return {
-                    'error': 'Start time must be a non-negative integer.'
+                    'error': 'Start time must be a non-negative number.'
                 }
         
             # Fetch the audio file using the AudioDataLayer [Data Layer]

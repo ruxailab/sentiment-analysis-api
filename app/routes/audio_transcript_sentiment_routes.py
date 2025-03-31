@@ -14,8 +14,18 @@ def register_routes(api):
     # Define the model for the audio transcript sentiment analysis request body
     audio_transcript_sentiment_request_model = api.model('AudioTranscriptSentimentRequestModel', {
         'url': fields.String(required=True, description='URL or path of the audio/video file.', example='https://example.com/audio.mp3'),
-        'start_time_ms': fields.Integer(required=True, description='Start time in milliseconds.', example=0),
-        'end_time_ms': fields.Integer(description='End time in milliseconds.', example=5000),
+        'start_time_ms': fields.Raw(
+            required=True,
+            description='Start time in milliseconds (integer or float).',
+            example=0,
+            validate=lambda x: isinstance(x, (int, float)) and x >= 0
+        ),
+        'end_time_ms': fields.Raw(
+            required=True,
+            description='End time in milliseconds (integer or float).',
+            example=5000,
+            validate=lambda x: isinstance(x, (int, float)) and x >= 0
+        ),
     })
 
     audio_transcript_sentiment_bad_request_model = api.model('AudioTranscriptSentimentBadRequestModel', {
@@ -34,11 +44,21 @@ def register_routes(api):
         'status': fields.String(required=True, description='The status of the response', example='success'),
         'data': fields.Nested(api.model('AudioTranscriptSentimentDataModel', {
             'audio_path': fields.String(required=True, description='URL of the extracted audio file.', example='https://example.com/extracted_audio.mp3'),
-            'start_time_ms': fields.Integer(required=True, description='Start time in milliseconds.', example=0),
-            'end_time_ms': fields.Integer(required=True, description='End time in milliseconds.', example=5000),
+            'start_time_ms': fields.Raw(
+                required=True,
+                description='Start time in milliseconds (integer or float).',
+                example=0,
+                validate=lambda x: isinstance(x, (int, float)) and x >= 0
+            ),
+            'end_time_ms': fields.Raw(
+                required=True,
+                description='End time in milliseconds (integer or float).',
+                example=5000,
+                validate=lambda x: isinstance(x, (int, float)) and x >= 0
+            ),
             'transcription': fields.String(required=True, description='Extracted transcript.', example='Hello, world!'),
             'utterances_sentiment': fields.List(fields.Nested(api.model('AudioTranscriptSentimentUtteranceModel', {
-                'timestamp': fields.List(fields.Integer, required=True, description='Start and end time of the utterance.', example=[0, 5000]),
+                'timestamp': fields.List(fields.Float, required=True, description='Start and end time of the utterance.', example=[0, 5000]),
                 'text': fields.String(required=True, description='The utterance text.', example='Hello, world!'),
                 'label': fields.String(required=True, description='The sentiment of the utterance.', enum= ['POS', 'NEG', 'NEU'], example='POS'),
                 'confidence': fields.Float(required=True, description='The confidence score of the sentiment.', example=0.95)

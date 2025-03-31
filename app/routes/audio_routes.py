@@ -16,8 +16,18 @@ def register_routes(api):
     # Define the model for the audio extraction request body
     audio_extract_request_model = api.model('AudioExtractRequestModel', {
         'url': fields.String(required=True, description='URL or path of the audio/video file.', example='https://example.com/audio.mp3'),
-        'start_time_ms': fields.Integer(required=True, description='Start time in milliseconds.', example=0),
-        'end_time_ms': fields.Integer(description='End time in milliseconds.', example=5000),
+        'start_time_ms': fields.Raw(
+            required=True,
+            description='Start time in milliseconds (integer or float).',
+            example=0,
+            validate=lambda x: isinstance(x, (int, float)) and x >= 0
+        ),
+        'end_time_ms': fields.Raw(
+            required=True,
+            description='End time in milliseconds (integer or float).',
+            example=5000,
+            validate=lambda x: isinstance(x, (int, float)) and x >= 0
+        ),
         'user_id': fields.String(description='User ID for creating user-specific subdirectories.', example='user123')
     })
 
@@ -37,8 +47,18 @@ def register_routes(api):
         'status': fields.String(required=True, description='The status of the response', example='success'),
         'data': fields.Nested(api.model('AudioExtractDataModel', {
             'audio_path': fields.String(required=True, description='URL of the extracted audio file.', example='https://example.com/extracted_audio.mp3'),
-            'start_time_ms': fields.Integer(required=True, description='Start time in milliseconds.', example=0),
-            'end_time_ms': fields.Integer(required=True, description='End time in milliseconds.', example=5000)
+            'start_time_ms': fields.Raw(
+                required=True,
+                description='Start time in milliseconds (integer or float).',
+                example=0,
+                validate=lambda x: isinstance(x, (int, float)) and x >= 0
+            ),
+            'end_time_ms': fields.Raw(
+                required=True,
+                description='End time in milliseconds (integer or float).',
+                example=5000,
+                validate=lambda x: isinstance(x, (int, float)) and x >= 0
+            ),
         }))  # Embed the data model
     })
 

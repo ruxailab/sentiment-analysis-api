@@ -6,3 +6,5 @@ __pycache__/
 static/
 
 logs/
+
+# Ignore Testing Coverage Results
