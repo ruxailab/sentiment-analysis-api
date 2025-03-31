@@ -161,10 +161,14 @@ This structure helps separate the application logic, configuration files, test f
 <!-- Docker Compose -->
 ### <img align="center" width="60px" src="https://github.com/user-attachments/assets/af017ff7-3275-4ae5-b706-d3a3e85bd9bf">Docker Compose<a id="docker-compose"></a>
 1. **Install Docker Compose**
-2. **Clone the Repository**
     ```bash
     ~$ sudo apt install docker-compose-v2
     ~$ docker-compose version   ## Docker Compose version 2.27.1+ds1-0ubuntu1~22.04.1
+    ```
+2. **Clone the Repository**     
+    ```bash
+    ~$ git clone https://github.com/ruxailab/sentiment-analysis-api.git
+    ~$ cd sentiment-analysis-api
     ```
 3. **Build Image Using Docker Compose**
     ```bash
