@@ -7,6 +7,8 @@ from pydub import AudioSegment
 
 from app.config import Config
 
+from app.utils.logger import logger
+
 # Data layer for fetching audio files
 from app.data.audio_data import AudioDataLayer
 
@@ -69,7 +71,8 @@ class AudioService:
             
         except Exception as e:
             # Catch any other exceptions
-            print(f"[error] [Service Layer] [AudioService] [extract_audio] An error occurred during the audio extraction: {str(e)}")
+            logger.error(f"[error] [Service Layer] [AudioService] [extract_audio] An error occurred during the audio extraction: {str(e)}")
+            # print(f"[error] [Service Layer] [AudioService] [extract_audio] An error occurred during the audio extraction: {str(e)}")
             return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
 
 

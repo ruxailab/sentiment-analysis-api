@@ -4,6 +4,8 @@ This module contains the service layer for transcribing audio files.
 import os
 from app.config import Config
 
+from app.utils.logger import logger
+
 # Data Layer for fetching and processing transcripts
 from app.data.transcript_data import TranscriptDataLayer
 
@@ -43,7 +45,8 @@ class TranscriptService:
         
         except Exception as e:
             # Catch any other exceptions
-            print(f"[error] [Service Layer] [TranscriptService] [transcribe] An error occurred during transcription: {str(e)}")
+            logger.error(f"[error] [Service Layer] [TranscriptService] [transcribe] An error occurred during transcription: {str(e)}")
+            # print(f"[error] [Service Layer] [TranscriptService] [transcribe] An error occurred during transcription: {str(e)}")
             return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
         
         

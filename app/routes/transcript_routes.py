@@ -5,6 +5,8 @@ This module contains the routes for the transcription endpoint.
 from flask_restx import Namespace, Resource, fields
 from flask import request
 
+from app.utils.logger import logger
+
 # Services
 from app.services.transcript_service import TranscriptService
 
@@ -81,7 +83,8 @@ def register_routes(api):
                 }, 200
             
             except Exception as e:
-                print(f"[error] [Route Layer] [TranscriptionTranscribe] [post] An error occurred: {str(e)}")
+                logger.error(f"[error] [Route Layer] [TranscriptionTranscribe] [post] An error occurred: {str(e)}")
+                # print(f"[error] [Route Layer] [TranscriptionTranscribe] [post] An error occurred: {str(e)}")
                 return {
                     'status': 'error',
                     "error": 'An unexpected error occurred while processing the request.', # Generic error message                    
@@ -160,7 +163,8 @@ def register_routes(api):
                 }, 200
             
             except Exception as e:
-                print(f"[error] [Route Layer] [TranscriptionChunks] [post] An error occurred: {str(e)}")
+                logger.error(f"[error] [Route Layer] [TranscriptionChunks] [post] An error occurred: {str(e)}")
+                # print(f"[error] [Route Layer] [TranscriptionChunks] [post] An error occurred: {str(e)}")
                 return {
                     'status': 'error',
                     "error": 'An unexpected error occurred while processing the request.', # Generic error message

@@ -5,6 +5,8 @@ This module contains the routes for the audio endpoint.
 from flask_restx import Namespace, Resource,fields
 from flask import  request
 
+from app.utils.logger import logger
+
 # Services
 from app.services.audio_service import AudioService
 
@@ -116,7 +118,8 @@ def register_routes(api):
             
             except Exception as e:
                 # Log the exception (optional)
-                print(f"[error] [Route Layer] [AudioExtract] [post] An unexpected error occurred during audio extraction: {str(e)}")
+                logger.error(f"[error] [Route Layer] [AudioExtract] [post] An unexpected error occurred during audio extraction: {str(e)}")
+                # print(f"[error] [Route Layer] [AudioExtract] [post] An unexpected error occurred during audio extraction: {str(e)}")
                 return {
                     "status": "error",
                     "error": 'An unexpected error occurred while processing the request.', # Generic error message

@@ -5,6 +5,8 @@ This module contains the routes for the sentiment endpoint.
 from flask_restx import Namespace, Resource, fields
 from flask import request
 
+from app.utils.logger import logger
+
 # Services
 from app.services.sentiment_service import SentimentService
 
@@ -82,7 +84,8 @@ def register_routes(api):
                 }
             
             except Exception as e:
-                print(f"[error] [Route Layer] [SentimentAnalyze] [post] An error occurred: {str(e)}")
+                logger.error(f"[error] [Route Layer] [SentimentAnalyze] [post] An error occurred: {str(e)}")
+                # print(f"[error] [Route Layer] [SentimentAnalyze] [post] An error occurred: {str(e)}")
                 return {
                     'status': 'error',
                     "error": 'An unexpected error occurred while processing the request.', # Generic error message
