@@ -168,7 +168,7 @@ This structure helps separate the application logic, configuration files, test f
 1. **Install Docker Compose**
     ```bash
     ~$ sudo apt install docker-compose-v2
-    ~$ docker-compose --version   ## Docker Compose version 2.27.1+ds1-0ubuntu1~22.04.1
+    ~$ docker compose --version   ## Docker Compose version 2.27.1+ds1-0ubuntu1~22.04.1
     ```
 2. **Clone the Repository**     
     ```bash
@@ -177,11 +177,11 @@ This structure helps separate the application logic, configuration files, test f
     ```
 3. **Build Image Using Docker Compose**
     ```bash
-     ~/sentiment-analysis-api$ docker-compose build
+     ~/sentiment-analysis-api$ docker compose build
     ```
 4. **Start Docker Container**
     ```bash
-    ~/sentiment-analysis-api$ docker-compose up
+    ~/sentiment-analysis-api$ docker compose up
     ```
 5. **Run API Documentation**
      - Access the API documentation at: http://localhost:8001/apidocs
