@@ -180,10 +180,15 @@ This structure helps separate the application logic, configuration files, test f
      ~/sentiment-analysis-api$ docker compose build
     ```
 4. **Start Docker Container**
+   - **New Container**  
     ```bash
     ~/sentiment-analysis-api$ docker compose up
     ```
-5. **Run API Documentation**
+   - **Existing Container**
+    ```bash
+    ~/sentiment-analysis-api$ docker compose start
+    ```
+6. **Run API Documentation**
      - Access the API documentation at: http://localhost:8001/apidocs
    
 
