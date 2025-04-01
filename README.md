@@ -159,11 +159,7 @@ This structure helps separate the application logic, configuration files, test f
     ```bash
     ~/sentiment-analysis-api$ docker start --name sentiment_analysis_api_app
     ```
-7. **Start Docker Conatiner (Port 8001)**
-    ```bash
-    ~/sentiment-analysis-api$ docker run  --name sentiment_analysis_api_app -p 8001:8001 -v ./:/sentiment-analysis-api sentiment_analysis_api
-    ```
-8. **Run API Documentation**
+7. **Run API Documentation**
      - Access the API documentation at: http://localhost:8001/apidocs
 
 
