@@ -8,4 +8,4 @@ services:
     ports:
       - "8001:8001"  # Map port 8080 of the container to port 8080 on the host
     volumes:
-      - .:/sentiment_analysis_api    # Bind mount for project
+      - .:/sentiment-analysis-api    # Bind mount for project
