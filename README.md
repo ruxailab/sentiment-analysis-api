@@ -40,7 +40,7 @@ This project aims to enhance RuxAiLab's capabilities by providing detailed senti
 ## <img  align= center width =60px  height =70px src="https://media4.giphy.com/media/ux6vPam8BubuCxbW20/giphy.gif?cid=6c09b952gi267xsujaqufpqwuzeqhbi88q0ohj83jwv6dpls&ep=v1_stickers_related&rid=giphy.gif&ct=s"> Built Using<a id="tools"></a>
 <table style="border-collapse: collapse; border: none;">
   <tr>
-    <td><img height="60" src="https://pngimg.com/d/linux_PNG29.png"/></td>
+    <td><img height="60" src="https://cdn-icons-png.flaticon.com/512/6124/6124995.png"/></td>
     <td><img height="60" src="https://miro.medium.com/v2/resize:fit:1400/0*adyeTInZ7lebNANK.png"/></td>
     <td><img height="40" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/PyTorch_logo_black.svg/2560px-PyTorch_logo_black.svg.png"/></td>
     <td><img height="70" src="https://cdn.worldvectorlogo.com/logos/docker.svg"/></td>
