@@ -9,7 +9,7 @@ pyaml==25.1.0
 requests==2.32.3
 
 
-#torch==2.6.0
+torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
 transformers==4.48.2
 emoji==0.6.0
 

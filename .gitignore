@@ -9,3 +9,5 @@ logs/
 
 # Ignore Testing Coverage Results
 tests/coverage/.coverage
+
+env/
