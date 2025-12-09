@@ -85,6 +85,9 @@ sentiment-analysis-api/
 ```
 This structure helps separate the application logic, configuration files, test files, and Docker-related configurations.
 
+### 🧩 Requirements
+- **Python:** 3.12
+- **pip:** 24
 
 <!-- Getting Started -->
 ## <img align="center" width="60px" height="60px" src="https://media3.giphy.com/media/wuZWV7keWqi2jJGzdB/giphy.gif?cid=6c09b952wp4ev7jtywg3j6tt7ec7vr3piiwql2vhrlsgydyz&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> Get Started <a id="started"></a>
@@ -103,7 +106,7 @@ This structure helps separate the application logic, configuration files, test f
         ```
     - **Windows**
         ```bash
-         ### python -m venv env
+         python -m venv env
         ```    
 4. **Activate the virtual environment**
     - **Linux**
@@ -112,7 +115,7 @@ This structure helps separate the application logic, configuration files, test f
         ```
     - **Windows**
         ```bash
-         #### env\Scripts\activate
+          env\Scripts\activate
         ```
 6. **Install pip Dependencies**
     ```bash
