@@ -5,8 +5,8 @@ Unit tests for the sentiment normalization module.
 import json
 import pytest
 
-from sentiment_normalization.schema import StandardizedOutput, ResultEntry, Segment
-from sentiment_normalization.normalizer import (
+from normalization.schema import StandardizedOutput, ResultEntry, Segment
+from normalization.normalizer import (
     normalize_text_sentiment,
     normalize_pipeline_sentiment,
     normalize_facial_emotions,

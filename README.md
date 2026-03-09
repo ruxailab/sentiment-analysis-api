@@ -9,6 +9,7 @@
 - <a href="#tools">Built Using</a>
 - <a href="#folder-structure">Folder Structure</a>
 - <a href="#documentation">API Documentation</a>
+- <a href="#standardized">Standardized Output Schema (Prototype)</a>
 - <a href="#started">Get Started</a>
     - <a href="#native">Native</a>
     - <a href="#docker">Docker</a>
@@ -99,6 +100,17 @@ This structure helps separate the application logic, configuration files, test f
     ~$ git clone https://github.com/ruxailab/sentiment-analysis-api.git
     ~$ cd sentiment-analysis-api
     ```
+
+## Standardized Output Schema (Prototype) <a id="standardized"></a>
+
+This repository now includes an experimental normalization layer
+that converts raw sentiment/emotion outputs into a standardized
+JSON schema. The goal is to make results consistent across
+modalities such as text, audio transcripts, and facial emotion
+analysis.
+
+See `docs/emotion_output_schema_v1.md` for details.
+
 2. **Create the Virtual Environment**
     - **Linux**
         ```bash

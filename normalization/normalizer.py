@@ -9,7 +9,7 @@ model or pipeline and returns a StandardizedOutput instance.
 from datetime import datetime, timezone
 from typing import Optional
 
-from sentiment_normalization.schema import (
+from normalization.schema import (
     StandardizedOutput,
     ResultEntry,
     Segment,
