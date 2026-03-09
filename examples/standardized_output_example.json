@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "analysis_type": "sentiment",
+  "modality": "audio",
+  "source_model": "bertweet-base-sentiment-analysis",
+  "timestamp": "2026-03-09T14:25:00Z",
+  "task_id": "usability-session-42",
+  "input_summary": "sample_audio.mp3 (0ms to 10000ms)",
+  "results": [
+    {
+      "label": "positive",
+      "score": 0.9231,
+      "intensity": null,
+      "segment": {
+        "start": 0.0,
+        "end": 3.52,
+        "text": "I really liked the navigation on this page"
+      }
+    },
+    {
+      "label": "negative",
+      "score": 0.7814,
+      "intensity": null,
+      "segment": {
+        "start": 3.52,
+        "end": 7.18,
+        "text": "but the search function was pretty confusing"
+      }
+    },
+    {
+      "label": "neutral",
+      "score": 0.6102,
+      "intensity": null,
+      "segment": {
+        "start": 7.18,
+        "end": 10.0,
+        "text": "I guess the layout is okay"
+      }
+    }
+  ]
+}
