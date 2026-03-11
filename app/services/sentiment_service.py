@@ -16,7 +16,7 @@ class SentimentService:
 
         self.sentiment_data_layer = SentimentDataLayer(config)
 
-    def analyze(self, text: str) -> tuple:
+    def analyze(self, text: str) -> dict:
         """
         Perform sentiment analysis on the given text.
         :param text: Input text for sentiment analysis.
@@ -31,16 +31,21 @@ class SentimentService:
                 }
 
             # Return the predicted label and confidence score
-            return {
-                'label': result['label'],
-                'confidence': result['confidence']
-            }
+            return self.format_response(result)
         
         except Exception as e:
             logger.error(f"[error] [Service Layer] [SentimentService] [analyze] An error occurred during sentiment analysis: {str(e)}")
             # print(f"[error] [Service Layer] [SentimentService] [analyze] An error occurred during sentiment analysis: {str(e)}")
             return {'error': f'An unexpected error occurred while processing the request.'}  # Generic error message
         
+    def format_response(self, result: dict) -> dict:
+        """
+        Format sentiment output into a reusable response structure.
+        """
+        return {
+            'label': result['label'],
+            'confidence': result['confidence']
+        }
 
 # if __name__ == "__main__":
 #     sentiment_service = SentimentService()
