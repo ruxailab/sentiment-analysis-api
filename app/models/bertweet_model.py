@@ -3,8 +3,11 @@ This module defines the BertweetSentiment class, which is a PyTorch model for se
 """
 import torch
 import torch.nn as nn
+import logging  
 
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
+
+logger = logging.getLogger(__name__)
 
 class BertweetSentiment(nn.Module):
     def __init__(self,config: dict)->None:
@@ -12,19 +15,27 @@ class BertweetSentiment(nn.Module):
         Initialize the Bertweet model for sentiment analysis.
         :param config: The configuration object containing model and device info.
         """
-        self.debug = config.get('debug')
+        
+
+        super(BertweetSentiment, self).__init__()
 
         self.config = config.get('sentiment_analysis').get('bertweet')
         self.model_name = self.config.get('model_name')
         self.device = self.config.get('device')
 
-        super(BertweetSentiment, self).__init__()
-        # Initialize the Tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        try:
+            # Initialize the Tokenizer
+            self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, do_lower_case=True, clean_up_tokenization_spaces=True)
 
-        # Initialize the Model
-        self.model= AutoModelForSequenceClassification.from_pretrained(self.model_name)
-        self.model.to(self.device)
+            # Initialize the Model
+            self.model= AutoModelForSequenceClassification.from_pretrained(self.model_name)
+            self.model.to(self.device)
+
+            logger.info(f"Successfully loaded model: {self.model_name} on {self.device}")
+
+        except Exception as e:
+            logger.error(f"Failed to load BERTweet model: {str(e)}")
+            raise e
 
         # Load the model configuration to get class labels
         self.model_config = self.model.config
@@ -35,32 +46,46 @@ class BertweetSentiment(nn.Module):
         else:
             self.class_labels = None
 
-    def forward(self,text)->tuple:
+    def forward(self,texts):
         """
-        Perform sentiment analysis on the given text.
+        Perform sentiment analysis on a single text or a list of texts (Batch).
 
         Args:
-            text (str): Input text for sentiment analysis.
+            texts (str or list): Input text or list of texts for sentiment analysis.
 
         Returns:
-            tuple: Model outputs, probabilities, predicted label, and confidence score.
+            list: A list of dictionaries containing text, label, and confidence score.
         """
-        # Tokenize the input text
-        inputs = self.tokenizer(text, return_tensors="pt", truncation=True, padding=True).to(self.device)
+        # Handle backward compatibility: wrap single string in a list
+        if isinstance(texts, str):
+            texts = [texts]
 
-        # Forward pass
-        outputs = self.model(**inputs)
+        
+        # Tokenize the input texts with padding and truncation
+        # Padding ensures all sequences in the batch have the same length
+        inputs = self.tokenizer(texts, return_tensors="pt", truncation=True, padding=True, max_length=128).to(self.device)
 
-        # Convert logits to probabilities
-        probabilities = torch.nn.functional.softmax(outputs.logits, dim=-1)
+        # Disable gradient calculation for efficiency
+        with torch.no_grad():
+            # Forward pass
+            outputs = self.model(**inputs)
 
-        # Get the predicted sentiment
-        predicted_class = torch.argmax(probabilities, dim=1).item()
+            # Convert logits to probabilities
+            probabilities = torch.nn.functional.softmax(outputs.logits, dim=-1)
 
-        # Get the corresponding class label
-        predicted_label = self.class_labels[predicted_class]
+        # Process results while maintaining the original order
+        results = []
+        confidences, predicted_classes = torch.max(probabilities, dim=1)
+        
+        for i in range(len(texts)):
+            label = self.class_labels[predicted_classes[i].item()]
+            results.append({
+                "text": texts[i],
+                "label": label,
+                "confidence": confidences[i].item()
+            })
 
-        return outputs, probabilities, predicted_label, probabilities[0][predicted_class].item()
+        return results
 
 
 # if __name__ == "__main__":
@@ -74,19 +99,31 @@ class BertweetSentiment(nn.Module):
 #             }
 #         }
 #     }
-#     print("config",config)
+#     logger.info(f"Config loaded: {config}")
+    
 #     model = BertweetSentiment(config)
-#     print("model",model)
-#     print("model.class_labels",model.class_labels)
+    
+#     logger.info(f"Model Labels: {model.class_labels}")
 
-#     text = "I love the new features of the app!"
-#     print(model(text))
+#     test_texts = [
+#             "I love the new features of the app!",
+#             "I hate the new features of the app!",
+#             "Hi how are u?"
+#         ]
 
-#     text = "I hate the new features of the app!"
-#     print(model(text))
-
-#     text = "Hi how are u?"
-#     print(model(text))
+#     logger.info(f"Running batch inference on {len(test_texts)} samples...")
+#     try:
+#         results = model(test_texts)
+        
+#         # Display Results in a clean format
+#         logger.info("--- Batch Results ---")
+#         for res in results:
+#             logger.info(f"Text: {res['text']}")
+#             logger.info(f"Sentiment: {res['label']} | Confidence: {res['confidence']:.4f}")
+#             logger.info("-" * 20)
+            
+#     except Exception as e:
+#         logger.error(f"An error occurred during testing: {e}")
 
 # # Run:
 # # python -m app.models.bertweet_model

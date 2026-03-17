@@ -38,6 +38,19 @@ def register_routes(api):
         }))  # Embed the data model
     })
 
+    # ── Models for /analyze/batch ──────────────────────────────────────────────
+    sentiment_analyze_batch_request_model = api.model('SentimentAnalyzeBatchRequestModel', {
+        'texts': fields.List(fields.String, required=True, description='List of texts for sentiment analysis.', example=['I love this!', 'I hate this!'])
+    })
+
+    sentiment_analyze_batch_success_model = api.model('SentimentAnalyzeBatchSuccessModel', {
+        'status': fields.String(required=True, description='The status of the response', example='success'),
+        'data': fields.List(fields.Nested(api.model('SentimentAnalyzeBatchItemModel', {
+            'label': fields.String(required=True, description='Predicted sentiment label.', enum=['POS', 'NEG', 'NEU'], example='POS'),
+            'confidence': fields.Float(required=True, description='Confidence score of the prediction.', example=0.95)
+        })))
+    })
+
     # Define the endpoint for the Analyze sentiment of a text.
     @api.route('/analyze') 
     class SentimentAnalyze(Resource):
@@ -85,12 +98,58 @@ def register_routes(api):
             
             except Exception as e:
                 logger.error(f"[error] [Route Layer] [SentimentAnalyze] [post] An error occurred: {str(e)}")
-                # print(f"[error] [Route Layer] [SentimentAnalyze] [post] An error occurred: {str(e)}")
                 return {
                     'status': 'error',
-                    "error": 'An unexpected error occurred while processing the request.', # Generic error message
+                    "error": 'An unexpected error occurred while processing the request.',
                     'data': None
-                }, 500 # Internal Server Error
+                }, 500
+
+    # Define the endpoint for batch sentiment analysis.
+    @api.route('/analyze/batch')
+    class SentimentAnalyzeBatch(Resource):
+        @api.doc(description="Analyze sentiment of a batch of texts.")
+        @api.expect(sentiment_analyze_batch_request_model)
+        @api.response(200, 'Success', sentiment_analyze_batch_success_model)
+        @api.response(400, 'Bad Request', sentiment_analyze_bad_request_model)
+        @api.response(500, 'Internal Server Error', sentiment_analyze_internal_server_error_model)
+        def post(self):
+            """
+            Endpoint to analyze sentiment of a batch of texts.
+                - texts (list[str]): List of input texts for sentiment analysis.
+            """
+            try:
+                data = request.json
+
+                texts = data.get('texts')
+
+                if not texts or not isinstance(texts, list) or len(texts) == 0:
+                    return {
+                        'status': 'error',
+                        'error': 'texts is required and must be a non-empty list.',
+                        'data': None
+                    }, 400
+
+                results = service.analyze(texts)
+
+                if isinstance(results, dict) and 'error' in results:
+                    return {
+                        'status': 'error',
+                        'error': results['error'],
+                        'data': None
+                    }, 500
+
+                return {
+                    'status': 'success',
+                    'data': results
+                }
+
+            except Exception as e:
+                logger.error(f"[error] [Route Layer] [SentimentAnalyzeBatch] [post] An error occurred: {str(e)}")
+                return {
+                    'status': 'error',
+                    'error': 'An unexpected error occurred while processing the request.',
+                    'data': None
+                }, 500
             
 # Define the namespace for the sentiment endpoint
 api = Namespace('Sentiment', description='Sentiment Operations')
