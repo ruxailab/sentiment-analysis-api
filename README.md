@@ -57,31 +57,48 @@ Here is the folder structure of the Sentiment Analysis API project:
 
 ```
 sentiment-analysis-api/
-├── app/
-│   ├── __init__.py         # Initializes the app and its components
-│   ├── config.py           # Configuration for app settings
-│   ├── data/               # Data handling module
-│   ├── models/             # Contains the models for sentiment analysis
-│   ├── routes/             # Defines the routes for the API
-│   ├── services/           # Contains the business logic services
-│   └── ...                 # Additional app files
-├── docs/                   # Documentation files
-├── docker-compose.yml      # Defines Docker Compose configuration
-├── Dockerfile              # Defines Docker container setup
-├── .env                    # Environment variables
-├── pytest.ini              # Pytest configuration
-├── README.md               # Project documentation
-├── CONTRIBUTING.md.md               # Project documentation
-├── requirements.txt        # Lists required Python dependencies
-├── run.py                  # Entry point to run the app
-├── samples/                # Sample input files for testing
-├── static/                 # Static files (e.g., images)
-├── tests/                  # Contains unit and integration tests
-│   ├── coverage/           # Coverage reports
-│   ├── integration/        # Integration tests
-│   ├── unit/               # Unit tests
-│   └── ...                 # Other test files
-└── ...                     # Other files
+├── app/                               # Main application package
+│   ├── __init__.py                    # Initializes the app and its components
+│   ├── config.py                      # Configuration for app settings
+│   ├── data/                          # Data handling module (Pydantic models / Data schemas)
+│   │   ├── audio_data.py
+│   │   ├── sentiment_data.py
+│   │   └── transcript_data.py
+│   ├── models/                        # Contains the models for sentiment analysis (Whisper, BERTweet)
+│   │   ├── bertweet_model.py
+│   │   └── whisper_model.py
+│   ├── routes/                        # Defines the routes for the API
+│   │   ├── __init__.py
+│   │   ├── audio_routes.py
+│   │   ├── audio_transcript_sentiment_routes.py
+│   │   ├── ping_routes.py
+│   │   ├── sentiment_routes.py
+│   │   └── transcript_routes.py
+│   ├── services/                      # Contains the business logic services and pipelines
+│   │   ├── audio_service.py
+│   │   ├── audio_transcription_sentiment_pipeline.py
+│   │   ├── ping_service.py
+│   │   ├── sentiment_service.py
+│   │   └── transcript_service.py
+│   └── utils/                         # Helper utilities
+│       └── logger.py
+├── docs/                              # Documentation files and reference papers
+├── logs/                              # Application log files
+├── research/                          # Jupyter notebooks and datasets for research
+├── samples/                           # Sample input files for testing
+├── static/                            # Static files (e.g., generated audio or images)
+├── tests/                             # Contains unit and integration tests
+│   ├── coverage/                      # Coverage reports
+│   ├── integration/                   # Integration tests
+│   └── unit/                          # Unit tests
+├── .coveragerc                        # Code coverage configuration
+├── config.yaml                        # Core application configuration
+├── docker-compose.yml                 # Defines Docker Compose configuration
+├── Dockerfile                         # Defines Docker container setup
+├── pytest.ini                         # Pytest configuration
+├── README.md                          # Project documentation
+├── requirements.txt                   # Lists required Python dependencies
+└── run.py                             # Entry point to run the app
 ```
 This structure helps separate the application logic, configuration files, test files, and Docker-related configurations.
 
