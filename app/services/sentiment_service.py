@@ -7,6 +7,7 @@ from app.utils.logger import logger
 
 # Data Layer for fetching and processing transcripts
 from app.data.sentiment_data import SentimentDataLayer
+from typing import Union
 
 config = Config().config # Load the configuration
 
@@ -16,7 +17,7 @@ class SentimentService:
 
         self.sentiment_data_layer = SentimentDataLayer(config)
 
-    def analyze(self, texts: str) -> list:
+    def analyze(self, texts: Union[str, list]) -> Union[dict, list]:
         """
         Perform sentiment analysis on the given text or list of texts.
         :param texts: Input text or list of texts for sentiment analysis.
@@ -31,24 +32,24 @@ class SentimentService:
                 }
 
             if isinstance(texts, str):
-                return {
-                    'label': results['label'],
-                    'confidence': results['confidence']
-                }    
+                return self.format_response(results)
 
-            formatted_results = []
-            for res in results:
-                formatted_results.append({
-                    'label': res['label'],
-                    'confidence': res['confidence']
-                })
-            return formatted_results
+            # Batch processing: format each result in the list
+            return [self.format_response(res) for res in results]
         
         except Exception as e:
             logger.error(f"[error] [Service Layer] [SentimentService] [analyze] An error occurred during sentiment analysis: {str(e)}")
             # print(f"[error] [Service Layer] [SentimentService] [analyze] An error occurred during sentiment analysis: {str(e)}")
             return {'error': f'An unexpected error occurred while processing the request.'}  # Generic error message
         
+    def format_response(self, result: dict) -> dict:
+        """
+        Format sentiment output into a reusable response structure.
+        """
+        return {
+            'label': result['label'],
+            'confidence': result['confidence']
+        }
 
 # if __name__ == "__main__":
 #     sentiment_service = SentimentService()
