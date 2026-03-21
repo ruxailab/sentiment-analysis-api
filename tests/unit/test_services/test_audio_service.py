@@ -328,3 +328,141 @@ class TestAudioService:
 
 # # Run:
 # coverage run  -m pytest .\tests\unit\test_services\test_audio_service.py
+
+# ── NEW BOUNDARY TESTS ────────────────────────────────────────────────────────
+
+class TestExtractAudioBoundary:
+    """
+    Boundary and edge-case tests for AudioService.extract_audio() that were
+    missing from the original test suite.
+
+    Three gaps covered:
+    1. start_time_ms=0  — valid lower boundary, previously untested
+    2. start_time_ms as float — the validation explicitly allows float via
+       isinstance(start_time_ms, (int, float)) but no test exercised this path
+    3. user_id=None through the full extract_audio flow — _save_audio unit
+       tests cover the None branch internally, but extract_audio never passed
+       user_id=None end-to-end
+    """
+
+    @pytest.fixture
+    def audio_service(self):
+        return AudioService(static_folder="mock_static")
+
+    @pytest.fixture
+    def mock_audio_data_layer__fetch_audio(self):
+        with patch('app.services.audio_service.AudioDataLayer.fetch_audio') as mock:
+            yield mock
+
+    @pytest.fixture
+    def mock__save_audio(self):
+        with patch('app.services.audio_service.AudioService._save_audio') as mock:
+            mock.return_value = "mock_audio_path"
+            yield mock
+
+    def test_extract_audio_start_time_zero(
+        self,
+        audio_service,
+        mock_audio_data_layer__fetch_audio,
+        mock__save_audio
+    ):
+        """
+        start_time_ms=0 is a valid lower boundary.
+        The guard clause rejects start_time_ms < 0, so 0 must pass through
+        and produce a successful result.
+        """
+        mock_audio = MagicMock()
+        mocked_audio_length = 5000
+        mock_audio_data_layer__fetch_audio.return_value = mock_audio
+        mock_audio_data_layer__fetch_audio.return_value.__len__.return_value = mocked_audio_length
+
+        expected_slice = "mocked_audio[0:1000]"
+        mock_audio.__getitem__.return_value = expected_slice
+
+        result = audio_service.extract_audio(
+            url="https://example.com/audio.mp3",
+            start_time_ms=0,
+            end_time_ms=1000,
+            user_id="user123"
+        )
+
+        mock_audio_data_layer__fetch_audio.assert_called_once_with("https://example.com/audio.mp3")
+        mock_audio.__getitem__.assert_called_once_with(slice(0, 1000))
+        mock__save_audio.assert_called_once_with(expected_slice, "user123")
+        assert result == {
+            "audio_path": "mock_audio_path",
+            "start_time_ms": 0,
+            "end_time_ms": 1000
+        }
+
+    def test_extract_audio_float_start_time(
+        self,
+        audio_service,
+        mock_audio_data_layer__fetch_audio,
+        mock__save_audio
+    ):
+        """
+        The validation uses isinstance(start_time_ms, (int, float)), explicitly
+        allowing floats, but no test verified a float value is accepted.
+        A non-negative float must pass validation and produce a successful result.
+        """
+        mock_audio = MagicMock()
+        mocked_audio_length = 5000
+        mock_audio_data_layer__fetch_audio.return_value = mock_audio
+        mock_audio_data_layer__fetch_audio.return_value.__len__.return_value = mocked_audio_length
+
+        expected_slice = "mocked_audio[10.5:1000]"
+        mock_audio.__getitem__.return_value = expected_slice
+
+        result = audio_service.extract_audio(
+            url="https://example.com/audio.mp3",
+            start_time_ms=10.5,
+            end_time_ms=1000,
+            user_id="user123"
+        )
+
+        mock_audio_data_layer__fetch_audio.assert_called_once_with("https://example.com/audio.mp3")
+        mock_audio.__getitem__.assert_called_once_with(slice(10.5, 1000))
+        mock__save_audio.assert_called_once_with(expected_slice, "user123")
+        assert result == {
+            "audio_path": "mock_audio_path",
+            "start_time_ms": 10.5,
+            "end_time_ms": 1000
+        }
+
+    def test_extract_audio_no_user_id(
+        self,
+        audio_service,
+        mock_audio_data_layer__fetch_audio,
+        mock__save_audio
+    ):
+        """
+        user_id=None must flow through extract_audio and be passed to
+        _save_audio correctly. The _save_audio unit tests cover the None
+        branch internally but extract_audio itself was never called without
+        a user_id in the end-to-end flow tests.
+        """
+        mock_audio = MagicMock()
+        mocked_audio_length = 5000
+        mock_audio_data_layer__fetch_audio.return_value = mock_audio
+        mock_audio_data_layer__fetch_audio.return_value.__len__.return_value = mocked_audio_length
+
+        expected_slice = "mocked_audio[10:1000]"
+        mock_audio.__getitem__.return_value = expected_slice
+
+        result = audio_service.extract_audio(
+            url="https://example.com/audio.mp3",
+            start_time_ms=10,
+            end_time_ms=1000,
+            user_id=None
+        )
+
+        mock_audio_data_layer__fetch_audio.assert_called_once_with("https://example.com/audio.mp3")
+        mock_audio.__getitem__.assert_called_once_with(slice(10, 1000))
+        # user_id=None must be forwarded to _save_audio, not silently dropped
+        mock__save_audio.assert_called_once_with(expected_slice, None)
+        assert result == {
+            "audio_path": "mock_audio_path",
+            "start_time_ms": 10,
+            "end_time_ms": 1000
+        }
