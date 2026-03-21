@@ -98,6 +98,7 @@ def register_routes(api):
             
             except Exception as e:
                 logger.error(f"[error] [Route Layer] [SentimentAnalyze] [post] An error occurred: {str(e)}")
+                # print(f"[error] [Route Layer] [SentimentAnalyze] [post] An error occurred: {str(e)}")
                 return {
                     'status': 'error',
                     "error": 'An unexpected error occurred while processing the request.',
@@ -149,7 +150,7 @@ def register_routes(api):
                     'status': 'error',
                     'error': 'An unexpected error occurred while processing the request.',
                     'data': None
-                }, 500
+                }, 500 # Internal Server Error
             
 # Define the namespace for the sentiment endpoint
 api = Namespace('Sentiment', description='Sentiment Operations')
