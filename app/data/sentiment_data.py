@@ -39,7 +39,7 @@ class SentimentDataLayer:
             for res in batch_results:
                 results.append({
                     'label': res['label'],
-                    'confidence': res['confidence']
+                    'confidence': round(float(res['confidence']), 2)
                 })
             
             
