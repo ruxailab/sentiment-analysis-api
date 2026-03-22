@@ -91,3 +91,37 @@ class TestSentimentAnalyze:
 
 # # Run:
 # coverage run  -m pytest .\tests\unit\test_routes\test_sentiment_routes.py
+
+    def test_sentiment_analyze_whitespace_only_text(self, mock_analyze):
+        """
+        Test that whitespace-only text is rejected with a 400 error.
+        The original guard `if not text` passed strings like "   " straight
+        to the model as valid input. The fix adds `.strip()` to catch this.
+        """
+        payload = {"text": "   "}
+        response = self.client.post(self.endpoint, json=payload)
+
+        assert response.status_code == 400
+        assert response.json == {
+            "status": "error",
+            "error": "text is required.",
+            "data": None
+        }
+        mock_analyze.assert_not_called()
+
+    def test_sentiment_analyze_empty_string_text(self, mock_analyze):
+        """
+        Test that an empty string is rejected with a 400 error.
+        Complements the whitespace test — verifies both empty and
+        whitespace-only strings are caught by the same guard clause.
+        """
+        payload = {"text": ""}
+        response = self.client.post(self.endpoint, json=payload)
+
+        assert response.status_code == 400
+        assert response.json == {
+            "status": "error",
+            "error": "text is required.",
+            "data": None
+        }
+        mock_analyze.assert_not_called()
