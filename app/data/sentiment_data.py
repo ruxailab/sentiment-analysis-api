@@ -3,7 +3,7 @@ This Module is responsible for handling the sentiment analysis data layer.
 """
 # Model Layer
 from app.models.bertweet_model import BertweetSentiment
-
+from app.models.roberta_model import RoBERTaSentiment
 from app.utils.logger import logger
 
 class SentimentDataLayer:
@@ -16,10 +16,13 @@ class SentimentDataLayer:
 
         self.config = config.get('sentiment_analysis')
         self.default_model = self.config.get('default_model')
+        print(f"default_model: '{self.default_model}'")  # ← ضيف السطر ده هنا
 
         # Initialize the appropriate model based on the configuration
         if self.default_model == "bertweet":
             self.model = BertweetSentiment(config)
+        elif self.default_model=="roberta":
+            self.model = RoBERTaSentiment(config)
         # elif self.default_model == "another_model":
         #     self.model = AnotherModel(config)  # Replace with your other model class
         else:
