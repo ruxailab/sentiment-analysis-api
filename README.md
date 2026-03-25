@@ -66,6 +66,7 @@ sentiment-analysis-api/
 │   │   └── transcript_data.py
 │   ├── models/                        # Contains the models for sentiment analysis (Whisper, BERTweet)
 │   │   ├── bertweet_model.py
+│   │   ├── roberta_model.py 
 │   │   └── whisper_model.py
 │   ├── routes/                        # Defines the routes for the API
 │   │   ├── __init__.py
