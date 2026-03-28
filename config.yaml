@@ -35,6 +35,13 @@ sentiment_analysis:
   #   api_key: "your_api_key"
   #   endpoint: "https://api.example.com/sentiment"
 
+speech_emotion:
+  default:
+    model_name: "superb/wav2vec2-base-superb-er"
+    device: -1 # -1 = CPU, 0 = GPU
+
+
+
 # AudioTranscriptionSentimentPipeline Configuration
 audio_transcription_sentiment_pipeline:
   remove_audio: false  # Specify whether to remove audio files after processing
