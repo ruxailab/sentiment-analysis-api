@@ -10,4 +10,5 @@ logs/
 # Ignore Testing Coverage Results
 tests/coverage/.coverage
 
-env/
+env/venv/ 
+venv/ 

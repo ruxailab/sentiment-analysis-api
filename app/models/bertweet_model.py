@@ -5,6 +5,7 @@ import torch
 import torch.nn as nn
 
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from typing import Dict, Any
 
 class BertweetSentiment(nn.Module):
     def __init__(self,config: dict)->None:
@@ -14,7 +15,16 @@ class BertweetSentiment(nn.Module):
         """
         self.debug = config.get('debug')
 
-        self.config = config.get('sentiment_analysis').get('bertweet')
+         # ✅ Add null check
+        sentiment_config = config.get('sentiment_analysis')
+        if not sentiment_config:
+            raise ValueError("'sentiment_analysis' not found in config")
+
+        self.config = sentiment_config.get('bertweet')
+        if not self.config:
+            raise ValueError("'bertweet' not found in sentiment_analysis config")
+
+
         self.model_name = self.config.get('model_name')
         self.device = self.config.get('device')
 
@@ -35,7 +45,7 @@ class BertweetSentiment(nn.Module):
         else:
             self.class_labels = None
 
-    def forward(self,text)->tuple:
+    def forward(self,text)-> Dict[str, Any]:
         """
         Perform sentiment analysis on the given text.
 
@@ -43,7 +53,7 @@ class BertweetSentiment(nn.Module):
             text (str): Input text for sentiment analysis.
 
         Returns:
-            tuple: Model outputs, probabilities, predicted label, and confidence score.
+            Dict: Model outputs, probabilities, predicted label, and confidence score.
         """
         # Tokenize the input text
         inputs = self.tokenizer(text, return_tensors="pt", truncation=True, padding=True).to(self.device)
@@ -57,10 +67,24 @@ class BertweetSentiment(nn.Module):
         # Get the predicted sentiment
         predicted_class = torch.argmax(probabilities, dim=1).item()
 
+        # Get the predicted sentiment
+        # Convert to integer explicitly
+        predicted_class = int(torch.argmax(probabilities, dim=1).item())
+
+        # Add null check
+        if self.class_labels is None:
+           raise ValueError("Class labels not available")
+
+
         # Get the corresponding class label
         predicted_label = self.class_labels[predicted_class]
 
-        return outputs, probabilities, predicted_label, probabilities[0][predicted_class].item()
+        return {
+    "logits": outputs.logits.tolist(),
+    "probabilities": probabilities.tolist(),
+    "label": predicted_label,
+    "score": probabilities[0][predicted_class].item()
+}
 
 
 # if __name__ == "__main__":
