@@ -15,6 +15,7 @@ class WhisperTranscript(nn.Module):
         :param config: The configuration object containing model and device info.      
         """
         self.debug = config.get('debug')
+
         transcription_config = config.get('transcription')
         if not transcription_config:
             raise ValueError("'transcription' not found in config")
@@ -57,7 +58,7 @@ class WhisperTranscript(nn.Module):
         chunks = []   
         
         
-        # Extract text and chunks safely
+        # Extracting the text and chunks safely
         if isinstance(out, dict):
             text = out.get("text", "")
             chunks = out.get("chunks", [])

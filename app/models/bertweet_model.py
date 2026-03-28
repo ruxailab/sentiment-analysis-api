@@ -32,14 +32,14 @@ class BertweetSentiment(nn.Module):
         # Initialize the Tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
 
-        # Initialize the Model
+        # Initializing the Model
         self.model= AutoModelForSequenceClassification.from_pretrained(self.model_name)
         self.model.to(self.device)
 
-        # Load the model configuration to get class labels
+        # Loading the model configuration to get class labels
         self.model_config = self.model.config
 
-        # Get Labels
+        # Geting the Labels
         if hasattr(self.model_config, 'id2label'):
             self.class_labels = [self.model_config.id2label[i] for i in range(len(self.model_config.id2label))]
         else:
@@ -55,28 +55,28 @@ class BertweetSentiment(nn.Module):
         Returns:
             Dict: Model outputs, probabilities, predicted label, and confidence score.
         """
-        # Tokenize the input text
+        # Tokenizing  the input text
         inputs = self.tokenizer(text, return_tensors="pt", truncation=True, padding=True).to(self.device)
 
         # Forward pass
         outputs = self.model(**inputs)
 
-        # Convert logits to probabilities
+        # Converting logits to probabilities
         probabilities = torch.nn.functional.softmax(outputs.logits, dim=-1)
 
-        # Get the predicted sentiment
+        # to get the predicted sentiment
         predicted_class = torch.argmax(probabilities, dim=1).item()
 
-        # Get the predicted sentiment
-        # Convert to integer explicitly
+        
+        # Converting it to the integer explicitly
         predicted_class = int(torch.argmax(probabilities, dim=1).item())
 
-        # Add null check
+        # Adding a null check
         if self.class_labels is None:
            raise ValueError("Class labels not available")
 
 
-        # Get the corresponding class label
+        # Geting the corresponding class label
         predicted_label = self.class_labels[predicted_class]
 
         return {
