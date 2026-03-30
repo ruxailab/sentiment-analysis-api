@@ -100,7 +100,6 @@ class AudioTranscriptionSentimentPipeline:
 
             # Step(3) Perform sentiment [Per chunk :D]
             for chunk in chunks:
-                timestamp = chunk['timestamp']
                 text = chunk['text']
 
                 sentiment_result = self.sentiment_service.analyze(text)

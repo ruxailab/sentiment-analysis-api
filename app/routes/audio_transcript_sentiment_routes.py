@@ -141,7 +141,7 @@ def register_routes(api):
                 }, 200
 
 
-            except Exception as e:
+            except Exception:
                 return {
                     'status': 'error',
                     'error': 'An unexpected error occurred while processing the request.', # Generic error message
