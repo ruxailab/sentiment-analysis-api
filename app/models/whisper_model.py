@@ -5,6 +5,7 @@ import torch
 import torch.nn as nn
 
 from transformers import pipeline
+from typing import Dict, Any
 
 
 class WhisperTranscript(nn.Module):
@@ -15,7 +16,14 @@ class WhisperTranscript(nn.Module):
         """
         self.debug = config.get('debug')
 
-        self.config = config.get('transcription').get('whisper')
+        transcription_config = config.get('transcription')
+        if not transcription_config:
+            raise ValueError("'transcription' not found in config")
+        
+        self.config = transcription_config.get('whisper')
+        if not self.config:
+            raise ValueError("'whisper' not found in transcription config")
+            
         self.model_size = self.config.get('model_size')
         self.device = self.config.get('device')
         self.chunk_length_s = self.config.get('chunk_length_s')
@@ -32,7 +40,7 @@ class WhisperTranscript(nn.Module):
         )
 
 
-    def forward(self, audio_file: str) -> tuple:
+    def forward(self, audio_file: str) -> Dict[str, Any]:
         """
         Perform transcription on the given audio file.
 
@@ -40,12 +48,30 @@ class WhisperTranscript(nn.Module):
             audio_file (str): Path to the audio file.
 
         Returns:
-            tuple: Transcribed text and timestamped chunks.
+            Dict: Transcribed text and timestamped chunks.
         """
         # Forward pass
         out = self.pipeline(audio_file, return_timestamps=True)
+
+         # Initialize to avoid "possibly unbound" error
+        text = ""
+        chunks = []   
         
-        return out["text"], out["chunks"]
+        
+        # Extracting the text and chunks safely
+        if isinstance(out, dict):
+            text = out.get("text", "")
+            chunks = out.get("chunks", [])
+        else:
+            # For dict-like objects (not necessarily dict type)
+             text = getattr(out, "text", "")
+             chunks = getattr(out, "chunks", [])
+            
+        return {
+               "text": text,
+               "chunks": chunks
+}
+  
     
 # if __name__ == "__main__":
 #     config = {
