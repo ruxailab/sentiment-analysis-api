@@ -1,7 +1,5 @@
 """
 This module defines the WhisperTranscript class, which is a PyTorch model for transcribing audio files using the OpenAI Whisper model.
-"""
-import torch
 import torch.nn as nn
 
 from transformers import pipeline
