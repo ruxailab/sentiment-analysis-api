@@ -88,7 +88,7 @@ class TestAudioDataLayer:
             result = audio_data_layer.fetch_audio(**payload)
 
             # Assert that mock_requests__get is called with the correct URL
-            mock_requests__get.assert_called_once_with(payload['url'])
+            mock_requests__get.assert_called_once_with(payload['url'], timeout=(10, 300))
             
             assert result == {'error': f'An error occurred during the HTTP request: HTTP status: {mock_response.status_code}'}
 
@@ -121,7 +121,7 @@ class TestAudioDataLayer:
             result = audio_data_layer.fetch_audio(**payload)
 
             # Assert that mock_requests_get is called with the correct URL
-            mock_requests__get.assert_called_once_with(payload['url'])
+            mock_requests__get.assert_called_once_with(payload['url'], timeout=(10, 300))
 
             # Assert the mock_io__BytesIO is called with the correct audio data
             mock_io__BytesIO.assert_called_once_with(mock_response.content)
@@ -130,6 +130,21 @@ class TestAudioDataLayer:
             mock_audio_segment__from_file.assert_called_once_with('mock_bytes_io')
 
             assert result == 'mock_audio_data'
+
+        def test_fetch_audio_from_url_timeout(self, audio_data_layer, mock_requests__get):
+            """
+            Test timeout during fetch from a URL.
+            """
+            mock_requests__get.side_effect = requests.exceptions.Timeout('mock timeout')
+
+            payload = self.args
+            with pytest.raises(RuntimeError) as err:
+                audio_data_layer.fetch_audio(**payload)
+
+            # Assert that mock_requests__get is called with the correct URL and timeout
+            mock_requests__get.assert_called_once_with(payload['url'], timeout=(10, 300))
+
+            assert str(err.value) == f"Audio download timed out (connection: 10s, read: 300s): {payload['url']}"
 
         
 
