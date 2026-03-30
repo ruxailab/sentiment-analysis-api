@@ -144,7 +144,7 @@ This structure helps separate the application logic, configuration files, test f
         ~$ apt-get -y update && apt-get -y upgrade && apt-get install -y --no-install-recommends ffmpeg
         ```
     - **Windows (Win10)**
-        - Follow Tutorial [here](htps://www.youtube.com/watch?v=IECI72XEox0)
+        - Follow Tutorial [here](https://www.youtube.com/watch?v=IECI72XEox0)
         - Add FFmpeg to the system path.    
 8. **Run Flask App**
    -    In Debug Mode  [port 8001]
@@ -152,7 +152,7 @@ This structure helps separate the application logic, configuration files, test f
          ~/sentiment-analysis-api$ python3 -m run
         ```
 9. **Run API Documentation**
-     - Access the API documentation at: http://localhost:8001/apidocs
+     - Access the API documentation at: http://localhost:8001/docs
    
 <!-- Docker -->
 ### <img align="center" width="60px" src="https://miro.medium.com/v2/resize:fit:1400/1*wXtyhpOL5NK_w39UvZpADQ.gif"> Docker <a id="docker"></a>
@@ -170,17 +170,17 @@ This structure helps separate the application logic, configuration files, test f
     ```bash
     ~/sentiment-analysis-api$ docker build -t sentiment_analysis_api .
     ```
-6. **Start Docker Conatiner (Port 8001)**
+6. **Start Docker Container (Port 8001)**
     - **New Container**  
     ```bash
     ~/sentiment-analysis-api$ docker run -d --name sentiment_analysis_api_app -p 8001:8001 -v ./:/sentiment-analysis-api sentiment_analysis_api
     ```
     - **Existing Container**
     ```bash
-    ~/sentiment-analysis-api$ docker start --name sentiment_analysis_api_app
+    ~/sentiment-analysis-api$ docker start sentiment_analysis_api_app
     ```
 7. **Run API Documentation**
-     - Access the API documentation at: http://localhost:8001/apidocs
+     - Access the API documentation at: http://localhost:8001/docs
 
 
 <!-- Docker Compose -->
@@ -209,12 +209,12 @@ This structure helps separate the application logic, configuration files, test f
     ~/sentiment-analysis-api$ docker compose start
     ```
 6. **Run API Documentation**
-     - Access the API documentation at: http://localhost:8001/apidocs
+     - Access the API documentation at: http://localhost:8001/docs
    
 
 <!-- API Documentation -->
 ## <img align="center" width="80px" src="https://cdn.dribbble.com/users/1874602/screenshots/5647628/send-icon.gif"> API Documentation <a id="documentaion"></a>
-You can access the API documentation at [http://localhost:8001/apidocs](http://localhost:8001/apidocs) after running the Flask App.
+You can access the API documentation at [http://localhost:8001/docs](http://localhost:8001/docs) after running the Flask App.
 
 <!-- Postman -->
 ### Postman Collection
@@ -281,10 +281,10 @@ This repository is part of the [Google Summer of Code (GSoC) 2024](https://summe
 - GSoC'24 Project Page: [Sentiment Analysis API Project GSoC 24 Program](https://summerofcode.withgoogle.com/programs/2024/projects/V469U9cf)
 - Progress Tracking Docs: [GSOC'24 Project Progress and Follow Up Sheet](https://docs.google.com/spreadsheets/d/1wnTACVlsw_JWCWV70Log1DFwilxwmj_azB3TekGA3OY/edit?usp=sharing)
 - Meetings Presentations: [Slides](https://drive.google.com/drive/u/1/folders/1SMujWE0p7Xz_CaS0e9qKkLRcDt7YX729)
-- Main Reposotory for the Project: [sentiment-analysis-api Repo](https://github.com/ruxailab/sentiment-analysis-api) 
+- Main Repository for the Project: [sentiment-analysis-api Repo](https://github.com/ruxailab/sentiment-analysis-api) 
 - Integration to [RUXAILAB](https://github.com/ruxailab/RUXAILAB) PR Requests<a id="integration_to_ruxailab"></a>:
     - [PR #533](https://github.com/ruxailab/RUXAILAB/pull/533)
-- Wikkis:
+- Wikis:
     - [Deployment Study Guide](https://github.com/ruxailab/sentiment-analysis-api/wiki/Deployment-Study-Guide)
     - [Speech2Text Tools Survey](https://github.com/ruxailab/sentiment-analysis-api/wiki/Speech2Text-Tools-Survey)
     - [VueJs and Vuetify Study Guide (RUXAILAB Repo)](https://github.com/ruxailab/RUXAILAB/wiki/VueJs-and-Vuetify-Study-Guide)
