@@ -180,7 +180,7 @@ This structure helps separate the application logic, configuration files, test f
     ~/sentiment-analysis-api$ docker start --name sentiment_analysis_api_app
     ```
 7. **Run API Documentation**
-     - Access the API documentation at: http://localhost:8001/apidocs
+     - Access the API documentation at: http://localhost:8001/docs
 
 
 <!-- Docker Compose -->
