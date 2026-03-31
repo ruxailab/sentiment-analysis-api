@@ -98,9 +98,8 @@ class TestSentimentDataLayer:
             """
             Setup method to create a SentimentDataLayer instance for testing.
             """
-            self.args = {
-                'text': "This is awesome!",
-            }
+            self.single_text = "This is awesome!"
+            self.batch_texts = ["I love it", "I hate it"]
 
         @pytest.fixture
         def mock_model(self,sentiment_data_layer):
@@ -117,31 +116,44 @@ class TestSentimentDataLayer:
             # Mock the model to raise an exception
             mock_model.side_effect = Exception("An error occurred")
 
-            result = sentiment_data_layer.analyze(self.args['text'])
+            result = sentiment_data_layer.analyze(self.single_text)
 
             # Ensure the method returns an error message
             assert result == {'error': 'An unexpected error occurred while processing the request.'}
-            mock_model.assert_called_once_with(self.args['text'])
+            mock_model.assert_called_once_with(self.single_text)
 
 
-        def test_analyze_success(self, sentiment_data_layer, mock_model):
-            """
-            Test that the analyze method returns expected results.
-            """
-            # Mock the model to return expected results
-            mock_model.return_value = ("output_mocked","probabilities_mocked",'POS', 0.9)
-
-            result = sentiment_data_layer.analyze(**self.args)
-
-            # Ensure the method returns the expected results
-            assert result == {
-                # 'outputs': "output_mocked", # Not Used
-                # 'probabilities': "probabilities_mocked",  # Not Used
-                'label': 'POS',
-                'confidence': 0.9
-            }
-            mock_model.assert_called_once_with(self.args['text'])
         
+        def test_analyze_success_single(self, sentiment_data_layer, mock_model):
+            """
+            Test analyzing a single text input and ensure it returns a dictionary.
+            """
+            # The model now returns a list of dicts even for single input
+            mock_model.return_value = [{'text': self.single_text, 'label': 'POS', 'confidence': 0.9}]
+
+            result = sentiment_data_layer.analyze(self.single_text)
+
+            # Ensure Data Layer extracts the dict from the list for backward compatibility
+            assert result == {'label': 'POS', 'confidence': 0.9}
+            mock_model.assert_called_once_with(self.single_text)
+
+        def test_analyze_success_batch(self, sentiment_data_layer, mock_model):
+            """
+            Test analyzing a batch of texts and ensure it returns a list of dictionaries.
+            """
+            mock_model.return_value = [
+                {'text': "I love it", 'label': 'POS', 'confidence': 0.99},
+                {'text': "I hate it", 'label': 'NEG', 'confidence': 0.88}
+            ]
+
+            result = sentiment_data_layer.analyze(self.batch_texts)
+
+            # Verify the result is a list with the correct mapped values
+            assert isinstance(result, list)
+            assert len(result) == 2
+            assert result[0]['label'] == 'POS'
+            assert result[1]['label'] == 'NEG'
+            mock_model.assert_called_once_with(self.batch_texts)
 
 # # Run the tests
 # # coverage run  -m pytest .\tests\unit\test_data\test_sentiment_data.py

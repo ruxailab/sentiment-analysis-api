@@ -7,6 +7,7 @@ from app.utils.logger import logger
 
 # Data Layer for fetching and processing transcripts
 from app.data.sentiment_data import SentimentDataLayer
+from typing import Union
 
 config = Config().config # Load the configuration
 
@@ -16,22 +17,25 @@ class SentimentService:
 
         self.sentiment_data_layer = SentimentDataLayer(config)
 
-    def analyze(self, text: str) -> dict:
+    def analyze(self, texts: Union[str, list]) -> Union[dict, list]:
         """
-        Perform sentiment analysis on the given text.
-        :param text: Input text for sentiment analysis.
+        Perform sentiment analysis on the given text or list of texts.
+        :param texts: Input text or list of texts for sentiment analysis.
         :return: predicted label, and confidence score.
         """
         try:
-            result = self.sentiment_data_layer.analyze(text)
+            results = self.sentiment_data_layer.analyze(texts)
 
-            if isinstance(result, dict) and 'error' in result:
+            if isinstance(results, dict) and 'error' in results:
                 return {
-                    'error': result['error']
+                    'error': results['error']
                 }
 
-            # Return the predicted label and confidence score
-            return self.format_response(result)
+            if isinstance(texts, str):
+                return self.format_response(results)
+
+            # Batch processing: format each result in the list
+            return [self.format_response(res) for res in results]
         
         except Exception as e:
             logger.error(f"[error] [Service Layer] [SentimentService] [analyze] An error occurred during sentiment analysis: {str(e)}")
@@ -50,14 +54,19 @@ class SentimentService:
 # if __name__ == "__main__":
 #     sentiment_service = SentimentService()
 
-#     result = sentiment_service.analyze("I love this product!")
-#     print("result",result)
+#     test_texts = [
+#         "I love this product!",
+#         "I hate this product!",
+#         "I am neutral about this product."
+#     ]
 
-#     result = sentiment_service.analyze("I hate this product!")
-#     print("result",result)
+#     print("\n--- Testing Batch Inference ---")
+#     batch_result = sentiment_service.analyze(test_texts)
+#     print("Batch Result:", batch_result)
 
-#     result = sentiment_service.analyze("I am neutral about this product.")
-#     print("result",result)
+#     print("\n--- Testing Single Input ---")
+#     single_result = sentiment_service.analyze("This is a great day!")
+#     print("Single Result:", single_result)
 
-# #  Run:
-# #  python -m app.services.sentiment_service
+#  Run:
+#  python -m app.services.sentiment_service

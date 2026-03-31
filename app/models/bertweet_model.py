@@ -35,32 +35,42 @@ class BertweetSentiment(nn.Module):
         else:
             self.class_labels = None
 
-    def forward(self,text)->tuple:
+    def forward(self,texts)->list:
         """
         Perform sentiment analysis on the given text.
 
         Args:
-            text (str): Input text for sentiment analysis.
+            texts (str): Input text for sentiment analysis.
 
         Returns:
-            tuple: Model outputs, probabilities, predicted label, and confidence score.
+            list: A list of dictionaries containing text, label, and confidence score.
         """
-        # Tokenize the input text
-        inputs = self.tokenizer(text, return_tensors="pt", truncation=True, padding=True).to(self.device)
+
+        # Handle single string input for consistency
+        if isinstance(texts, str):
+            texts = [texts]
+
+        # Process as batch with padding and truncation (The Core Fix)
+        inputs = self.tokenizer(texts, return_tensors="pt", truncation=True, padding=True).to(self.device)
 
         # Forward pass
         outputs = self.model(**inputs)
 
         # Convert logits to probabilities
         probabilities = torch.nn.functional.softmax(outputs.logits, dim=-1)
+        # Get the highest probability and its index
+        confidences, predicted_classes = torch.max(probabilities, dim=1)
 
-        # Get the predicted sentiment
-        predicted_class = torch.argmax(probabilities, dim=1).item()
+        results = []
+        for i in range(len(texts)):
+            label = self.class_labels[predicted_classes[i].item()]
+            results.append({
+                "text": texts[i],
+                "label": label,
+                "confidence": confidences[i].item()
+            })
 
-        # Get the corresponding class label
-        predicted_label = self.class_labels[predicted_class]
-
-        return outputs, probabilities, predicted_label, probabilities[0][predicted_class].item()
+        return results
 
 
 # if __name__ == "__main__":
@@ -88,5 +98,12 @@ class BertweetSentiment(nn.Module):
 #     text = "Hi how are u?"
 #     print(model(text))
 
+#     test_texts = [
+#             "I love the new features of the app!",
+#             "I hate the new features of the app!",
+#             "Hi how are u?"
+#         ]
+
+#     print(model(test_texts))
 # # Run:
 # # python -m app.models.bertweet_model
