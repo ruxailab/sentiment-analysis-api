@@ -26,15 +26,19 @@ transcription:
 
 # Sentiment Analysis Configuration
 sentiment_analysis:
-  default_model: "bertweet"  # Specify the default sentiment analysis model (e.g., bertweet, another_model)
-  bertweet:                  # Vader-specific configuration
+  default_model: "bertweet"  # Specified default model
+  bertweet:                  # Bertweet-specific configuration
     model_name: "finiteautomata/bertweet-base-sentiment-analysis"
-    device: 'cpu'               # `cpu` for CPU, or `cuda` GPU device
-    # device: 'cuda'               # `cpu` for CPU, or `cuda` GPU device
+    device: 'cpu'
+    # device: 'cuda'
+  roberta:                   # RoBERTa-specific configuration
+    model_name: "cardiffnlp/twitter-roberta-base-sentiment-latest"
+    device: 'cpu'
+    # device: 'cuda'
   # another_model:          # Placeholder for another sentiment analysis model's configuration
   #   api_key: "your_api_key"
   #   endpoint: "https://api.example.com/sentiment"
 
-# AudioTranscriptionSentimentPipeline Configuration
+  # AudioTranscriptionSentimentPipeline Configuration
 audio_transcription_sentiment_pipeline:
   remove_audio: false  # Specify whether to remove audio files after processing
