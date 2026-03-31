@@ -26,7 +26,7 @@ transcription:
 
 # Sentiment Analysis Configuration
 sentiment_analysis:
-  default_model: "roberta"  # Changed from bertweet to roberta
+  default_model: "bertweet"  # Specified default model
   bertweet:                  # Bertweet-specific configuration
     model_name: "finiteautomata/bertweet-base-sentiment-analysis"
     device: 'cpu'
