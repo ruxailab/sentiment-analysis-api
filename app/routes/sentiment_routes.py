@@ -35,14 +35,13 @@ def register_routes(api):
         'data': fields.Nested(api.model('SentimentAnalyzeDataModel', {
             'label': fields.String(required=True, description='Predicted sentiment label.', enum=['POS', 'NEG', 'NEU'], example='POS'),
             'confidence': fields.Float(required=True, description='Confidence score of the prediction.', example=0.95)
-        }))  # Embed the data model
+        }))
     })
 
-    # Define the endpoint for the Analyze sentiment of a text.
-    @api.route('/analyze') 
+    @api.route('/analyze')
     class SentimentAnalyze(Resource):
         @api.doc(description="Analyze sentiment of a text.")
-        @api.expect(sentiment_analyze_request_model)  # Use the model for request validation
+        @api.expect(sentiment_analyze_request_model)
         @api.response(200, 'Success', sentiment_analyze_success_model)
         @api.response(400, 'Bad Request', sentiment_analyze_bad_request_model)
         @api.response(500, 'Internal Server Error', sentiment_analyze_internal_server_error_model)
@@ -52,18 +51,20 @@ def register_routes(api):
                 - text (str): Input text for sentiment analysis.
             """
             try:
-                # Parse the request body
                 data = request.json
 
                 text = data.get('text')
 
-                if not text:
+                # Reject missing, empty, or whitespace-only text.
+                # The original guard `if not text` passed whitespace-only
+                # strings (e.g. "   ") straight to the model as valid input.
+                if not text or not text.strip():
                     return {
                         'status': 'error',
                         'error': 'text is required.',
                         'data': None
                     }, 400
-                
+
                 # Call the service to analyze the sentiment of the text
                 result = service.analyze(text)
 
@@ -72,9 +73,8 @@ def register_routes(api):
                         'status': 'error',
                         'error': result['error'],
                         'data': None
-                    }, 500 # Internal Server Error
-                
-                # Return the predicted label and confidence score
+                    }, 500
+
                 return {
                     'status': 'success',
                     'data': {
@@ -82,16 +82,19 @@ def register_routes(api):
                         'confidence': result['confidence']
                     }
                 }
-            
+
             except Exception as e:
-                logger.error(f"[error] [Route Layer] [SentimentAnalyze] [post] An error occurred: {str(e)}")
-                # print(f"[error] [Route Layer] [SentimentAnalyze] [post] An error occurred: {str(e)}")
+                logger.error(
+                    "[Route Layer] [SentimentAnalyze] [post] An error occurred: %s",
+                    str(e)
+                )
                 return {
                     'status': 'error',
-                    "error": 'An unexpected error occurred while processing the request.', # Generic error message
+                    'error': 'An unexpected error occurred while processing the request.',
                     'data': None
-                }, 500 # Internal Server Error
-            
+                }, 500
+
+
 # Define the namespace for the sentiment endpoint
 api = Namespace('Sentiment', description='Sentiment Operations')
 
