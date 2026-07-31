@@ -1,20 +1,22 @@
-# Huggingface Transformers Parent Image
-FROM cnstark/pytorch:2.0.1-py3.10.11-ubuntu22.04
+# CPU-only image (Cloud Run / local CPU). Avoids multi-GB CUDA base images.
+FROM python:3.10-slim-bookworm
 
-# install ffmpeg
-RUN apt-get -y update && apt-get -y upgrade && apt-get install -y --no-install-recommends ffmpeg
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory to /sentiment-analysis-api
 WORKDIR /sentiment-analysis-api
 
-# Copy the requirements file first to leverage Docker cache
 COPY requirements.txt .
 
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
+# CPU torch first (PyPI default Linux wheels are CUDA), then the rest without re-resolving torch.
+RUN pip install --no-cache-dir torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu \
+    && grep -vE '^torch==' requirements.txt > /tmp/requirements.notorch.txt \
+    && pip install --no-cache-dir -r /tmp/requirements.notorch.txt \
+    && rm /tmp/requirements.notorch.txt
 
-# Make port 8001 available to the world outside this container
+COPY . .
+RUN python scripts/prefetch_models.py
+
 EXPOSE 8001
-
-# Run run.py when the container launches
-CMD ["python3","-u","-m", "run"]
+CMD ["python3", "-u", "-m", "run"]
