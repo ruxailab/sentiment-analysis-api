@@ -45,31 +45,3 @@ class TranscriptDataLayer:
             logger.error(f"[error] [Data Layer] [TranscriptDataLayer] [transcribe] An error occurred during transcription: {str(e)}")
             # print(f"[error] [Data Layer] [TranscriptDataLayer] [transcribe] An error occurred during transcription: {str(e)}")
             return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
-    
-# if __name__ == "__main__":
-#     config = {
-#         'debug': True,
-#         # Transcription Configuration
-#         'transcription':{
-#             'default_model': "whisper",  # Specify the default transcription model (e.g., whisper, another_model)
-#             'whisper':{                  # Whisper-specific configuration
-#                 'model_size': "base" ,   # Choose between tiny, base, small, medium, large
-#                 'device': 'cpu'  ,       # -1 for CPU, or the GPU device index (e.g., 0)
-#                 'chunk_length_s': 30 
-#             }                 
-#             # 'another_model':{          # Placeholder for another transcription model's configuration
-#                 #   'api_key': "your_api_key"
-#                 #   'endpoint': "https://api.example.com/transcribe"
-#             # }
-#         }
-#     }
-    # print("config",config)
-    # transcript_data = TranscriptDataLayer(config)
-    # print("transcript_data",transcript_data)
-
-    # audio_file_path = "./samples/sample_1.mp3"
-    # transcript = transcript_data.transcribe(audio_file_path)
-    # print("transcript",transcript)
-
-# #  Run:
-# #  python -m app.data.transcript_data

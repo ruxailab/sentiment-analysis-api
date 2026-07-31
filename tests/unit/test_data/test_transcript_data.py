@@ -14,7 +14,15 @@ class TestTranscriptDataLayer:
     # Grouped tests for initialization (__init__ method)
     class TestInitialization:
         @pytest.fixture
-        def transcript_data_layer__whisper(self):
+        def mock_whisper_transcript(self):
+            """
+            Fixture to mock the 'WhisperTranscript' class.
+            """
+            with patch('app.data.transcript_data.WhisperTranscript') as mock_whisper_transcript:
+                yield mock_whisper_transcript
+
+        @pytest.fixture
+        def transcript_data_layer__whisper(self, mock_whisper_transcript):
             """
             Fixture to set up TranscriptDataLayer instance for testing.
             """
@@ -25,22 +33,15 @@ class TestTranscriptDataLayer:
                     'whisper': {
                         'model_size': "base",
                         'device': 'cpu',
-                        'chunk_length_s': 30
+                        'compute_type': 'int8',
+                        'beam_size': 5,
+                        'vad_filter': True,
                     }
                 }
             }
             return TranscriptDataLayer(config)
-        
-        @pytest.fixture
-        def mock_whisper_transcript(self):
-            """
-            Fixture to mock the 'WhisperTranscript' class.
-            """
-            with patch('app.data.transcript_data.WhisperTranscript') as mock_whisper_transcript:
-                yield mock_whisper_transcript
 
-
-        def test_init_whisper_model(self,mock_whisper_transcript,transcript_data_layer__whisper):
+        def test_init_whisper_model(self, mock_whisper_transcript, transcript_data_layer__whisper):
             """
             Test that TranscriptDataLayer initializes the Whisper model.
             """
@@ -52,7 +53,9 @@ class TestTranscriptDataLayer:
                     'whisper': {
                         'model_size': "base",
                         'device': 'cpu',
-                        'chunk_length_s': 30
+                        'compute_type': 'int8',
+                        'beam_size': 5,
+                        'vad_filter': True,
                     }
                 }
             })
@@ -88,11 +91,14 @@ class TestTranscriptDataLayer:
                 'whisper': {
                     'model_size': "base",
                     'device': 'cpu',
-                    'chunk_length_s': 30
+                    'compute_type': 'int8',
+                    'beam_size': 5,
+                    'vad_filter': True,
                 }
             }
         }
-        return TranscriptDataLayer(config)
+        with patch('app.data.transcript_data.WhisperTranscript'):
+            return TranscriptDataLayer(config)
     
     # Grouped tests for the 'transcribe' method
     class TestTranscribe:

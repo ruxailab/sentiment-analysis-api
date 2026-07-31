@@ -15,11 +15,12 @@ flask:
 # Transcription Configuration
 transcription:
   default_model: "whisper"  # Specify the default transcription model (e.g., whisper, another_model)
-  whisper:                 # Whisper-specific configuration
+  whisper:                 # Whisper-specific configuration (faster-whisper / CTranslate2)
     model_size: "base"  # Choose between tiny, base, small, medium, large
     device: 'cpu'               # `cpu` for CPU, or `cuda` GPU device
-    # device: 'cuda'               # `cpu` for CPU, or `cuda` GPU device
-    chunk_length_s: 30 
+    compute_type: "int8"        # CPU: int8 | GPU: float16
+    vad_filter: true
+
   # another_model:           # Placeholder for another transcription model's configuration
   #   api_key: "your_api_key"
   #   endpoint: "https://api.example.com/transcribe"
@@ -30,7 +31,6 @@ sentiment_analysis:
   bertweet:                  # Vader-specific configuration
     model_name: "finiteautomata/bertweet-base-sentiment-analysis"
     device: 'cpu'               # `cpu` for CPU, or `cuda` GPU device
-    # device: 'cuda'               # `cpu` for CPU, or `cuda` GPU device
   # another_model:          # Placeholder for another sentiment analysis model's configuration
   #   api_key: "your_api_key"
   #   endpoint: "https://api.example.com/sentiment"

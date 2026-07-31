@@ -1,13 +1,15 @@
 import yaml
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
+from faster_whisper import WhisperModel
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 with open("config.yaml") as f:
     config = yaml.safe_load(f)
 
-whisper_size = config["transcription"]["whisper"]["model_size"]
-pipeline(
-    "automatic-speech-recognition",
-    model=f"openai/whisper-{whisper_size}",
+whisper = config["transcription"]["whisper"]
+WhisperModel(
+    whisper.get("model_size", "base"),
+    device=whisper.get("device", "cpu"),
+    compute_type=whisper.get("compute_type", "int8"),
 )
 
 model_name = config["sentiment_analysis"]["bertweet"]["model_name"]

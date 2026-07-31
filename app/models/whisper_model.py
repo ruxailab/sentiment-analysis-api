@@ -1,38 +1,33 @@
 """
-This module defines the WhisperTranscript class, which is a PyTorch model for transcribing audio files using the OpenAI Whisper model.
+This module defines the WhisperTranscript class for transcribing audio files
+using faster-whisper (CTranslate2).
 """
-import torch
-import torch.nn as nn
-
-from transformers import pipeline
+from faster_whisper import WhisperModel
 
 
-class WhisperTranscript(nn.Module):
+class WhisperTranscript:
     def __init__(self, config: dict) -> None:
         """
-        Initialize the Whisper model pipeline for transcription.
-        :param config: The configuration object containing model and device info.      
+        Initialize the faster-whisper model for transcription.
+        :param config: The configuration object containing model and device info.
         """
         self.debug = config.get('debug')
 
         self.config = config.get('transcription').get('whisper')
-        self.model_size = self.config.get('model_size')
-        self.device = self.config.get('device')
-        self.chunk_length_s = self.config.get('chunk_length_s')
+        self.model_size = self.config.get('model_size', 'base')
+        self.device = self.config.get('device', 'cpu')
+        self.compute_type = self.config.get('compute_type', 'int8')
+        self.beam_size = self.config.get('beam_size', 5)
+        self.vad_filter = self.config.get('vad_filter', True)
+        self.language = self.config.get('language')  # None => auto-detect
 
-        model_name = f"openai/whisper-{self.model_size}"  # Dynamically set model size
-
-        super(WhisperTranscript, self).__init__()
-        # Initialize the pipeline
-        self.pipeline = pipeline(
-            task="automatic-speech-recognition",
-            model=model_name,
-            chunk_length_s=self.chunk_length_s,
-            device=self.device,  # Use the device from the configuration
+        self.model = WhisperModel(
+            self.model_size,
+            device=self.device,
+            compute_type=self.compute_type,
         )
 
-
-    def forward(self, audio_file: str) -> tuple:
+    def __call__(self, audio_file: str) -> tuple:
         """
         Perform transcription on the given audio file.
 
@@ -42,38 +37,21 @@ class WhisperTranscript(nn.Module):
         Returns:
             tuple: Transcribed text and timestamped chunks.
         """
-        # Forward pass
-        out = self.pipeline(audio_file, return_timestamps=True)
-        
-        return out["text"], out["chunks"]
-    
-# if __name__ == "__main__":
-#     config = {
-#         'debug': True,
-#         # Transcription Configuration
-#         'transcription':{
-#             'default_model': "whisper",  # Specify the default transcription model (e.g., whisper, another_model)
-#             'whisper':{                  # Whisper-specific configuration
-#                 'model_size': "base" ,   # Choose between tiny, base, small, medium, large
-#                 'device': 'cpu'  ,       # -1 for CPU, or the GPU device index (e.g., 0)
-#                 'chunk_length_s': 30 
-#             }                 
-#             # 'another_model':{          # Placeholder for another transcription model's configuration
-#                 #   'api_key': "your_api_key"
-#                 #   'endpoint': "https://api.example.com/transcribe"
-#             # }
-#         }
-#     }
-#     print("config",config)
-#     model = WhisperTranscript(config)
-#     print("model",model)
+        segments_iter, _info = self.model.transcribe(
+            audio_file,
+            beam_size=self.beam_size,
+            vad_filter=self.vad_filter,
+            language=self.language,
+        )
+        segments = list(segments_iter)
 
-#     audio_file = "./samples/sample_1.mp3"
-#     print("audio_file",audio_file)
-#     transcription, chunks = model(audio_file)
-#     print("transcription",transcription)
-#     print("chunks",chunks)
+        chunks = [
+            {
+                "timestamp": (segment.start, segment.end),
+                "text": segment.text,
+            }
+            for segment in segments
+        ]
+        transcription = "".join(segment.text for segment in segments)
 
-# #  Run:
-# # python -m app.models.whisper_model
-    
+        return transcription, chunks
