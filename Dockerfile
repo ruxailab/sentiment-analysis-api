@@ -10,7 +10,8 @@ WORKDIR /sentiment-analysis-api
 COPY requirements.txt .
 
 # CPU torch first (PyPI default Linux wheels are CUDA), then the rest without re-resolving torch.
-RUN pip install --no-cache-dir torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu \
+RUN pip install --no-cache-dir torch==2.6.0 \
+        --extra-index-url https://download.pytorch.org/whl/cpu \
     && grep -vE '^torch==' requirements.txt > /tmp/requirements.notorch.txt \
     && pip install --no-cache-dir -r /tmp/requirements.notorch.txt \
     && rm /tmp/requirements.notorch.txt
