@@ -1,5 +1,5 @@
 # CPU-only image (Cloud Run / local CPU). Avoids multi-GB CUDA base images.
-FROM python:3.10-slim-bookworm
+FROM python:3.12-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ffmpeg \
