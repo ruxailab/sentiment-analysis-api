@@ -2,6 +2,7 @@
 This module contains the routes for the transcription endpoint.
 """
 
+import os
 from flask_restx import Namespace, Resource, fields
 from flask import request
 
@@ -12,10 +13,19 @@ from app.services.transcript_service import TranscriptService
 
 service = TranscriptService()
 
+from app.services.audio_service import AudioService
+from app.config import Config
+
+audio_service=AudioService()
+config = Config().config 
+debug = config.get('debug')
+
+
 def register_routes(api):
     # Define the model for the transcript extraction request body
     transcription_transcribe_request_model = api.model('TranscriptionTranscribeRequestModel', {
-        'file_path': fields.String(required=True, description='Path of the audio file.', example='audio.mp3')
+        'file_path': fields.String(required=False, description='Path of the audio file.', example='audio.mp3'),
+        'audio_url': fields.String(required=False, description='Url of the audio file.', example='https://audio.mp3'),
     })
 
     transcription_transcribe_bad_request_model = api.model('TranscriptionTranscribeBadRequestModel', {
@@ -56,35 +66,67 @@ def register_routes(api):
                 data = request.json
 
                 file_path = data.get('file_path')
+                url = data.get('audio_url')
 
-                if not file_path:
+                if not file_path and not url:
                     return {
                         'status': 'error',
-                        'error': 'file_path is required.',
+                        'error': 'file_path or url is required.',
                         'data': None
                     }, 400
                 
+                if file_path and url:
+                    return {'status': 'error', 'error': 'Provide either file_path or url, not both.', 'data': None}, 400
+
+                if url:
+                    audio_result = audio_service.extract_audio(url,start_time_ms=0)
+
+                    if isinstance(audio_result, dict) and 'error' in audio_result:
+                        # If there was an error extracting the audio, return it
+                        return {
+                            'status':'error',
+                            'error': audio_result["error"], 
+                            'data':None
+                        }
+                    
+                    if debug:
+                        logger.debug(f"[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [audio_result]", audio_result)
+                    
+                    # Parse the audio segment details
+                    file_path = audio_result['audio_path']
+
+                should_cleanup = url is not None
+
                 # Call the service to transcribe the audio file
                 result = service.transcribe(audio_file_path = file_path)
 
+                if should_cleanup:
+                    if file_path and os.path.exists(file_path):
+                        try:
+                            os.remove(file_path)
+                        except OSError:
+                            pass
+
                 if 'error' in result:
+                    print(f'error : {result}')
                     return {
                         'status': 'error',
                         'error': result['error'],
                         'data': None
-                    }, 500 # Internal Server Error
+                    }, 500 
                 
-                # Return the transcribed text
                 return {
                     'status': 'success',
                     'data': {
-                        'transcription': result['transcription']
+                        'transcription': result['transcription'],
+                        'chunks' : result['chunks']
                     }
                 }, 200
             
             except Exception as e:
                 logger.error(f"[error] [Route Layer] [TranscriptionTranscribe] [post] An error occurred: {str(e)}")
                 # print(f"[error] [Route Layer] [TranscriptionTranscribe] [post] An error occurred: {str(e)}")
+                print(f'error : {e}')
                 return {
                     'status': 'error',
                     "error": 'An unexpected error occurred while processing the request.', # Generic error message                    
@@ -141,7 +183,7 @@ def register_routes(api):
                         'error': 'file_path is required.',
                         'data': None
                     }, 400
-                
+    
                 # Call the service to transcribe the audio file
                 result = service.transcribe(audio_file_path = file_path)
 
