@@ -29,7 +29,7 @@ class TranscriptService:
                 return {
                     'error': f'Audio file not found: {audio_file_path}'
                 }
-            
+
             result = self.transcript_data_layer.transcribe(audio_file_path)
 
             if isinstance(result, dict) and 'error' in result:
@@ -42,25 +42,10 @@ class TranscriptService:
                 'transcription': result['transcription'],
                 'chunks': result['chunks']
             }
-        
+
         except Exception as e:
-            # Catch any other exceptions
-            logger.error(f"[error] [Service Layer] [TranscriptService] [transcribe] An error occurred during transcription: {str(e)}")
-            # print(f"[error] [Service Layer] [TranscriptService] [transcribe] An error occurred during transcription: {str(e)}")
-            return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
-        
-        
-# if __name__ == "__main__":
-#     transcript_service = TranscriptService()
-#     print("transcript_service",transcript_service)
-
-#     # Normal Case
-#     result = transcript_service.transcribe("./samples/sample_1.mp3")
-#     print("result",result)
-
-    # # File doesn't exist
-    # result = transcript_service.transcribe("./samples/non_exist_file.mp3")
-    # print("result",result)
-
-# #  Run:
-# #  python -m app.services.transcript_service
+            logger.error(
+                "[Service Layer] [TranscriptService] [transcribe] An error occurred: %s",
+                str(e)
+            )
+            return {'error': 'An unexpected error occurred while processing the request.'}

@@ -15,7 +15,7 @@ from app.data.audio_data import AudioDataLayer
 config = Config().config # Load the configuration
 
 class AudioService:
-    def __init__(self,static_folder="static/audio"):
+    def __init__(self, static_folder="static/audio"):
         self.debug = config.get('debug')
 
         self.audio_data_layer = AudioDataLayer(config)
@@ -36,16 +36,15 @@ class AudioService:
                 return {
                     'error': 'Start time must be a non-negative number.'
                 }
-        
+
             # Fetch the audio file using the AudioDataLayer [Data Layer]
             audio = self.audio_data_layer.fetch_audio(url)
 
             if isinstance(audio, dict) and 'error' in audio:
-                # If there was an error fetching the audio, return it
                 return {
-                    'error': audio['error'] # Return the error message
+                    'error': audio['error']
                 }
-            
+
             # If end_time_ms is None, set it to the length of the audio file
             if end_time_ms is None or end_time_ms > len(audio):
                 end_time_ms = len(audio)
@@ -62,18 +61,18 @@ class AudioService:
             # Save the extracted audio (with a unique filename)
             file_path = self._save_audio(extracted_audio, user_id)
 
-            # Return the file path or URL to access the audio
             return {
                 "audio_path": file_path,
                 "start_time_ms": start_time_ms,
                 "end_time_ms": end_time_ms
             }
-            
+
         except Exception as e:
-            # Catch any other exceptions
-            logger.error(f"[error] [Service Layer] [AudioService] [extract_audio] An error occurred during the audio extraction: {str(e)}")
-            # print(f"[error] [Service Layer] [AudioService] [extract_audio] An error occurred during the audio extraction: {str(e)}")
-            return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
+            logger.error(
+                "[Service Layer] [AudioService] [extract_audio] An error occurred: %s",
+                str(e)
+            )
+            return {'error': 'An unexpected error occurred while processing the request.'}
 
 
     def _save_audio(self, audio: AudioSegment, user_id: str = None):
@@ -95,49 +94,7 @@ class AudioService:
             os.makedirs(self.static_folder, exist_ok=True)
             file_path = f"{self.static_folder}/{unique_filename}"
 
-
         # Export the audio to the file path
         audio.export(file_path, format="mp3")
 
         return file_path
-
-
-# if __name__ == "__main__":
-#     service = AudioService()
-   
-    # # start_time_ms < 0
-    # audio = service.extract_audio("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", -100,100)
-    # print("audio",audio)
-   
-    # # Invalid URL
-    # audio = service.extract_audio("https://invalid-url.com/audio.mp3", 0, 5000)
-    # print("audio",audio)
-
-    # # Invalid local file
-    # audio = service.extract_audio("./samples/non-exist.mp4",0,5000)
-    # print("audio",audio)
-
-    # # end_time_ms is None
-    # audio = service.extract_audio("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", 0)
-    # print("audio",audio)
-
-    # # end_time_ms > len(audio)
-    # audio = service.extract_audio("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", 0, 500000000)
-    # print("audio",audio)
-
-    # # start_time_ms > end_time_ms
-    # audio = service.extract_audio("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", 500,100)
-    # print("audio",audio)
-
-    # # From URL (Normal Case)
-    # result = service.extract_audio("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", 0, 5000)
-    # print(result)
-
-    # # From local file (Normal Case)
-    # audio = service.extract_audio("./samples/sample_0.mp4",0,5000)
-    # print("audio",audio)
-
-
-
-# #  Run:
-# #  python -m app.services.audio_service
