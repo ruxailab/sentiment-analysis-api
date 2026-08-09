@@ -13,13 +13,12 @@ class TestAudioTranscriptionSentimentPipeline:
     def audio_transcription_sentiment_pipeline(self):
         """
         Fixture to set up AudioTranscriptionSentimentPipeline instance for testing.
+        remove_audio is False by default — tests that require True set it explicitly.
         """
         pipeline = AudioTranscriptionSentimentPipeline()
-
-        # Override the remove_audio attribute to prevent deletion of audio files
         pipeline.remove_audio = False
-        return  pipeline
-    
+        return pipeline
+
     # Grouped tests for the `process` method
     class TestProcess:
         def setup_method(self):
@@ -34,109 +33,68 @@ class TestAudioTranscriptionSentimentPipeline:
         # Mocking Services
         @pytest.fixture
         def mock_audio_service__extract_audio(self):
-            """
-            Fixture to mock the AudioService class.
-            """
-            with patch("app.services.audio_transcription_sentiment_pipeline.AudioService.extract_audio") as mock_audio_service__extract_audio:
-                yield mock_audio_service__extract_audio
+            with patch("app.services.audio_transcription_sentiment_pipeline.AudioService.extract_audio") as mock:
+                yield mock
 
         @pytest.fixture
         def mock_transcript_service__transcribe(self):
-            """
-            Fixture to mock the TranscriptService class.
-            """
-            with patch("app.services.audio_transcription_sentiment_pipeline.TranscriptService.transcribe") as mock_transcript_service__transcribe:
-                yield mock_transcript_service__transcribe
+            with patch("app.services.audio_transcription_sentiment_pipeline.TranscriptService.transcribe") as mock:
+                yield mock
 
         @pytest.fixture
         def mock_sentiment_service__analyze(self):
-            """
-            Fixture to mock the SentimentService class.
-            """
-            with patch("app.services.audio_transcription_sentiment_pipeline.SentimentService.analyze") as mock_sentiment_service__analyze:
-                yield mock_sentiment_service__analyze
+            with patch("app.services.audio_transcription_sentiment_pipeline.SentimentService.analyze") as mock:
+                yield mock
 
         @pytest.fixture
         def mock_os__remove(self):
-            """
-            Fixture to mock the os.remove method.
-            """
-            with patch("os.remove") as mock_os__remove:
+            with patch("app.services.audio_transcription_sentiment_pipeline.os.remove") as mock:
+                mock.return_value = True
+                yield mock
 
-                # Override the remove_audio attribute to prevent deletion of audio files
-                mock_os__remove.return_value = True
-                yield mock_os__remove
+        # --- Existing tests (unchanged) ---
 
-        
         def test_process__extract_audio_failure(self, audio_transcription_sentiment_pipeline, mock_audio_service__extract_audio):
-            """
-            Test the process method when the extract_audio method fails.
-            """
             payload = self.args.copy()
-            # Setup
-            mock_audio_service__extract_audio.return_value = {
-                "error": "Mocked error message"
-            }
+            mock_audio_service__extract_audio.return_value = {"error": "Mocked error message"}
 
-            # Run
             result = audio_transcription_sentiment_pipeline.process(**payload)
 
-            # Assert
-            assert result == {
-                'error': "Mocked error message"
-            }
-            mock_audio_service__extract_audio.assert_called_once_with(payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id'])
-
+            assert result == {'error': "Mocked error message"}
+            mock_audio_service__extract_audio.assert_called_once_with(
+                payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id']
+            )
 
         def test_process__extract_audio_exception(self, audio_transcription_sentiment_pipeline, mock_audio_service__extract_audio):
-            """
-            Test the process method when the extract_audio method raises an exception.
-            """
             payload = self.args.copy()
-            # Setup
             mock_audio_service__extract_audio.side_effect = Exception("Mocked exception")
 
-            # Run
             result = audio_transcription_sentiment_pipeline.process(**payload)
 
-            # Assert
-            assert result == {
-                'error': "An unexpected error occurred while processing the request."
-            }
-            mock_audio_service__extract_audio.assert_called_once_with(payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id'])
-
+            assert result == {'error': "An unexpected error occurred while processing the request."}
+            mock_audio_service__extract_audio.assert_called_once_with(
+                payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id']
+            )
 
         def test_process__transcribe_audio_failure(self, audio_transcription_sentiment_pipeline, mock_audio_service__extract_audio, mock_transcript_service__transcribe):
-            """
-            Test the process method when the transcribe method fails.
-            """
             payload = self.args.copy()
-            # Setup
             mock_audio_service__extract_audio.return_value = {
                 "audio_path": "/path/to/audio.mp3",
                 "start_time_ms": 10,
                 "end_time_ms": 20
             }
-            mock_transcript_service__transcribe.return_value = {
-                "error": "Mocked error message"
-            }
+            mock_transcript_service__transcribe.return_value = {"error": "Mocked error message"}
 
-            # Run
             result = audio_transcription_sentiment_pipeline.process(**self.args)
 
-            # Assert
-            assert result == {
-                'error': "Mocked error message"
-            }
-            mock_audio_service__extract_audio.assert_called_once_with(payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id'])
+            assert result == {'error': "Mocked error message"}
+            mock_audio_service__extract_audio.assert_called_once_with(
+                payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id']
+            )
             mock_transcript_service__transcribe.assert_called_once_with("/path/to/audio.mp3")
 
         def test_process__transcribe_audio_exception(self, audio_transcription_sentiment_pipeline, mock_audio_service__extract_audio, mock_transcript_service__transcribe):
-            """
-            Test the process method when the transcribe method raises an exception.
-            """
             payload = self.args.copy()
-            # Setup
             mock_audio_service__extract_audio.return_value = {
                 "audio_path": "/path/to/audio.mp3",
                 "start_time_ms": 10,
@@ -144,17 +102,14 @@ class TestAudioTranscriptionSentimentPipeline:
             }
             mock_transcript_service__transcribe.side_effect = Exception("Mocked exception")
 
-            # Run
             result = audio_transcription_sentiment_pipeline.process(**payload)
 
-            # Assert
-            assert result == {
-                'error': "An unexpected error occurred while processing the request."
-            }
-            mock_audio_service__extract_audio.assert_called_once_with(payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id'])
+            assert result == {'error': "An unexpected error occurred while processing the request."}
+            mock_audio_service__extract_audio.assert_called_once_with(
+                payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id']
+            )
             mock_transcript_service__transcribe.assert_called_once_with("/path/to/audio.mp3")
 
-        
         def test_process__sentiment_analysis_failure(
             self,
             audio_transcription_sentiment_pipeline,
@@ -162,19 +117,12 @@ class TestAudioTranscriptionSentimentPipeline:
             mock_transcript_service__transcribe,
             mock_sentiment_service__analyze
         ):
-            """
-            Test the process method when the sentiment analysis service fails for one or more chunks.
-            """
             payload = self.args.copy()
-
-            # Mock extract_audio success
             mock_audio_service__extract_audio.return_value = {
                 "audio_path": "/path/to/audio.mp3",
                 "start_time_ms": 10,
                 "end_time_ms": 20
             }
-
-            # Mock transcribe success with multiple chunks
             mock_transcript_service__transcribe.return_value = {
                 "transcription": "This is a test transcription.",
                 "chunks": [
@@ -182,17 +130,13 @@ class TestAudioTranscriptionSentimentPipeline:
                     {"timestamp": [15, 20], "text": "Second chunk"}
                 ]
             }
-
-            # Mock sentiment analysis failure for one chunk
             mock_sentiment_service__analyze.side_effect = [
-                {"label": "POS", "confidence": 0.9},  # First chunk succeeds
-                {"error": "Mocked sentiment analysis failure"}  # Second chunk fails
+                {"label": "POS", "confidence": 0.9},
+                {"error": "Mocked sentiment analysis failure"}
             ]
 
-            # Run
             result = audio_transcription_sentiment_pipeline.process(**payload)
 
-            # Assert
             assert result == {
                 'audio_path': '/path/to/audio.mp3',
                 'start_time_ms': 10,
@@ -211,19 +155,12 @@ class TestAudioTranscriptionSentimentPipeline:
             mock_transcript_service__transcribe,
             mock_sentiment_service__analyze
         ):
-            """
-            Test the process method when the sentiment analysis service raises an exception.
-            """
             payload = self.args.copy()
-
-            # Mock extract_audio success
             mock_audio_service__extract_audio.return_value = {
                 "audio_path": "/path/to/audio.mp3",
                 "start_time_ms": 10,
                 "end_time_ms": 20
             }
-
-            # Mock transcribe success with multiple chunks
             mock_transcript_service__transcribe.return_value = {
                 "transcription": "This is a test transcription.",
                 "chunks": [
@@ -231,24 +168,19 @@ class TestAudioTranscriptionSentimentPipeline:
                     {"timestamp": [15, 20], "text": "Second chunk"}
                 ]
             }
-
-            # Mock sentiment analysis failure for one chunk
             mock_sentiment_service__analyze.side_effect = [
                 Exception("Mocked sentiment analysis exception"),
-                {"label": "POS", "confidence": 0.9}  # Second chunk succeeds
+                {"label": "POS", "confidence": 0.9}
             ]
 
-            # Run
             result = audio_transcription_sentiment_pipeline.process(**payload)
 
-            # Assert
-            assert result == {
-                'error': 'An unexpected error occurred while processing the request.'
-            }
-            assert mock_audio_service__extract_audio.called_once_with(payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id'])
+            assert result == {'error': 'An unexpected error occurred while processing the request.'}
+            assert mock_audio_service__extract_audio.called_once_with(
+                payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id']
+            )
             assert mock_transcript_service__transcribe.called_once_with("/path/to/audio.mp3")
             assert mock_sentiment_service__analyze.call_once_with("First chunk")
-
 
         def test_process_success(
             self,
@@ -257,20 +189,13 @@ class TestAudioTranscriptionSentimentPipeline:
             mock_transcript_service__transcribe,
             mock_sentiment_service__analyze,
             mock_os__remove
-            ):
-            """
-            Test the process method when all services succeed.
-            """
+        ):
             payload = self.args.copy()
-
-            # Mock extract_audio success
             mock_audio_service__extract_audio.return_value = {
                 "audio_path": "/path/to/audio.mp3",
                 "start_time_ms": 10,
                 "end_time_ms": 20
             }
-
-            # Mock transcribe success with multiple chunks
             mock_transcript_service__transcribe.return_value = {
                 "transcription": "This is a test transcription.",
                 "chunks": [
@@ -278,17 +203,13 @@ class TestAudioTranscriptionSentimentPipeline:
                     {"timestamp": [15, 20], "text": "Second chunk"}
                 ]
             }
-
-            # Mock sentiment analysis success for all chunks
             mock_sentiment_service__analyze.side_effect = [
                 {"label": "POS", "confidence": 0.9},
                 {"label": "NEG", "confidence": 0.8}
             ]
 
-            # Run
             result = audio_transcription_sentiment_pipeline.process(**payload)
 
-            # Assert
             assert result == {
                 'audio_path': '/path/to/audio.mp3',
                 'start_time_ms': 10,
@@ -299,11 +220,88 @@ class TestAudioTranscriptionSentimentPipeline:
                     {'timestamp': [15, 20], 'text': 'Second chunk', 'label': 'NEG', 'confidence': 0.8}
                 ]
             }
-            assert mock_audio_service__extract_audio.called_once_with(payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id'])
+            assert mock_audio_service__extract_audio.called_once_with(
+                payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id']
+            )
             assert mock_transcript_service__transcribe.called_once_with("/path/to/audio.mp3")
             assert mock_sentiment_service__analyze.call_count == 2
             assert mock_os__remove.called == False
 
+        # --- NEW: remove_audio=True coverage ---
 
-# # Run:
-# coverage run  -m pytest .\tests\unit\test_services\test_audio_transcription_sentiment_pipeline.py
+        def test_process__remove_audio_called_when_enabled(
+            self,
+            audio_transcription_sentiment_pipeline,
+            mock_audio_service__extract_audio,
+            mock_transcript_service__transcribe,
+            mock_sentiment_service__analyze,
+            mock_os__remove
+        ):
+            """
+            Test that os.remove() is called with the correct audio path
+            when remove_audio is set to True.
+            Previously untested — the shared fixture hardcodes remove_audio=False.
+            """
+            # Enable remove_audio for this test only
+            audio_transcription_sentiment_pipeline.remove_audio = True
+
+            payload = self.args.copy()
+            mock_audio_service__extract_audio.return_value = {
+                "audio_path": "/path/to/audio.mp3",
+                "start_time_ms": 10,
+                "end_time_ms": 20
+            }
+            mock_transcript_service__transcribe.return_value = {
+                "transcription": "This is a test transcription.",
+                "chunks": [
+                    {"timestamp": [10, 15], "text": "First chunk"}
+                ]
+            }
+            mock_sentiment_service__analyze.return_value = {"label": "POS", "confidence": 0.9}
+
+            result = audio_transcription_sentiment_pipeline.process(**payload)
+
+            # os.remove must be called exactly once with the audio path
+            mock_os__remove.assert_called_once_with("/path/to/audio.mp3")
+
+            assert result == {
+                'audio_path': '/path/to/audio.mp3',
+                'start_time_ms': 10,
+                'end_time_ms': 20,
+                'transcription': 'This is a test transcription.',
+                'utterances_sentiment': [
+                    {'timestamp': [10, 15], 'text': 'First chunk', 'label': 'POS', 'confidence': 0.9}
+                ]
+            }
+
+        def test_process__remove_audio_not_called_when_disabled(
+            self,
+            audio_transcription_sentiment_pipeline,
+            mock_audio_service__extract_audio,
+            mock_transcript_service__transcribe,
+            mock_sentiment_service__analyze,
+            mock_os__remove
+        ):
+            """
+            Test that os.remove() is NOT called when remove_audio is False.
+            Complements test_process__remove_audio_called_when_enabled.
+            """
+            audio_transcription_sentiment_pipeline.remove_audio = False
+
+            payload = self.args.copy()
+            mock_audio_service__extract_audio.return_value = {
+                "audio_path": "/path/to/audio.mp3",
+                "start_time_ms": 10,
+                "end_time_ms": 20
+            }
+            mock_transcript_service__transcribe.return_value = {
+                "transcription": "This is a test transcription.",
+                "chunks": [
+                    {"timestamp": [10, 15], "text": "First chunk"}
+                ]
+            }
+            mock_sentiment_service__analyze.return_value = {"label": "NEU", "confidence": 0.7}
+
+            audio_transcription_sentiment_pipeline.process(**payload)
+
+            mock_os__remove.assert_not_called()
