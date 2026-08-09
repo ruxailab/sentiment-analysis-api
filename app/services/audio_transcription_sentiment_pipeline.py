@@ -98,27 +98,32 @@ class AudioTranscriptionSentimentPipeline:
                 os.remove(audio_path)
 
 
-            # Step(3) Perform sentiment [Per chunk :D]
-            for chunk in chunks:
-                timestamp = chunk['timestamp']
-                text = chunk['text']
+            # Step(3) Perform sentiment analysis [Batch Processing]
+            try:
+                # Extract all text chunks into a list for batch processing
+                texts_to_analyze = [chunk['text'] for chunk in chunks]
 
-                sentiment_result = self.sentiment_service.analyze(text)
-                if isinstance(sentiment_result, dict) and 'error' in sentiment_result:
-                    logger.error(f"[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [sentiment_result]", sentiment_result)
-                    # print("[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [sentiment_result]", sentiment_result)
-                    chunk['error'] = sentiment_result['error']  # Add the error message to the chunk
-                    continue # Skip this chunk if there was an error :D
+                if texts_to_analyze:
+                    # Perform batch inference
+                    batch_results = self.sentiment_service.analyze(texts_to_analyze)
 
+                    if isinstance(batch_results, dict) and 'error' in batch_results:
+                        logger.error(f"[error] [Service Layer] [Pipeline] Batch sentiment analysis failed: {batch_results['error']}")
+                        # Handle the error by marking chunks if necessary
+                    else:
+                        # Map the results back to each chunk
+                        for i, result in enumerate(batch_results):
+                            chunks[i]['label'] = result.get('label')
+                            chunks[i]['confidence'] = result.get('confidence')
+                
                 if self.debug:
-                    logger.debug("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [sentiment_result]", sentiment_result)
-                    # print("[debug] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] [sentiment_result]", sentiment_result)
+                    logger.debug(f"[debug] [Service Layer] [Pipeline] Processed {len(chunks)} chunks using batching.")
 
-                # Add the sentiment result to the chunk
-                chunk['label'] = sentiment_result['label']
-                chunk['confidence'] = sentiment_result['confidence']
+            except Exception as e:
+                logger.error(f"[error] [Service Layer] [AudioTranscriptionSentimentPipeline] [process] Sentiment batching failed: {str(e)}")
+                # Optional: fallback to the original chunks without sentiment if critical
 
-            # Return the transcription, sentiment analysis, and audio segment details
+            # Return the full result
             return {
                 'audio_path': audio_path,
                 'start_time_ms': start_time_ms,
@@ -134,29 +139,33 @@ class AudioTranscriptionSentimentPipeline:
 
 
 # if __name__ == "__main__":
+#     # Initialize the pipeline
 #     pipeline = AudioTranscriptionSentimentPipeline()
-#     print("pipeline",pipeline)
+#     print(f"Pipeline initialized: {pipeline}")
 
-    # # URL to Video File
-    # result = pipeline.process("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", 0, 10000)
-    # print("result",result)
+#     # Test with a local video or audio file (Make sure the path exists)
+#     sample_path = "./samples/sample_0.mp4" 
+    
+#     if os.path.exists(sample_path):
+#         print(f"\n--- Processing Sample: {sample_path} ---")
+#         # Extract and analyze the first 30 seconds
+#         result = pipeline.process(sample_path, start_time_ms=0, end_time_ms=30000)
 
-    # # Invalid URL Video
-    # result = pipeline.process("https://invalid-url.com/video.mp4", 0, 10000)
-    # print("result",result)
-
-    # # Local Video File Path    
-    # result = pipeline.process("./samples/sample_0.mp4", 0, 10000)
-    # print("result",result)
-
-    # # Invalid Video File Path
-    # result = pipeline.process("./samples/non-exist.mp4", 0, 10000)
-    # print("result",result)
-
-    # # Local Audio File Path
-    # result = pipeline.process("./samples/sample_1.mp3", 0, 10000)
-    # print("result",result)
-
+#         if 'error' in result:
+#             print(f"Error occurred: {result['error']}")
+#         else:
+#             print(f"Successfully processed audio: {result['audio_path']}")
+#             print(f"Full Transcription: {result['transcription'][:100]}...") # Print first 100 chars
+            
+#             # Check the batch results
+#             utterances = result.get('utterances_sentiment', [])
+#             print(f"Number of chunks analyzed: {len(utterances)}")
+            
+#             # Print the first few results to verify
+#             for i, chunk in enumerate(utterances[:3]):
+#                 print(f"Chunk {i}: Text: '{chunk['text'][:30]}...' -> Label: {chunk.get('label')}, Confidence: {chunk.get('confidence')}")
+#     else:
+#         print(f"\n[Note] Sample file not found at {sample_path}. Skip local test.")
 
 # #  Run:
 # #  python -m app.services.audio_transcription_sentiment_pipeline

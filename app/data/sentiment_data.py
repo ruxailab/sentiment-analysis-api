@@ -25,21 +25,29 @@ class SentimentDataLayer:
         else:
             raise ValueError(f"Unsupported sentiment analysis model: {self.default_model}")
         
-    def analyze(self, text: str) -> tuple:
+    def analyze(self, texts: str) -> list:
         """
-        Perform sentiment analysis on the given text.
-        :param text: Input text for sentiment analysis.
-        :return: Model outputs, probabilities, predicted label, and confidence score.
+        Perform sentiment analysis on the given text or list of texts.
+        
+        :param text: Input text or list of texts for sentiment analysis.
+        :return: Dictionary for single input or list of dictionaries for batch input.
         """
         try:
-            outputs, probabilities, predicted_label, confidence = self.model(text)
-            return {
-                # 'outputs': outputs,
-                # 'probabilities': probabilities,
-                'label': predicted_label,
-                'confidence': confidence
-            }
-        
+            batch_results = self.model(texts)
+
+            results = []
+            for res in batch_results:
+                results.append({
+                    'label': res['label'],
+                    'confidence': round(float(res['confidence']), 2)
+                })
+            
+            
+            if isinstance(texts, str):
+                return results[0]
+            
+            return results
+
         except Exception as e:
             logger.error(f"[error] [Data Layer] [SentimentDataLayer] [analyze] An error occurred during sentiment analysis: {str(e)}")
             # print(f"[error] [Data Layer] [SentimentDataLayer] [analyze] An error occurred during sentiment analysis: {str(e)}")
@@ -57,13 +65,20 @@ class SentimentDataLayer:
 #             }
 #         }
 #     }
-#     print("config",config)
 #     sentiment_data = SentimentDataLayer(config)
-#     print("sentiment_data",sentiment_data)
 
-#     print(sentiment_data.analyze("I love this product!"))
-#     print(sentiment_data.analyze("I hate this product!"))
-#     print(sentiment_data.analyze("I am neutral about this product."))
+#     test_batch = [
+#         "I love this product!",
+#         "I hate this product!",
+#         "I am neutral about this product."
+#     ]
 
-# #  Run:
-# #  python -m app.data.sentiment_data
+#     print("\n--- Testing Batch Inference ---")
+#     results = sentiment_data.analyze(test_batch)
+#     print(results)
+
+#     print("\n--- Testing Single Inference ---")
+#     result = sentiment_data.analyze("I love this product!")
+#     print(result)
+#  Run:
+#  python -m app.data.sentiment_data
