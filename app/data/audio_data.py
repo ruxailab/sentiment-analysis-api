@@ -35,7 +35,7 @@ class AudioDataLayer:
                     logger.debug(f"[debug] [Data Layer] [AudioDataLayer] [fetch_audio] Downloading audio file from URL: {url}")
                     # print(f"[debug] [Data Layer] [AudioDataLayer] [fetch_audio] Downloading audio file from URL: {url}")
                 try:
-                    url_response = requests.get(url)
+                    url_response = requests.get(url, timeout=(10, 300))
                     if url_response.status_code != 200:
                         # Capture and format the error message for the upper layers
                         error_message = f'An error occurred during the HTTP request: HTTP status: {url_response.status_code}'
@@ -45,6 +45,9 @@ class AudioDataLayer:
                     
                     # Load audio file into pydub from the response content
                     return AudioSegment.from_file(BytesIO(url_response.content))
+
+                except requests.exceptions.Timeout as timeout_err:
+                    raise RuntimeError(f'Audio download timed out (connection: 10s, read: 300s): {url}') from timeout_err
                 
                 except requests.exceptions.RequestException as req_err:
                     # Handle any specific errors related to HTTP requests
@@ -66,7 +69,8 @@ class AudioDataLayer:
                 # print(f"[error] [Data Layer] [AudioDataLayer] [fetch_audio] {error_message}")
                 return {'error': error_message}
                 
-
+        except RuntimeError:
+            raise
         except Exception as e:
             # Catch any other exceptions
             logger.error(f"[error] [Data Layer] [AudioDataLayer] [fetch_audio] An unexpected error occurred: {str(e)}")
