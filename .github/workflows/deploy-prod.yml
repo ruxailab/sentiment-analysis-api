@@ -1,0 +1,31 @@
+# Deploy Sentiment Analysis API to Cloud Run (production).
+# Triggered on push to main.
+
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "app/**"
+      - ".github/workflows/**"
+      - "Dockerfile"
+      - "scripts/**"
+      - "config.yaml"
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: true
+
+jobs:
+  Deploy:
+    uses: ./.github/workflows/deploy-reusable.yml
+    with:
+      project_id: ruxailab-prod
+      region: us-central1
+      repo: containers
+      image: sentiment-analysis-api
+      service: sentiment-analysis-api
+    secrets:
+      GCP_SA_KEY: ${{ secrets.GCP_SA_KEY_PROD }}

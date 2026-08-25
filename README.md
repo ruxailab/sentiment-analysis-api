@@ -14,6 +14,7 @@
     - <a href="#docker">Docker</a>
     - <a href="#docker-compose">Docker Compose</a>
 - <a href="#tests">Tests</a>
+- <a href="#deployment">Deployment</a>
 - <a href="#gsoc">GSoC Docs</a>
 - <a href="#license">License</a>
 
@@ -269,6 +270,72 @@ For testing the API endpoints, you can use the following Postman collection:
             ```
 
 
+
+<!-- Deployment -->
+## Deployment <a id="deployment"></a>
+
+The API is deployed as a **CPU-only** Dockerized Flask service on **Google Cloud Run**. Shared deploy logic lives in [`.github/workflows/deploy-reusable.yml`](.github/workflows/deploy-reusable.yml); callers trigger it per branch:
+
+| Branch | Workflow | GCP project | Cloud Run service |
+|---|---|---|---|
+| `main` | [`deploy-prod.yml`](.github/workflows/deploy-prod.yml) | `ruxailab-prod` | `sentiment-analysis-api` |
+| `develop` | [`deploy-dev.yml`](.github/workflows/deploy-dev.yml) | `ruxailab-develop` | `sentiment-analysis-api` |
+
+| Setting | Value |
+|---|---|
+| Region | `us-central1` |
+| Artifact Registry repo | `containers` |
+| Image | `sentiment-analysis-api` |
+| Resources | 2 CPU · 4 Gi memory · port 8001 |
+
+### Prerequisites
+
+- Google Cloud project with billing enabled (`ruxailab-prod` / `ruxailab-develop`)
+- Artifact Registry repository `containers` in `us-central1`
+- APIs enabled: Artifact Registry, Cloud Run
+- GitHub repository secrets:
+  - **`GCP_SA_KEY_PROD`** — JSON key for the production GCP service account (used by `deploy-prod.yml`)
+  - **`GCP_SA_KEY_DEV`** — JSON key for the development GCP service account (used by `deploy-dev.yml`)
+
+Each caller maps its environment-specific secret to the generic `GCP_SA_KEY` expected by the reusable workflow. The service account needs Artifact Registry Writer, Cloud Run Admin, and Service Account User.
+
+### Automatic deploy (recommended)
+
+1. Configure the secrets above in the GitHub repository settings.
+2. Push (or merge) to `main` (prod) or `develop` (dev), with changes under `app/**`, `.github/workflows/**`, `Dockerfile`, `scripts/**`, or `config.yaml`.
+3. The workflow will:
+   - Authenticate to GCP with `GCP_SA_KEY_PROD` or `GCP_SA_KEY_DEV`
+   - Build and push `us-central1-docker.pkg.dev/<project>/containers/sentiment-analysis-api:sha-<short-sha>`
+   - Deploy the image to Cloud Run, then delete the Artifact Registry image tag
+
+### Manual deploy (optional)
+
+Use this only when you need to deploy outside CI (e.g. a hotfix from a local machine).
+
+```bash
+PROJECT_ID="ruxailab-develop"   # or ruxailab-prod
+REGION="us-central1"
+REPO="containers"
+IMAGE="sentiment-analysis-api"
+SERVICE="sentiment-analysis-api"
+TAG="sha-$(git rev-parse --short HEAD)"
+IMAGE_URI="${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO}/${IMAGE}:${TAG}"
+
+gcloud auth login
+gcloud config set project "$PROJECT_ID"
+gcloud auth configure-docker "${REGION}-docker.pkg.dev"
+
+docker build -t "${IMAGE_URI}" .
+docker push "${IMAGE_URI}"
+
+gcloud run deploy "${SERVICE}" \
+  --image "${IMAGE_URI}" \
+  --region "${REGION}" \
+  --allow-unauthenticated \
+  --cpu 2 \
+  --memory 4Gi \
+  --port 8001
+```
 
 <!-- GSoC Docs -->
 ## <img align="center" width="60px" src="https://en.opensuse.org/images/9/91/Gsocsun.png"> GSoC Docs <a id="gsoc"></a>
