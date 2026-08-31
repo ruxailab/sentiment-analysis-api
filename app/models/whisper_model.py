@@ -2,15 +2,34 @@
 This module defines the WhisperTranscript class for transcribing audio files
 using faster-whisper (CTranslate2).
 """
+import threading
+
 from faster_whisper import WhisperModel
 
 
 class WhisperTranscript:
+    _instance = None
+    _lock = threading.Lock()
+
+    def __new__(cls, config: dict = None):
+        """Return the singleton instance (thread-safe)."""
+        if cls._instance is None:
+            with cls._lock:
+                if cls._instance is None:
+                    instance = super().__new__(cls)
+                    instance._initialized = False
+                    cls._instance = instance
+        return cls._instance
+
     def __init__(self, config: dict) -> None:
         """
         Initialize the faster-whisper model for transcription.
+        Heavy model weights are loaded only once for the process lifetime.
         :param config: The configuration object containing model and device info.
         """
+        if self._initialized:
+            return
+
         self.debug = config.get('debug')
 
         self.config = config.get('transcription').get('whisper')
@@ -26,6 +45,7 @@ class WhisperTranscript:
             device=self.device,
             compute_type=self.compute_type,
         )
+        self._initialized = True
 
     def __call__(self, audio_file: str) -> tuple:
         """

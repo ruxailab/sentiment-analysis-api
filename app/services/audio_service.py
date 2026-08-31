@@ -1,143 +1,120 @@
 """
 This module contains the service layer for extracting audio segments.
 """
-import uuid
 import os
-from pydub import AudioSegment
+import uuid
 
 from app.config import Config
-
 from app.utils.logger import logger
+from app.utils.ffmpeg_audio import FFmpegError, extract_audio_segment, get_duration_ms
 
 # Data layer for fetching audio files
 from app.data.audio_data import AudioDataLayer
 
-config = Config().config # Load the configuration
+config = Config().config  # Load the configuration
+
+DEFAULT_OUTPUT_SAMPLE_RATE = 16000
+
 
 class AudioService:
-    def __init__(self,static_folder="static/audio"):
+    def __init__(self, static_folder="static/audio"):
         self.debug = config.get('debug')
+        audio_config = config.get('audio') or {}
+        self.output_sample_rate = audio_config.get(
+            'output_sample_rate',
+            DEFAULT_OUTPUT_SAMPLE_RATE,
+        )
 
         self.audio_data_layer = AudioDataLayer(config)
         self.static_folder = static_folder
 
     def extract_audio(self, url: str, start_time_ms: int, end_time_ms: int = None, user_id: str = None):
         """
-        Extract a segment from the audio file.
+        Extract a segment from the audio/video file using ffmpeg.
         :param url: URL or local file path to the audio file.
         :param start_time_ms: Start time of the segment to extract (in milliseconds).
         :param end_time_ms: End time of the segment to extract (in milliseconds).
         :param user_id: (Optional) User ID for creating user-specific subdirectories.
         :return: Path to the saved audio file or error message
         """
+        source = None
         try:
-            # Validate start_time_ms (must be a non-negative number)
             if not isinstance(start_time_ms, (int, float)) or start_time_ms < 0:
                 return {
                     'error': 'Start time must be a non-negative number.'
                 }
-        
-            # Fetch the audio file using the AudioDataLayer [Data Layer]
-            audio = self.audio_data_layer.fetch_audio(url)
 
-            if isinstance(audio, dict) and 'error' in audio:
-                # If there was an error fetching the audio, return it
-                return {
-                    'error': audio['error'] # Return the error message
-                }
-            
-            # If end_time_ms is None, set it to the length of the audio file
-            if end_time_ms is None or end_time_ms > len(audio):
-                end_time_ms = len(audio)
-
-            # Validate that end_time_ms is not less than start_time_ms
-            if end_time_ms < start_time_ms:
+            if end_time_ms is not None and end_time_ms < start_time_ms:
                 return {
                     'error': 'End time must not be less than start time.'
                 }
 
-            # Extract the segment from the audio
-            extracted_audio = audio[start_time_ms:end_time_ms]
+            source = self.audio_data_layer.resolve_audio_source(url)
+            if isinstance(source, dict) and 'error' in source:
+                return {
+                    'error': source['error']
+                }
 
-            # Save the extracted audio (with a unique filename)
-            file_path = self._save_audio(extracted_audio, user_id)
+            source_path = source['path']
+            duration_ms = get_duration_ms(source_path)
 
-            # Return the file path or URL to access the audio
+            resolved_end_time_ms = end_time_ms
+            if resolved_end_time_ms is None or resolved_end_time_ms > duration_ms:
+                resolved_end_time_ms = duration_ms
+
+            if resolved_end_time_ms < start_time_ms:
+                return {
+                    'error': 'End time must not be less than start time.'
+                }
+
+            output_path = self._build_output_path(user_id)
+            extract_audio_segment(
+                input_path=source_path,
+                output_path=output_path,
+                start_time_ms=start_time_ms,
+                end_time_ms=resolved_end_time_ms,
+                sample_rate=self.output_sample_rate,
+            )
+
             return {
-                "audio_path": file_path,
+                "audio_path": output_path,
                 "start_time_ms": start_time_ms,
-                "end_time_ms": end_time_ms
+                "end_time_ms": resolved_end_time_ms,
             }
-            
+
+        except FFmpegError as e:
+            logger.error(
+                f"[error] [Service Layer] [AudioService] [extract_audio] FFmpeg error: {str(e)}"
+            )
+            return {'error': 'An unexpected error occurred while processing the request.'}
         except Exception as e:
-            # Catch any other exceptions
-            logger.error(f"[error] [Service Layer] [AudioService] [extract_audio] An error occurred during the audio extraction: {str(e)}")
-            # print(f"[error] [Service Layer] [AudioService] [extract_audio] An error occurred during the audio extraction: {str(e)}")
-            return {'error': 'An unexpected error occurred while processing the request.'}  # Generic error message
+            logger.error(
+                f"[error] [Service Layer] [AudioService] [extract_audio] "
+                f"An error occurred during the audio extraction: {str(e)}"
+            )
+            return {'error': 'An unexpected error occurred while processing the request.'}
+        finally:
+            if isinstance(source, dict) and source.get('is_temporary') and source.get('path'):
+                self._safe_remove(source['path'])
 
-
-    def _save_audio(self, audio: AudioSegment, user_id: str = None):
+    def _build_output_path(self, user_id: str = None) -> str:
         """
-        Save the audio segment with a unique filename.
-        :param audio: The audio segment to save.
-        :param user_id: (Optional) User ID for creating user-specific subdirectories.
-        :return: The path to the saved audio file.
+        Build a unique WAV output path under the static audio folder.
         """
-        # Generate a unique filename using UUID
-        unique_filename = f"{str(uuid.uuid4())}_audio.mp3"
+        unique_filename = f"{str(uuid.uuid4())}_audio.wav"
 
-        # Optionally, create a user-specific subdirectory if user_id is provided
         if user_id:
             user_folder = os.path.join(self.static_folder, user_id).replace("\\", "/")
             os.makedirs(user_folder, exist_ok=True)
-            file_path = f"{user_folder}/{unique_filename}"
-        else:
-            os.makedirs(self.static_folder, exist_ok=True)
-            file_path = f"{self.static_folder}/{unique_filename}"
+            return f"{user_folder}/{unique_filename}"
 
+        os.makedirs(self.static_folder, exist_ok=True)
+        return f"{self.static_folder}/{unique_filename}"
 
-        # Export the audio to the file path
-        audio.export(file_path, format="mp3")
-
-        return file_path
-
-
-# if __name__ == "__main__":
-#     service = AudioService()
-   
-    # # start_time_ms < 0
-    # audio = service.extract_audio("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", -100,100)
-    # print("audio",audio)
-   
-    # # Invalid URL
-    # audio = service.extract_audio("https://invalid-url.com/audio.mp3", 0, 5000)
-    # print("audio",audio)
-
-    # # Invalid local file
-    # audio = service.extract_audio("./samples/non-exist.mp4",0,5000)
-    # print("audio",audio)
-
-    # # end_time_ms is None
-    # audio = service.extract_audio("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", 0)
-    # print("audio",audio)
-
-    # # end_time_ms > len(audio)
-    # audio = service.extract_audio("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", 0, 500000000)
-    # print("audio",audio)
-
-    # # start_time_ms > end_time_ms
-    # audio = service.extract_audio("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", 500,100)
-    # print("audio",audio)
-
-    # # From URL (Normal Case)
-    # result = service.extract_audio("https://drive.usercontent.google.com/u/2/uc?id=1BJ-0fvbc0mlDWaBGci0Ma-f1k6iElh6v", 0, 5000)
-    # print(result)
-
-    # # From local file (Normal Case)
-    # audio = service.extract_audio("./samples/sample_0.mp4",0,5000)
-    # print("audio",audio)
-
-
-
-# #  Run:
-# #  python -m app.services.audio_service
+    @staticmethod
+    def _safe_remove(path: str) -> None:
+        try:
+            if path and os.path.exists(path):
+                os.remove(path)
+        except OSError:
+            pass
