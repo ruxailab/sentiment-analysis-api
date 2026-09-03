@@ -49,12 +49,12 @@ class TestAudioTranscriptionSentimentPipeline:
                 yield mock_transcript_service__transcribe
 
         @pytest.fixture
-        def mock_sentiment_service__analyze(self):
+        def mock_sentiment_service__analyze_batch(self):
             """
-            Fixture to mock the SentimentService class.
+            Fixture to mock the SentimentService.analyze_batch method.
             """
-            with patch("app.services.audio_transcription_sentiment_pipeline.SentimentService.analyze") as mock_sentiment_service__analyze:
-                yield mock_sentiment_service__analyze
+            with patch("app.services.audio_transcription_sentiment_pipeline.SentimentService.analyze_batch") as mock_sentiment_service__analyze_batch:
+                yield mock_sentiment_service__analyze_batch
 
         @pytest.fixture
         def mock_os__remove(self):
@@ -160,10 +160,10 @@ class TestAudioTranscriptionSentimentPipeline:
             audio_transcription_sentiment_pipeline,
             mock_audio_service__extract_audio,
             mock_transcript_service__transcribe,
-            mock_sentiment_service__analyze
+            mock_sentiment_service__analyze_batch
         ):
             """
-            Test the process method when the sentiment analysis service fails for one or more chunks.
+            Test the process method when the sentiment analysis batch fails.
             """
             payload = self.args.copy()
 
@@ -183,11 +183,9 @@ class TestAudioTranscriptionSentimentPipeline:
                 ]
             }
 
-            # Mock sentiment analysis failure for one chunk
-            mock_sentiment_service__analyze.side_effect = [
-                {"label": "POS", "confidence": 0.9},  # First chunk succeeds
-                {"error": "Mocked sentiment analysis failure"}  # Second chunk fails
-            ]
+            mock_sentiment_service__analyze_batch.return_value = {
+                "error": "Mocked sentiment analysis failure"
+            }
 
             # Run
             result = audio_transcription_sentiment_pipeline.process(**payload)
@@ -199,17 +197,18 @@ class TestAudioTranscriptionSentimentPipeline:
                 'end_time_ms': 20,
                 'transcription': 'This is a test transcription.',
                 'utterances_sentiment': [
-                    {'timestamp': [10, 15], 'text': 'First chunk', 'label': 'POS', 'confidence': 0.9},
+                    {'timestamp': [10, 15], 'text': 'First chunk', 'error': 'Mocked sentiment analysis failure'},
                     {'timestamp': [15, 20], 'text': 'Second chunk', 'error': 'Mocked sentiment analysis failure'}
                 ]
             }
+            mock_sentiment_service__analyze_batch.assert_called_once_with(["First chunk", "Second chunk"])
 
         def test_process__sentiment_analysis_exception(
             self,
             audio_transcription_sentiment_pipeline,
             mock_audio_service__extract_audio,
             mock_transcript_service__transcribe,
-            mock_sentiment_service__analyze
+            mock_sentiment_service__analyze_batch
         ):
             """
             Test the process method when the sentiment analysis service raises an exception.
@@ -232,11 +231,7 @@ class TestAudioTranscriptionSentimentPipeline:
                 ]
             }
 
-            # Mock sentiment analysis failure for one chunk
-            mock_sentiment_service__analyze.side_effect = [
-                Exception("Mocked sentiment analysis exception"),
-                {"label": "POS", "confidence": 0.9}  # Second chunk succeeds
-            ]
+            mock_sentiment_service__analyze_batch.side_effect = Exception("Mocked sentiment analysis exception")
 
             # Run
             result = audio_transcription_sentiment_pipeline.process(**payload)
@@ -247,7 +242,7 @@ class TestAudioTranscriptionSentimentPipeline:
             }
             assert mock_audio_service__extract_audio.called_once_with(payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id'])
             assert mock_transcript_service__transcribe.called_once_with("/path/to/audio.mp3")
-            assert mock_sentiment_service__analyze.call_once_with("First chunk")
+            mock_sentiment_service__analyze_batch.assert_called_once_with(["First chunk", "Second chunk"])
 
 
         def test_process_success(
@@ -255,7 +250,7 @@ class TestAudioTranscriptionSentimentPipeline:
             audio_transcription_sentiment_pipeline,
             mock_audio_service__extract_audio,
             mock_transcript_service__transcribe,
-            mock_sentiment_service__analyze,
+            mock_sentiment_service__analyze_batch,
             mock_os__remove
             ):
             """
@@ -279,11 +274,12 @@ class TestAudioTranscriptionSentimentPipeline:
                 ]
             }
 
-            # Mock sentiment analysis success for all chunks
-            mock_sentiment_service__analyze.side_effect = [
-                {"label": "POS", "confidence": 0.9},
-                {"label": "NEG", "confidence": 0.8}
-            ]
+            mock_sentiment_service__analyze_batch.return_value = {
+                "results": [
+                    {"label": "POS", "confidence": 0.9},
+                    {"label": "NEG", "confidence": 0.8}
+                ]
+            }
 
             # Run
             result = audio_transcription_sentiment_pipeline.process(**payload)
@@ -301,7 +297,7 @@ class TestAudioTranscriptionSentimentPipeline:
             }
             assert mock_audio_service__extract_audio.called_once_with(payload['url'], payload['start_time_ms'], payload['end_time_ms'], payload['user_id'])
             assert mock_transcript_service__transcribe.called_once_with("/path/to/audio.mp3")
-            assert mock_sentiment_service__analyze.call_count == 2
+            mock_sentiment_service__analyze_batch.assert_called_once_with(["First chunk", "Second chunk"])
             assert mock_os__remove.called == False
 
 

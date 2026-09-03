@@ -25,11 +25,11 @@ class SentimentDataLayer:
         else:
             raise ValueError(f"Unsupported sentiment analysis model: {self.default_model}")
         
-    def analyze(self, text: str) -> tuple:
+    def analyze(self, text: str) -> dict:
         """
         Perform sentiment analysis on the given text.
         :param text: Input text for sentiment analysis.
-        :return: Model outputs, probabilities, predicted label, and confidence score.
+        :return: Predicted label and confidence score, or an error dict.
         """
         try:
             outputs, probabilities, predicted_label, confidence = self.model(text)
@@ -44,6 +44,28 @@ class SentimentDataLayer:
             logger.error(f"[error] [Data Layer] [SentimentDataLayer] [analyze] An error occurred during sentiment analysis: {str(e)}")
             # print(f"[error] [Data Layer] [SentimentDataLayer] [analyze] An error occurred during sentiment analysis: {str(e)}")
             return {'error': f'An unexpected error occurred while processing the request.'}  # Generic error message
+
+    def analyze_batch(self, texts: list) -> dict:
+        """
+        Perform sentiment analysis on a batch of texts in a single forward pass.
+        :param texts: List of input texts.
+        :return: {'results': [{'label', 'confidence'}, ...]} or an error dict.
+        """
+        try:
+            if not texts:
+                return {'results': []}
+
+            batch_results = self.model(texts)
+            return {
+                'results': [
+                    {'label': label, 'confidence': confidence}
+                    for label, confidence in batch_results
+                ]
+            }
+
+        except Exception as e:
+            logger.error(f"[error] [Data Layer] [SentimentDataLayer] [analyze_batch] An error occurred during sentiment analysis: {str(e)}")
+            return {'error': 'An unexpected error occurred while processing the request.'}
         
 
 # if __name__ == "__main__":

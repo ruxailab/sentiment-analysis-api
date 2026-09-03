@@ -10,7 +10,10 @@ flask:
 
 
 # Audio Configuration
-# audio:
+audio:
+  download_timeout_seconds: 60
+  max_download_bytes: 104857600  # 100 MiB
+  output_sample_rate: 16000  # Whisper-friendly mono WAV
 
 # Transcription Configuration
 transcription:
@@ -37,4 +40,4 @@ sentiment_analysis:
 
 # AudioTranscriptionSentimentPipeline Configuration
 audio_transcription_sentiment_pipeline:
-  remove_audio: false  # Specify whether to remove audio files after processing
+  remove_audio: true  # Remove extracted segment after transcription

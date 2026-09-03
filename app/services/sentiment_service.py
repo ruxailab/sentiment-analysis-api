@@ -37,6 +37,28 @@ class SentimentService:
             logger.error(f"[error] [Service Layer] [SentimentService] [analyze] An error occurred during sentiment analysis: {str(e)}")
             # print(f"[error] [Service Layer] [SentimentService] [analyze] An error occurred during sentiment analysis: {str(e)}")
             return {'error': f'An unexpected error occurred while processing the request.'}  # Generic error message
+
+    def analyze_batch(self, texts: list) -> dict:
+        """
+        Perform sentiment analysis on a batch of texts.
+        :param texts: List of input texts.
+        :return: {'results': [{'label', 'confidence'}, ...]} or an error dict.
+        """
+        try:
+            result = self.sentiment_data_layer.analyze_batch(texts)
+
+            if isinstance(result, dict) and 'error' in result:
+                return {
+                    'error': result['error']
+                }
+
+            return {
+                'results': [self.format_response(item) for item in result['results']]
+            }
+
+        except Exception as e:
+            logger.error(f"[error] [Service Layer] [SentimentService] [analyze_batch] An error occurred during sentiment analysis: {str(e)}")
+            return {'error': 'An unexpected error occurred while processing the request.'}
         
     def format_response(self, result: dict) -> dict:
         """

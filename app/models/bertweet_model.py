@@ -1,17 +1,37 @@
 """
 This module defines the BertweetSentiment class, which is a PyTorch model for sentiment analysis using the Bertweet model.
 """
+import threading
+from typing import List, Union
+
 import torch
 import torch.nn as nn
 
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 class BertweetSentiment(nn.Module):
-    def __init__(self,config: dict)->None:
+    _instance = None
+    _lock = threading.Lock()
+
+    def __new__(cls, config: dict = None):
+        """Return the singleton instance (thread-safe)."""
+        if cls._instance is None:
+            with cls._lock:
+                if cls._instance is None:
+                    instance = super(BertweetSentiment, cls).__new__(cls)
+                    instance._initialized = False
+                    cls._instance = instance
+        return cls._instance
+
+    def __init__(self, config: dict) -> None:
         """
         Initialize the Bertweet model for sentiment analysis.
+        Heavy model weights are loaded only once for the process lifetime.
         :param config: The configuration object containing model and device info.
         """
+        if self._initialized:
+            return
+
         self.debug = config.get('debug')
 
         self.config = config.get('sentiment_analysis').get('bertweet')
@@ -23,8 +43,9 @@ class BertweetSentiment(nn.Module):
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
 
         # Initialize the Model
-        self.model= AutoModelForSequenceClassification.from_pretrained(self.model_name)
+        self.model = AutoModelForSequenceClassification.from_pretrained(self.model_name)
         self.model.to(self.device)
+        self.model.eval()
 
         # Load the model configuration to get class labels
         self.model_config = self.model.config
@@ -35,32 +56,48 @@ class BertweetSentiment(nn.Module):
         else:
             self.class_labels = None
 
-    def forward(self,text)->tuple:
+        self._initialized = True
+
+    def forward(self, text: Union[str, List[str]]):
         """
-        Perform sentiment analysis on the given text.
+        Perform sentiment analysis on one text or a batch of texts.
 
         Args:
-            text (str): Input text for sentiment analysis.
+            text: Input text, or list of texts for batch inference.
 
         Returns:
-            tuple: Model outputs, probabilities, predicted label, and confidence score.
+            Single text: (outputs, probabilities, predicted_label, confidence).
+            Batch: list of (predicted_label, confidence) tuples.
         """
-        # Tokenize the input text
-        inputs = self.tokenizer(text, return_tensors="pt", truncation=True, padding=True).to(self.device)
+        single_input = isinstance(text, str)
+        texts = [text] if single_input else list(text)
 
-        # Forward pass
-        outputs = self.model(**inputs)
+        if not texts:
+            return [] if not single_input else (None, None, None, None)
 
-        # Convert logits to probabilities
-        probabilities = torch.nn.functional.softmax(outputs.logits, dim=-1)
+        with torch.no_grad():
+            inputs = self.tokenizer(
+                texts,
+                return_tensors="pt",
+                truncation=True,
+                padding=True,
+            ).to(self.device)
 
-        # Get the predicted sentiment
-        predicted_class = torch.argmax(probabilities, dim=1).item()
+            outputs = self.model(**inputs)
+            probabilities = torch.nn.functional.softmax(outputs.logits, dim=-1)
+            predicted_classes = torch.argmax(probabilities, dim=1)
 
-        # Get the corresponding class label
-        predicted_label = self.class_labels[predicted_class]
+            labels = []
+            confidences = []
+            for i in range(len(texts)):
+                predicted_class = predicted_classes[i].item()
+                labels.append(self.class_labels[predicted_class])
+                confidences.append(probabilities[i][predicted_class].item())
 
-        return outputs, probabilities, predicted_label, probabilities[0][predicted_class].item()
+        if single_input:
+            return outputs, probabilities, labels[0], confidences[0]
+
+        return list(zip(labels, confidences))
 
 
 # if __name__ == "__main__":
