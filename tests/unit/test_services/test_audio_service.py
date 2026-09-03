@@ -201,6 +201,71 @@ class TestAudioService:
                 "error": "An unexpected error occurred while processing the request."
             }
 
+        def test_extract_audio_unknown_duration_uses_output_probe(
+            self,
+            audio_service,
+            mock_resolve_audio_source,
+            mock_get_duration_ms,
+            mock_extract_audio_segment,
+            mock_build_output_path,
+        ):
+            mock_resolve_audio_source.return_value = {
+                'path': '/tmp/source.webm',
+                'is_temporary': False,
+            }
+            mock_get_duration_ms.side_effect = [None, 3500]
+
+            payload = self.args.copy()
+            payload['url'] = 'https://example.com/audio.webm'
+            payload['start_time_ms'] = 0
+            payload['end_time_ms'] = 43200000
+            result = audio_service.extract_audio(**payload)
+
+            mock_extract_audio_segment.assert_called_once_with(
+                input_path='/tmp/source.webm',
+                output_path='mock_static/user123/mock_uuid_audio.wav',
+                start_time_ms=0,
+                end_time_ms=43200000,
+                sample_rate=audio_service.output_sample_rate,
+            )
+            assert mock_get_duration_ms.call_count == 2
+            assert result == {
+                "audio_path": "mock_static/user123/mock_uuid_audio.wav",
+                "start_time_ms": 0,
+                "end_time_ms": 3500,
+            }
+
+        def test_extract_audio_unknown_duration_end_time_none(
+            self,
+            audio_service,
+            mock_resolve_audio_source,
+            mock_get_duration_ms,
+            mock_extract_audio_segment,
+            mock_build_output_path,
+        ):
+            mock_resolve_audio_source.return_value = {
+                'path': '/tmp/source.webm',
+                'is_temporary': False,
+            }
+            mock_get_duration_ms.side_effect = [None, 2000]
+
+            payload = self.args.copy()
+            del payload['end_time_ms']
+            result = audio_service.extract_audio(**payload)
+
+            mock_extract_audio_segment.assert_called_once_with(
+                input_path='/tmp/source.webm',
+                output_path='mock_static/user123/mock_uuid_audio.wav',
+                start_time_ms=self.args['start_time_ms'],
+                end_time_ms=None,
+                sample_rate=audio_service.output_sample_rate,
+            )
+            assert result == {
+                "audio_path": "mock_static/user123/mock_uuid_audio.wav",
+                "start_time_ms": self.args['start_time_ms'],
+                "end_time_ms": self.args['start_time_ms'] + 2000,
+            }
+
     class TestBuildOutputPath:
         @pytest.fixture
         def mock_uuid(self):

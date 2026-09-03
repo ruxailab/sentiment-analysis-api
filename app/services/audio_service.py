@@ -59,13 +59,14 @@ class AudioService:
             duration_ms = get_duration_ms(source_path)
 
             resolved_end_time_ms = end_time_ms
-            if resolved_end_time_ms is None or resolved_end_time_ms > duration_ms:
-                resolved_end_time_ms = duration_ms
+            if duration_ms is not None:
+                if resolved_end_time_ms is None or resolved_end_time_ms > duration_ms:
+                    resolved_end_time_ms = duration_ms
 
-            if resolved_end_time_ms < start_time_ms:
-                return {
-                    'error': 'End time must not be less than start time.'
-                }
+                if resolved_end_time_ms < start_time_ms:
+                    return {
+                        'error': 'End time must not be less than start time.'
+                    }
 
             output_path = self._build_output_path(user_id)
             extract_audio_segment(
@@ -75,6 +76,11 @@ class AudioService:
                 end_time_ms=resolved_end_time_ms,
                 sample_rate=self.output_sample_rate,
             )
+
+            if duration_ms is None:
+                output_duration_ms = get_duration_ms(output_path)
+                if output_duration_ms is not None:
+                    resolved_end_time_ms = start_time_ms + output_duration_ms
 
             return {
                 "audio_path": output_path,
